@@ -1,6 +1,5 @@
-import { MdCategory } from "react-icons/md";
 import { Container } from "./styled";
-import { IoMdArrowDropdown } from "react-icons/io";
+
 
 export default function Price() {
     return (

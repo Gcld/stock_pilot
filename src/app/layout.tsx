@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import StyledComponentsRegistry from "./registry";
-import { Poppins } from 'next/font/google'
-import { Caveat } from 'next/font/google'
+import { Poppins, Caveat } from 'next/font/google'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -30,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable, caveat.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${caveat.variable}`}>
       <body>
         <StyledComponentsRegistry>
           {children}

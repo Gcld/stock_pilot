@@ -4,6 +4,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { LuArrowDownAZ } from "react-icons/lu";
 import { GoNumber } from "react-icons/go";
 import Price from "../Price";
+import ResetFilter from "../ResetFilter";
 
 export default function Filters() {
     return (
@@ -25,6 +26,7 @@ export default function Filters() {
                 <IoMdArrowDropdown size={20} color="var(--buttonIconColor)"/>
             </div>
             <Price/>
+            <ResetFilter/>
         </Container>
     );
 }

@@ -5,6 +5,11 @@ export default function ItemsContainer() {
     return (
         <Container>
             <ItemCard/>
+            <ItemCard/>
+            <ItemCard/>
+            <ItemCard/>
+            <ItemCard/>
+            <ItemCard/>
         </Container>
     );
 }

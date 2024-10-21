@@ -6,9 +6,9 @@ export const Container = styled.div`
     justify-content: center;
     gap: 11px;
     width: 100%;
-    height: 695px;
     background-color: #161616;
     border-radius: 10px;
+    padding: 0px 9px 0px 9px;
 
 
     h3{

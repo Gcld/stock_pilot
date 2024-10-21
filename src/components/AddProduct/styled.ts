@@ -56,7 +56,7 @@ export const Select = styled.select`
     padding: 5px 15px 5px 15px;
     border: 1px solid var(--grayZaori);
     border-radius: 20px;
-    background-color: transparent;
+    background-color: var(--darkZaori);
     color: #FDF9E745;
     font-family: var(--font-poppins);
     appearance: none; 
@@ -64,6 +64,31 @@ export const Select = styled.select`
     background-repeat: no-repeat;
     background-position: right 10px center; 
     background-size: 20px;
+
+    &:focus {
+        outline: none;
+        border-color: var(--primaryDarkZaori);
+    }
+
+    option {
+        background-color: var(--darkZaori);
+        color: var(--primaryLightZaori);
+    }
+
+    /* Para navegadores baseados em WebKit (Chrome, Safari) */
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--darkZaori);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--primaryDarkZaori);
+        border-radius: 20px;
+        border: 3px solid var(--darkZaori);
+    }
 `;
 
 export const SubmitButton = styled.button`

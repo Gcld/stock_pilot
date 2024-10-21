@@ -35,6 +35,7 @@ export default function AddProduct() {
                     value={product.name}
                     onChange={handleChange}
                     required
+                    autoComplete='off'
                 />
                 <h3>Description</h3>
                 <TextArea

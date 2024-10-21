@@ -13,6 +13,7 @@ export const ButtonHeaderClicked = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     background-color: var(--darkZaori);
     gap: 10px;
     border-radius: 100px;
@@ -28,6 +29,7 @@ export const ButtonHeader = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     border-radius: 100px;
     padding: 15px;

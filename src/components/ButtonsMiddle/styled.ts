@@ -20,6 +20,7 @@ export const Container = styled.div`
         padding: 15px;
         h3{
             font-family: var(--font-poppins);
+            font-weight: 400;
             font-size: 16px;
         }
     }
@@ -35,6 +36,7 @@ export const Container = styled.div`
         border: 2px solid var(--darkZaori);
         h3{
             font-family: var(--font-poppins);
+            font-weight: 400;
             font-size: 16px;
         }
     }

@@ -10,7 +10,8 @@ export const Container = styled.div`
     justify-content: center;
     p{
         color: white;
-        font-weight: 500;
+        font-family: var(--font-poppins);
+        font-weight: 600;
         font-size: 18px;
         line-height: 27px;
         text-align: center;

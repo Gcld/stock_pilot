@@ -1,4 +1,11 @@
 import styled from "styled-components";
+import { Caveat } from 'next/font/google'
+
+const caveat = Caveat({
+    subsets: ['latin'],
+    display: 'swap',
+    weight: ['400', '700']
+})
 
 export const Container = styled.div`
     width: 100%;
@@ -8,9 +15,10 @@ export const Container = styled.div`
     align-items: center;
     gap: 5px;
 
-    h2{
+    h2 {
         color: var(--primaryLightZaori);
-        font-family: var(--font-caveat);
+        font-family: ${caveat.style.fontFamily};
         font-size: 32px;
+        font-weight: 700;
     }
 `;

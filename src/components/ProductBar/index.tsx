@@ -1,4 +1,4 @@
-import ProductButtons from "../ProductButtons";
+import GridButtons from "../GridButtons";
 import ProductTitle from "../ProductTitle";
 import SearchBar from "../SearchBar";
 import { Container } from "./styled";
@@ -8,7 +8,7 @@ export default function ProductBar() {
         <Container>
             <ProductTitle/>
             <SearchBar/>
-            <ProductButtons/>
+            <GridButtons/>
         </Container>
     );
 }

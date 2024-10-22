@@ -1,17 +1,25 @@
 import { LuBox, LuHistory } from "react-icons/lu";
-import { ButtonHeader, ButtonHeaderClicked, Container } from "./styled";
+import { Container } from "./styled";
+import { useState } from "react";
 
 export default function ButtonsMiddle() {
+
+    const [isListView, setIsListView] = useState(true);
+
+    const toggleView = () => {
+        setIsListView(!isListView);
+    };
+
     return (
         <Container>
-            <ButtonHeaderClicked>
-                    <LuBox size={20} color="var(--primaryDarkZaori)"/>
-                    <h3>Inventory</h3>
-                </ButtonHeaderClicked>
-                <ButtonHeader>
-                    <LuHistory size={20} color="var(--primaryDarkZaori)"/>
-                    <h3>History</h3>
-                </ButtonHeader>
+            <div className={isListView ? "buttonsMiddleClicked" : "buttonsMiddle"} onClick={toggleView}>
+                <LuBox size={20} color="var(--primaryDarkZaori)"/>
+                <h3>Inventory</h3>
+            </div>
+            <div className={!isListView ? "buttonsMiddleClicked" : "buttonsMiddle"} onClick={() => setIsListView(false)}>
+                <LuHistory size={20} color="var(--primaryDarkZaori)"/>
+                <h3>History</h3>
+            </div>    
         </Container>
     );
 }

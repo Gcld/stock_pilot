@@ -3,10 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     width: 100%;
-    height: 100px;
     flex-direction: row;
-    padding: 30px;
-    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
 
     h3{
         font-family: var(--font-poppins);

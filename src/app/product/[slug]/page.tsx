@@ -7,7 +7,7 @@ import ProductDetailBar from "@/components/ProductDetailBar";
 import { Container } from "./styled";
 import { ItemInfo } from "@/components/ItemInfo";
 import ProductButtons from "@/components/ProductButtons";
-import ProductInfo from "@/components/Product Info";
+import ProductContent from "@/components/ProductContent";
 
 export default function ProductDetail(){
     return (
@@ -16,7 +16,7 @@ export default function ProductDetail(){
             <ProductDetailBar />
             <ItemInfo/>
             <ProductButtons/>
-            <ProductInfo />
+            <ProductContent />
             <Footer />
         </Container>
     );

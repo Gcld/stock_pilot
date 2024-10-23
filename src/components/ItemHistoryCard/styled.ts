@@ -6,6 +6,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     background-color: var(--darkZaori);
     border-radius: 10px;
     padding: 8px;
@@ -28,7 +29,8 @@ export const ItemInfo = styled.div`
     padding-right: 20px;
     border-right: 1px solid var(--buttonIconColor);
 
-    h1{
+    > h1{
+        padding-left: 20px;
         font-family: var(--font-poppins);
         font-size: 24px;
         font-weight: 400;
@@ -42,6 +44,7 @@ export const ItemDescription = styled.div`
     justify-content: space-between;
     align-items: left;
     gap: 3px;
+    padding-left: 10px;
 
     h2{
         font-family: var(--font-poppins);
@@ -65,7 +68,7 @@ export const ItemPriceAndButton = styled.div`
     align-items: center;
     gap: 40px;
 
-    h1{
+    > h1{
         font-family: var(--font-poppins);
         font-size: 32px;
         font-weight: 400;

@@ -4,7 +4,8 @@ export const Container = styled.div`
     display: flex;
     height: 62px;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
+    padding-left: 30px;
 `;
 
 export const Button = styled.div`

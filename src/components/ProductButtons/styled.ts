@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     display: flex;
@@ -8,34 +8,50 @@ export const Container = styled.div`
     padding-left: 30px;
 `;
 
-export const Button = styled.div`
+interface ButtonProps {
+    isActive: boolean;
+    isLeft?: boolean;
+    isRight?: boolean;
+}
+
+export const Button = styled.div<ButtonProps>`
     display: flex;
-    border-radius: 0px 10px 10px 0px;
     align-items: center;
-    border: 1px solid var(--buttonIconColor);
     justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
-    h3{
-        font-family: var(--font-poppins);
-        font-size: 16px;
-        font-weight: 400;
-        color: var(--buttonIconColor);
-        padding: 20px;
+    ${props => props.isLeft && css`
+        border-radius: 10px 0px 0px 10px;
+    `}
+
+    ${props => props.isRight && css`
+        border-radius: 0px 10px 10px 0px;
+    `}
+
+    ${props => props.isActive
+        ? css`
+            border: 1px solid var(--primaryLightZaori);
+            background-color: var(--darkZaori);
+
+            h3 {
+                color: var(--primaryDarkZaori);
+            }
+        `
+        : css`
+            border: 1px solid var(--buttonIconColor);
+
+            h3 {
+                color: var(--buttonIconColor);
+            }
+        `
     }
-`;
 
-export const ButtonClicked = styled.div`
-    display: flex;
-    border-radius: 10px 0px 0px 10px;
-    align-items: center;
-    border: 1px solid var(--primaryLightZaori);
-    background-color: var(--darkZaori);
-    justify-content: center;  
-    h3{
+    h3 {
         font-family: var(--font-poppins);
         font-size: 16px;
         font-weight: 400;
-        color: var(--primaryDarkZaori);
         padding: 20px;
-    }  
+        transition: color 0.3s ease;
+    }
 `;

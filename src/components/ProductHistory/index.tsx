@@ -1,9 +1,19 @@
-import { Container } from "./styled";
+import ProductHistoryCard from "../ProductHistoryCard";
+import ProductStockAndDescription from "../ProductStockAndDescription";
+import { Container, HistoryCardDiv } from "./styled";
 
 export default function ProductHistory() {
     return (
         <Container>
-            <h1>Product History</h1>
+            <HistoryCardDiv>
+                <ProductHistoryCard/>
+                <ProductHistoryCard/>
+                <ProductHistoryCard/>
+                <ProductHistoryCard/>
+                <ProductHistoryCard/>
+                <ProductHistoryCard/>
+            </HistoryCardDiv>
+            <ProductStockAndDescription/>
         </Container>
     );
 }

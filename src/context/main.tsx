@@ -5,6 +5,8 @@ import { createContext, useContext, useState } from "react"
 interface MainContextData {
     setTabGeneral: (tab: number) => void;
     tabGeneral: number;
+    showMenu: boolean;
+    setShowMenu: (show: boolean) => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
@@ -12,11 +14,12 @@ const MainContext = createContext<MainContextData>({} as MainContextData)
 const MainProvider = ({ children }: React.PropsWithChildren) => {
 
     const [tabGeneral, setTabGeneral] = useState(0);
+    const [showMenu, setShowMenu] = useState(true);
 
     return (
         <MainContext.Provider
             value={{
-                setTabGeneral, tabGeneral 
+                setTabGeneral, tabGeneral, showMenu, setShowMenu
             }}
         >
             {children}

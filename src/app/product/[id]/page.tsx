@@ -5,12 +5,18 @@ import { Container } from "./styled";
 import { ItemInfo } from "@/components/ItemInfo";
 import ProductButtons from "@/components/ProductButtons";
 import ProductContent from "@/components/ProductContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductHistory from "@/components/ProductHistory";
+import { useMain } from "@/context/main";
 
 export default function ProductDetail(){
 
     const [tab, setTab] = useState(0);
+    const {setShowMenu} = useMain();
+
+    useEffect(() => {
+        setShowMenu(false);
+    }, [])
 
     return (
         <Container>

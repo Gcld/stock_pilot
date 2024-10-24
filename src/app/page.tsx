@@ -1,18 +1,20 @@
 'use client'
 
-import Header from "@/components/Header";
 import ProductBar from "@/components/ProductBar";
 import { Container } from "./styled";
 import Content from "@/components/Content";
-import Footer from "@/components/Footer";
+import { useMain } from "@/context/main";
+import ContentHistory from "@/components/ContentHistory";
 
 export default function Home() {
+
+  const {tabGeneral} = useMain();
+
   return (
     <Container>
-      <Header/>
       <ProductBar/>
-      <Content/>
-      <Footer/>
+      {tabGeneral === 0 && <Content/>}
+      {tabGeneral === 1 && <ContentHistory/>}
     </Container>
   );
 }

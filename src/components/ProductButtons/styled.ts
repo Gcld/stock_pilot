@@ -9,9 +9,9 @@ export const Container = styled.div`
 `;
 
 interface ButtonProps {
-    isActive: boolean;
-    isLeft?: boolean;
-    isRight?: boolean;
+    $isActive: boolean;
+    $isLeft?: boolean;
+    $isRight?: boolean;
 }
 
 export const Button = styled.div<ButtonProps>`
@@ -21,15 +21,15 @@ export const Button = styled.div<ButtonProps>`
     cursor: pointer;
     transition: all 0.3s ease;
 
-    ${props => props.isLeft && css`
+    ${props => props.$isLeft && css`
         border-radius: 10px 0px 0px 10px;
     `}
 
-    ${props => props.isRight && css`
+    ${props => props.$isRight && css`
         border-radius: 0px 10px 10px 0px;
     `}
 
-    ${props => props.isActive
+    ${props => props.$isActive
         ? css`
             border: 1px solid var(--primaryLightZaori);
             background-color: var(--darkZaori);

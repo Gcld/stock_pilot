@@ -15,7 +15,7 @@ export const Container = styled.div`
     align-items: center;
     gap: 5px;
 
-    h2 {
+    > h2 {
         color: var(--primaryLightZaori);
         font-family: ${caveat.style.fontFamily};
         font-size: 32px;

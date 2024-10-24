@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import StyledComponentsRegistry from "./registry";
-import { Poppins, Caveat } from 'next/font/google'
+import { Poppins } from 'next/font/google'
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import AppProvider from "@/context/indext";
+
 
 const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
-
-const caveat = Caveat({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '700']
-})
 
 export const metadata: Metadata = {
   title: "Study Page",
@@ -27,9 +25,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} ${caveat.className}`}>
+      <body className={`${poppins.className}`}>
         <StyledComponentsRegistry>
-          {children}
+          <AppProvider>
+            <Header />
+            <main className="main">
+              {children}
+            </main>
+            <Footer />
+          </AppProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

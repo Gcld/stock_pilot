@@ -16,7 +16,7 @@ export default function ProductDetail(){
 
     useEffect(() => {
         setShowMenu(false);
-    }, [])
+    }, [setShowMenu])
 
     return (
         <Container>

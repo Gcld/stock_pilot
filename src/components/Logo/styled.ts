@@ -22,3 +22,19 @@ export const Container = styled.div`
         font-weight: 700;
     }
 `;
+
+export const LogoDiv = styled.div`
+    width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        > h2 {
+            color: var(--primaryLightZaori);
+            font-family: ${caveat.style.fontFamily};
+            font-size: 32px;
+            font-weight: 700;
+        }
+`;

@@ -1,11 +1,17 @@
 import { LuArchive } from "react-icons/lu";
-import { Container } from "./styled";
+import { Container, LogoDiv } from "./styled";
+import Link from "next/link";
 
 export default function Logo() {
     return (
+        
         <Container>
-            <LuArchive size={58} color="var(--primaryDarkZaori)"/>
-            <h2>StockPilot</h2>
+            <Link href="/">
+                <LogoDiv>
+                    <LuArchive size={58} color="var(--primaryDarkZaori)"/>
+                    <h2>StockPilot</h2>
+                </LogoDiv>
+            </Link>
         </Container>
     );
 }

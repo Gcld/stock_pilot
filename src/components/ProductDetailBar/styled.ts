@@ -1,3 +1,5 @@
+// src/components/ProductDetailBar/styled.ts
+
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -8,12 +10,23 @@ export const Container = styled.div`
     padding-right: 30px;
     justify-content: space-between;
 
-    h1{
+    h1 {
         font-family: var(--font-poppins);
         font-size: 36px;
         font-weight: 600;
         color: var(--primaryLightZaori);
     }
+`;
+
+export const Separator = styled.div`
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 1px;
+    background-color: var(--buttonIconColor);
+    transition: all 0.3s ease;
+    z-index: 0;
 `;
 
 export const GridButtons = styled.div`
@@ -23,6 +36,11 @@ export const GridButtons = styled.div`
     border-radius: 10px;
     border: 1px solid var(--buttonIconColor);
     position: relative;
+    overflow: hidden;
+
+    &:hover ${Separator} {
+        background-color: var(--primaryDarkZaori);
+    }
 `;
 
 export const ButtonEnd = styled.div`
@@ -33,13 +51,80 @@ export const ButtonEnd = styled.div`
     background-color: var(--darkZaori);
     align-items: center;
     justify-content: center;
-`;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
 
-export const Separator = styled.div`
-    position: absolute;
-    top: 0%; 
-    left: 50%;
-    height: 100%; 
-    width: 1px;
-    background-color: var(--buttonIconColor);
+    &:first-child {
+        border-radius: 9px 0 0 9px;
+    }
+
+    &:last-child {
+        border-radius: 0 9px 9px 0;
+    }
+
+    .button-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 2;
+
+        svg {
+            transition: all 0.3s ease;
+            color: var(--buttonIconColor);
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: var(--primaryDarkZaori);
+            color: var(--darkZaori);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-family: var(--font-poppins);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--primaryDarkZaori);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    &:hover {
+        .button-content {
+            svg {
+                color: var(--darkZaori);
+                transform: scale(1.2);
+            }
+
+            .tooltip {
+                opacity: 1;
+                transform: translateY(-40px);
+            }
+        }
+
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
 `;

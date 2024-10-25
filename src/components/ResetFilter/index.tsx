@@ -4,8 +4,10 @@ import { Container } from "./styled";
 export default function ResetFilter() {
     return (
         <Container>
-            <GrPowerReset size={24}/>
-            <h2>Reset Filters</h2>
+            <div className="content">
+                <GrPowerReset size={24}/>
+                <h2>Reset Filters</h2>
+            </div>
         </Container>
     );
 }

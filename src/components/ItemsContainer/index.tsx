@@ -9,7 +9,7 @@ export default function ItemsContainer() {
             <ItemCard/>
             <ItemCard/>
             <ItemCard/>
-            <ItemCard/>
+            <ItemCard/> 
         </Container>
     );
 }

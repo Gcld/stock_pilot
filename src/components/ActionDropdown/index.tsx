@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu } from "./styled";
+import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu, DeleteConfirmation, DeleteButtons } from "./styled";
 import { BsThreeDots } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaExchangeAlt } from "react-icons/fa";
@@ -15,6 +15,7 @@ interface ActionDropdownProps {
 
 export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: ActionDropdownProps) {
     const [showMovementMenu, setShowMovementMenu] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -22,6 +23,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
                 setShowMovementMenu(false);
+                setShowDeleteConfirmation(false);
             }
         };
 
@@ -35,17 +37,29 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
         e.preventDefault();
         setIsOpen(!isOpen);
         setShowMovementMenu(false);
+        setShowDeleteConfirmation(false);
     };
 
     const handleDropdownItemClick = (e: React.MouseEvent, action: string, subAction?: string) => {
         e.preventDefault();
         if (action === 'movement' && !subAction) {
             setShowMovementMenu(!showMovementMenu);
+            setShowDeleteConfirmation(false);
+            return;
+        }
+        if (action === 'delete' && !subAction) {
+            setShowDeleteConfirmation(true);
+            setShowMovementMenu(false);
+            return;
+        }
+        if (action === 'delete' && subAction === 'cancel') {
+            setShowDeleteConfirmation(false);
             return;
         }
         onActionClick(action, subAction);
         setIsOpen(false);
         setShowMovementMenu(false);
+        setShowDeleteConfirmation(false);
     };
 
     return (
@@ -86,10 +100,32 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
                             </DropdownItem>
                         </SubDropdownMenu>
                     )}
-                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'delete')} $isDelete>
+                    <DropdownItem 
+                        onClick={(e) => handleDropdownItemClick(e, 'delete')} 
+                        $isDelete
+                    >
                         <MdDelete size={20}/>
                         Delete
                     </DropdownItem>
+                    {showDeleteConfirmation && (
+                        <DeleteConfirmation>
+                            <p>Do you wish to delete this product?</p>
+                            <DeleteButtons>
+                                <button 
+                                    onClick={(e) => handleDropdownItemClick(e, 'delete', 'cancel')}
+                                    className="cancel"
+                                >
+                                    Cancel
+                                </button>
+                                <button 
+                                    onClick={(e) => handleDropdownItemClick(e, 'delete', 'confirm')}
+                                    className="confirm"
+                                >
+                                    Confirm
+                                </button>
+                            </DeleteButtons>
+                        </DeleteConfirmation>
+                    )}
                 </DropdownMenu>
             )}
         </div>

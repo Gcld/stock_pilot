@@ -10,28 +10,28 @@ export const Container = styled.div`
     border-radius: 10px;
     padding: 0px 9px 0px 9px;
 
-
-    h3{
+    h3 {
         font-family: var(--font-poppins);
         font-size: 12px;
         font-weight: 400;
         color: var(--buttonIconColor);
     }
 
-    .priceBox{
+    .priceBox {
         display: flex;
         width: 51px;
-        height: 47px;
+        height: 100%;
         background-color: var(--darkZaori);
-        border-radius: 10px 0px 0px 10px;
+        border-radius: 9px 0px 0px 9px;
         align-items: center;
         justify-content: center;
         font-family: var(--font-poppins);
         font-weight: 400;
         font-size: 29px;
+        color: var(--primaryLightZaori);
     }
 
-    .priceDropdown{
+    .priceDropdown {
         width: 308px;
         height: 50px;
         display: flex;
@@ -39,14 +39,34 @@ export const Container = styled.div`
         align-items: center;
         justify-content: left;
         border-radius: 10px;
-        gap: 9px;
         border: 2px solid #5D5D5D;
+        background-color: transparent;
+        transition: border-color 0.3s ease;
 
-        h2{
-            font-family: var(--font-poppins);
-            font-weight: 500;
-            font-size: 16px;
-            color: var(--buttonIconColor);
+        &:focus-within {
+            border-color: var(--primaryDarkZaori);
         }
+    }
+`;
+
+export const PriceInput = styled.input`
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 15px;
+    font-family: var(--font-poppins);
+    font-size: 16px;
+    color: var(--primaryLightZaori);
+
+    &::placeholder {
+        color: var(--buttonIconColor);
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 `;

@@ -81,3 +81,52 @@ export const DropdownItem = styled.div<DropdownItemProps>`
         color: ${props => props.$isDelete ? '#ff4444' : 'var(--primaryLightZaori)'};
     }
 `;
+
+export const DeleteConfirmation = styled.div`
+    padding: 16px;
+    border-top: 1px solid var(--buttonIconColor);
+    
+    p {
+        font-family: var(--font-poppins);
+        font-size: 14px;
+        color: var(--primaryLightZaori);
+        margin-bottom: 12px;
+        text-align: center;
+    }
+`;
+
+export const DeleteButtons = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+
+    button {
+        flex: 1;
+        padding: 8px;
+        border-radius: 5px;
+        font-family: var(--font-poppins);
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+
+        &.cancel {
+            background-color: transparent;
+            border: 1px solid var(--buttonIconColor);
+            color: var(--primaryLightZaori);
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        &.confirm {
+            background-color: #ff4444;
+            color: white;
+
+            &:hover {
+                background-color: #ff6666;
+            }
+        }
+    }
+`;

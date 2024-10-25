@@ -1,34 +1,33 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    gap: 29px;
     background-color: var(--darkZaori);
     border-radius: 10px;
-    padding: 8px;
+    padding: 15px;
 `;
 
 export const ItemPicture = styled.div`
-    width: 240px;
-    height: 82px;
+    width: 100%;
+    height: 150px;
     background-color: white;
     border-radius: 5px;
 `;
 
 export const ItemInfo = styled.div`
     display: flex;
-    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
     padding-right: 20px;
+    padding-left: 20px;
 
-    > h1{
-        padding-left: 20px;
+    h1{
         font-family: var(--font-poppins);
         font-size: 24px;
         font-weight: 400;
@@ -39,12 +38,11 @@ export const ItemInfo = styled.div`
 export const ItemDescription = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: left;
+    justify-content: center;
+    align-items: center;
     gap: 3px;
-    padding-left: 10px;
 
-    h2{
+    > h2{
         font-family: var(--font-poppins);
         font-size: 12px;
         font-weight: regular;
@@ -61,15 +59,18 @@ export const ItemDescription = styled.div`
 
 export const ItemPriceAndButton = styled.div`
     display: flex;
-    width: 100%;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    gap: 40px;
+    justify-content: space-between;
+    gap: 70px;
 
     > h1{
+        display: flex;
         font-family: var(--font-poppins);
         font-size: 32px;
         font-weight: 400;
         color: var(--primaryLightZaori);
+        align-content: left;
+        justify-content: left;
     }
 `;

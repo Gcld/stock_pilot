@@ -7,19 +7,26 @@ interface MainContextData {
     tabGeneral: number;
     showMenu: boolean;
     setShowMenu: (show: boolean) => void;
+    isGridView: boolean;
+    setIsGridView: (isGrid: boolean) => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
 
 const MainProvider = ({ children }: React.PropsWithChildren) => {
-
     const [tabGeneral, setTabGeneral] = useState(0);
     const [showMenu, setShowMenu] = useState(true);
+    const [isGridView, setIsGridView] = useState(false);
 
     return (
         <MainContext.Provider
             value={{
-                setTabGeneral, tabGeneral, showMenu, setShowMenu
+                setTabGeneral, 
+                tabGeneral, 
+                showMenu, 
+                setShowMenu,
+                isGridView,
+                setIsGridView
             }}
         >
             {children}

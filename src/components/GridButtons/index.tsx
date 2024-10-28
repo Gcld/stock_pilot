@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdFormatListBulleted } from "react-icons/md";
 import { Container } from "./styled";
 import { IoGrid } from "react-icons/io5";
+import { useMain } from '@/context/main';
 
 export default function GridButtons() {
-    const [isListView, setIsListView] = useState(true);
-
-    const toggleView = () => {
-        setIsListView(!isListView);
-    };
+    const { isGridView, setIsGridView } = useMain();
 
     return (
         <Container>
-            <div className={isListView ? "buttonsClicked" : "buttons"} onClick={toggleView}>
-                <MdFormatListBulleted size={33} color={isListView ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}/>
+            <div 
+                className={!isGridView ? "buttonsClicked" : "buttons"} 
+                onClick={() => setIsGridView(false)}
+            >
+                <MdFormatListBulleted 
+                    size={33} 
+                    color={!isGridView ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}
+                />
             </div>
             <div 
-                className={!isListView ? "buttonsClicked" : "buttons"}
-                onClick={() => setIsListView(false)}
+                className={isGridView ? "buttonsClicked" : "buttons"}
+                onClick={() => setIsGridView(true)}
             >
-                <IoGrid size={33} color={!isListView ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}/>
+                <IoGrid 
+                    size={33} 
+                    color={isGridView ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}
+                />
             </div>
         </Container>
     );

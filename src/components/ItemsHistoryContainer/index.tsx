@@ -5,6 +5,11 @@ export default function ItemsHistoryContainer() {
     return (
         <Container>
             <ItemHistoryCard/>
+            <ItemHistoryCard/>
+            <ItemHistoryCard/>
+            <ItemHistoryCard/>
+            <ItemHistoryCard/>
+            <ItemHistoryCard/>
         </Container>
     );
 }

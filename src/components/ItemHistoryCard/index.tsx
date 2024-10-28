@@ -1,4 +1,4 @@
-import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton } from "./styled";
+import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton} from "./styled";
 
 export default function ItemHistoryCard() {
     return (

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    height: 100%;
+    height: 98px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: var(--darkZaori);
@@ -12,8 +12,8 @@ export const Container = styled.div`
 `;
 
 export const ItemPicture = styled.div`
-    width: 240px;
-    height: 82px;
+    width: 25%;
+    height: 100%;
     background-color: white;
     border-radius: 5px;
 `;
@@ -26,6 +26,7 @@ export const ItemInfo = styled.div`
     align-items: center;
     gap: 10px;
     padding-right: 20px;
+    border-right: 1px solid var(--buttonIconColor);
 
     > h1{
         padding-left: 20px;

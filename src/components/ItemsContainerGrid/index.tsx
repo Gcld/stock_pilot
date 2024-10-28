@@ -1,13 +1,18 @@
+import { Product } from "@/Interfaces/interface";
 import ItemCardGrid from "../ItemCardGrid";
 import { Container } from "./styled";
 
-export default function ItemsContainerGrid() {
+interface ItemsContainerProps{
+    data: Product[];
+}
+
+export default function ItemsContainerGrid({data}: ItemsContainerProps) {
+    console.log("GRID CONTAINER", data)
     return (
         <Container>
-            <ItemCardGrid/>
-            <ItemCardGrid/>
-            <ItemCardGrid/>
-            <ItemCardGrid/>
+            {data.map((item) => (
+                <ItemCardGrid key={item.id} data={item} />
+            ))}
         </Container>
     );
 }

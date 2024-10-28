@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from "react";
-import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu, DeleteConfirmation, DeleteButtons } from "./styled";
+import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu, DeleteConfirmation, DeleteButtons, ModalOverlay } from "./styled";
 import { BsThreeDots } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaExchangeAlt } from "react-icons/fa";
 import { IoReturnDownBack, IoAdd } from "react-icons/io5";
 import { BiSolidDiscount } from "react-icons/bi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import EditModal from "../EditModal";
 
 interface ActionDropdownProps {
     isOpen: boolean;
@@ -16,6 +17,7 @@ interface ActionDropdownProps {
 export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: ActionDropdownProps) {
     const [showMovementMenu, setShowMovementMenu] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -24,6 +26,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
                 setIsOpen(false);
                 setShowMovementMenu(false);
                 setShowDeleteConfirmation(false);
+                setShowEditModal(false);
             }
         };
 
@@ -38,12 +41,18 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
         setIsOpen(!isOpen);
         setShowMovementMenu(false);
         setShowDeleteConfirmation(false);
+        setShowEditModal(false);
     };
 
     const handleDropdownItemClick = (e: React.MouseEvent, action: string, subAction?: string) => {
         e.preventDefault();
+        if (action === 'edit') {
+            setShowEditModal(true);
+            setIsOpen(false);
+            return;
+        }
         if (action === 'movement' && !subAction) {
-            setShowMovementMenu(!showMovementMenu);
+            setShowMovementMenu(!showMovementMenu); // Toggle do menu de movimento
             setShowDeleteConfirmation(false);
             return;
         }
@@ -63,71 +72,78 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
     };
 
     return (
-        <div ref={dropdownRef} style={{ position: 'relative' }}>
-            <DotsButton onClick={handleDotsClick}>
-                <BsThreeDots size={48}/>
-            </DotsButton>
-            {isOpen && (
-                <DropdownMenu>
-                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'edit')}>
-                        <MdEdit size={20}/>
-                        Edit
-                    </DropdownItem>
-                    <DropdownItem 
-                        onClick={(e) => handleDropdownItemClick(e, 'movement')}
-                        $hasSubmenu
-                    >
-                        <FaExchangeAlt size={20}/>
-                        Movement
-                    </DropdownItem>
-                    {showMovementMenu && (
-                        <SubDropdownMenu>
-                            <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'return')}>
-                                <IoReturnDownBack size={20}/>
-                                Return
-                            </DropdownItem>
-                            <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'sell')}>
-                                <RiMoneyDollarCircleFill size={20}/>
-                                Sell
-                            </DropdownItem>
-                            <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'discard')}>
-                                <BiSolidDiscount size={20}/>
-                                Discard
-                            </DropdownItem>
-                            <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'add')}>
-                                <IoAdd size={20}/>
-                                Add
-                            </DropdownItem>
-                        </SubDropdownMenu>
-                    )}
-                    <DropdownItem 
-                        onClick={(e) => handleDropdownItemClick(e, 'delete')} 
-                        $isDelete
-                    >
-                        <MdDelete size={20}/>
-                        Delete
-                    </DropdownItem>
-                    {showDeleteConfirmation && (
-                        <DeleteConfirmation>
-                            <p>Do you wish to delete this product?</p>
-                            <DeleteButtons>
-                                <button 
-                                    onClick={(e) => handleDropdownItemClick(e, 'delete', 'cancel')}
-                                    className="cancel"
-                                >
-                                    Cancel
-                                </button>
-                                <button 
-                                    onClick={(e) => handleDropdownItemClick(e, 'delete', 'confirm')}
-                                    className="confirm"
-                                >
-                                    Confirm
-                                </button>
-                            </DeleteButtons>
-                        </DeleteConfirmation>
-                    )}
-                </DropdownMenu>
+        <>
+            <div ref={dropdownRef} style={{ position: 'relative' }}>
+                <DotsButton onClick={handleDotsClick}>
+                    <BsThreeDots size={48} />
+                </DotsButton>
+                {isOpen && (
+                    <DropdownMenu>
+                        <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'edit')}>
+                            <MdEdit size={20} />
+                            Edit
+                        </DropdownItem>
+                        <DropdownItem
+                            onClick={(e) => handleDropdownItemClick(e, 'movement')}
+                            $hasSubmenu
+                        >
+                            <FaExchangeAlt size={20} />
+                            Movement
+                        </DropdownItem>
+                        {showMovementMenu && (
+                            <SubDropdownMenu>
+                                <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'return')}>
+                                    <IoReturnDownBack size={20} />
+                                    Return
+                                </DropdownItem>
+                                <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'sell')}>
+                                    <RiMoneyDollarCircleFill size={20} />
+                                    Sell
+                                </DropdownItem>
+                                <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'discard')}>
+                                    <BiSolidDiscount size={20} />
+                                    Discard
+                                </DropdownItem>
+                                <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'add')}>
+                                    <IoAdd size={20} />
+                                    Add
+                                </DropdownItem>
+                            </SubDropdownMenu>
+                        )}
+                        <DropdownItem
+                            onClick={(e) => handleDropdownItemClick(e, 'delete')}
+                            $isDelete
+                        >
+                            <MdDelete size={20} />
+                            Delete
+                        </DropdownItem>
+                        {showDeleteConfirmation && (
+                            <DeleteConfirmation>
+                                <p>Do you wish to delete this product?</p>
+                                <DeleteButtons>
+                                    <button
+                                        onClick={(e) => handleDropdownItemClick(e, 'delete', 'cancel')}
+                                        className="cancel"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={(e) => handleDropdownItemClick(e, 'delete', 'confirm')}
+                                        className="confirm"
+                                    >
+                                        Confirm
+                                    </button>
+                                </DeleteButtons>
+                            </DeleteConfirmation>
+                        )}
+                    </DropdownMenu>
+                )}
+            </div>
+            {showEditModal && (
+                <ModalOverlay onClick={() => setShowEditModal(false)}>
+                    <EditModal onClose={() => setShowEditModal(false)} />
+                </ModalOverlay>
             )}
-        </div>
+        </>
     );
 }

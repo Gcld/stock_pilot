@@ -10,7 +10,7 @@ export default function ItemsContainerGrid({data}: ItemsContainerProps) {
     console.log("GRID CONTAINER", data)
     return (
         <Container>
-            {data.map((item) => (
+            {data?.map((item) => (
                 <ItemCardGrid key={item.id} data={item} />
             ))}
         </Container>

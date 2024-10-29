@@ -7,7 +7,7 @@ import ItemsContainer from "../ItemsContainer";
 import ItemsContainerGrid from "../ItemsContainerGrid";
 import { Container } from "./styled";
 import { useMain } from "@/context/main";
-import { apiLocal } from "@/service/api";
+import { api } from "@/service/api";
 import { useEffect, useState } from "react";
 
 export default function Content() {
@@ -15,9 +15,9 @@ export default function Content() {
     const [products, setProducts] = useState<Product[]>([]);
 
     const getProducts = async () => {
-        await apiLocal.get('/products').then((response) => {
+        await api.get('/products').then((response) => {
             console.log("RESPONSE", response.data);
-            setProducts(response.data.products);
+            setProducts(response.data);
         }).catch((error) => {
             console.log(error);
         })

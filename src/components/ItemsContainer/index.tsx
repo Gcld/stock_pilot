@@ -10,7 +10,7 @@ interface ItemsContainerProps {
 export default function ItemsContainer({data}: ItemsContainerProps) {
     return (
         <Container>
-            {data.map((item) => (
+            {data?.map((item) => (
                 <ItemCard key={item.id} data={item} />
             ))}
         </Container>

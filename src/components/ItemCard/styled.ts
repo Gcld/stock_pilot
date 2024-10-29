@@ -120,7 +120,7 @@ export const ItemPriceAndButton = styled.div`
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    padding-left: 60px;
+    padding-left: 30px;
     position: relative;
 
     h1 {

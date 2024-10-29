@@ -17,7 +17,7 @@ export default function ItemCardGrid({data}: Props) {
     };
 
     return (
-        <Link href={`/product/1`} passHref>
+        <Link href={`/product/${data.id}`} passHref>
             <Container>
                 <ItemPicture/>
                 <ItemInfo>

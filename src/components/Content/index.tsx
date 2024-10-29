@@ -30,7 +30,7 @@ export default function Content() {
     return (
         <Container>
             <Filters />
-            {isGridView ? <ItemsContainerGrid data={products} /> : <ItemsContainer />}
+            {isGridView ? <ItemsContainerGrid data={products} /> : <ItemsContainer data={products}/>}
             <AddProduct />
         </Container>
     );

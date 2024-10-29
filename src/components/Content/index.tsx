@@ -11,7 +11,7 @@ import { api } from "@/service/api";
 import { useEffect, useState } from "react";
 
 export default function Content() {
-    const { isGridView } = useMain();
+    const { isGridView, setLoading } = useMain();
     const [products, setProducts] = useState<Product[]>([]);
 
     const getProducts = async () => {
@@ -20,6 +20,8 @@ export default function Content() {
             setProducts(response.data);
         }).catch((error) => {
             console.log(error);
+        }).finally(() => {
+            setLoading(false);
         })
     }
 
@@ -30,7 +32,7 @@ export default function Content() {
     return (
         <Container>
             <Filters />
-            {isGridView ? <ItemsContainerGrid data={products} /> : <ItemsContainer data={products}/>}
+            {isGridView === 'grid' ? <ItemsContainerGrid data={products} /> : <ItemsContainer data={products}/>}
             <AddProduct />
         </Container>
     );

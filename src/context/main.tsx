@@ -7,8 +7,12 @@ interface MainContextData {
     tabGeneral: number;
     showMenu: boolean;
     setShowMenu: (show: boolean) => void;
-    isGridView: boolean;
-    setIsGridView: (isGrid: boolean) => void;
+    isGridView: string;
+    setIsGridView: (isGrid: string) => void;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    handleTabView: (tab: string) => void;
+    getTabView: () => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
@@ -16,7 +20,22 @@ const MainContext = createContext<MainContextData>({} as MainContextData)
 const MainProvider = ({ children }: React.PropsWithChildren) => {
     const [tabGeneral, setTabGeneral] = useState(0);
     const [showMenu, setShowMenu] = useState(true);
-    const [isGridView, setIsGridView] = useState(false);
+    const [isGridView, setIsGridView] = useState('list');
+    const [loading, setLoading] = useState(true);
+
+    const handleTabView = (tab: string) => {
+        localStorage.setItem('isGridView', JSON.stringify(tab));
+        setIsGridView(tab);
+    }
+
+    const getTabView = () => {
+        const tab = localStorage.getItem('isGridView');
+        setIsGridView(tab ?? 'list');
+    }
+
+    // useEffect(() => {
+    //     handleTabView('list');
+    // }, [])
 
     return (
         <MainContext.Provider
@@ -26,7 +45,11 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
                 showMenu, 
                 setShowMenu,
                 isGridView,
-                setIsGridView
+                setIsGridView,
+                loading,
+                setLoading,
+                handleTabView,
+                getTabView
             }}
         >
             {children}

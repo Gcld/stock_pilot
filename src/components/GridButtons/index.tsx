@@ -1,30 +1,30 @@
-import React from 'react';
 import { MdFormatListBulleted } from "react-icons/md";
 import { Container } from "./styled";
 import { IoGrid } from "react-icons/io5";
 import { useMain } from '@/context/main';
 
 export default function GridButtons() {
-    const { isGridView, setIsGridView } = useMain();
+    const { handleTabView, isGridView } = useMain();
 
     return (
         <Container>
+            {isGridView}
             <div 
-                className={!isGridView ? "buttonsClicked" : "buttons"} 
-                onClick={() => setIsGridView(false)}
+                className={isGridView === 'list' ? "buttonsClicked" : "buttons"} 
+                onClick={() => handleTabView('list')}
             >
                 <MdFormatListBulleted 
                     size={33} 
-                    color={!isGridView ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}
+                    color={isGridView === 'list' ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}
                 />
             </div>
             <div 
-                className={isGridView ? "buttonsClicked" : "buttons"}
-                onClick={() => setIsGridView(true)}
+                className={isGridView === 'grid' ? "buttonsClicked" : "buttons"}
+                onClick={() => handleTabView('grid')}
             >
                 <IoGrid 
                     size={33} 
-                    color={isGridView ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}
+                    color={isGridView === 'grid' ? "var(--primaryDarkZaori)" : "var(--primaryLightZaori)"}
                 />
             </div>
         </Container>

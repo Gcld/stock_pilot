@@ -1,7 +1,12 @@
+import { Product } from "@/Interfaces/interface";
 import ProductImages from "../ProductImages";
 import { Container, InfoContent, InfoDiv, InfoTitle, InfoWrapper } from "./styled";
 
-export default function ProductInfo() {
+interface ProductInfoProps {
+    data: Product
+}
+
+export default function ProductInfo({data}: ProductInfoProps) {
     return (
         <Container>
             <ProductImages/>
@@ -10,15 +15,15 @@ export default function ProductInfo() {
                 <InfoWrapper>
                     <InfoDiv>
                         <InfoTitle>PRICE</InfoTitle>
-                        <InfoContent>$140.50</InfoContent>
+                        <InfoContent>${data.price}</InfoContent>
                     </InfoDiv>
                     <InfoDiv>
                         <InfoTitle>CATEGORY</InfoTitle>
-                        <InfoContent>Shoe</InfoContent>
+                        <InfoContent>{data.category.name}</InfoContent>
                     </InfoDiv>
                     <InfoDiv>
                         <InfoTitle>TOTAL BE PACKED</InfoTitle>
-                        <InfoContent>Stocked Product</InfoContent>
+                        <InfoContent>{data.stock_quantity === 0 ? 'Out of Stock' : 'Stocked Product'}</InfoContent>
                     </InfoDiv>
                 </InfoWrapper>
             </div>

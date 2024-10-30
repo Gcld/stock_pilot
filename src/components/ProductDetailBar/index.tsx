@@ -1,11 +1,16 @@
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { ButtonEnd, Container, GridButtons, Separator } from "./styled";
 import Link from "next/link";
+import { Product } from "@/Interfaces/interface";
 
-export default function ProductDetailBar() {
+interface Props {
+    data: Product
+}
+
+export default function ProductDetailBar({data}: Props) {
     return (
         <Container>
-            <h1>Adidas NEO Greeen 36</h1>
+            <h1>{data.name}</h1>
             <GridButtons>
                 <Link href="/product/0" passHref>
                     <ButtonEnd>

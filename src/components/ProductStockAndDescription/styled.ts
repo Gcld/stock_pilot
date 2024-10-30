@@ -15,7 +15,8 @@ export const Container = styled.div`
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: top;
+        padding-top: 20px;
         align-items: center; 
         background-color: var(--darkZaori);
         border-radius: 20px;

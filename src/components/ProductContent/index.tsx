@@ -1,12 +1,17 @@
+import { Product } from "@/Interfaces/interface";
 import ProductInfo from "../Product Info";
 import ProductStockAndDescription from "../ProductStockAndDescription";
 import { Container } from "./styled";
 
-export default function ProductContent() {
+interface ProductContentProps {
+    data: Product;
+}
+
+export default function ProductContent({data}: ProductContentProps) {
     return (
         <Container>
-            <ProductInfo/>
-            <ProductStockAndDescription/>
+            <ProductInfo data={data}/>
+            <ProductStockAndDescription data={data}/>
         </Container>
     );
 }

@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Container, Description, Separator, AdjustStockButton, Overlay, OverlayContent, AdjustmentBox, Select, AdjustmentButtonsDiv, ButtonsDiv, PlusOrMinusButton, ButtonsMovementDiv } from "./styled";
 import ItemHistoryCard from '../ItemHistoryCard';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import { Product } from '@/Interfaces/interface';
 
-export default function ProductStockAndDescription() {
+interface Props {
+    data: Product
+}
+
+export default function ProductStockAndDescription({data}: Props) {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -17,18 +22,18 @@ export default function ProductStockAndDescription() {
             <h1>Stock</h1>
             <div className="quantityAndDescription">
                 <h3>QUANTITY AT HAND</h3>
-                <h2>980</h2>
+                <h2>{data.stock_quantity}</h2>
                 <AdjustStockButton onClick={openOverlay}>
                     <h2>Adjust Stock</h2> 
                 </AdjustStockButton>
                 <Separator />
-                <Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa.</Description>
+                <Description>{data.description}</Description>
             </div>
             {isOverlayOpen && (
                 <Overlay onClick={closeOverlay}>
                     <OverlayContent onClick={(e) => e.stopPropagation()}>
                         <h2>New Adjustment</h2>
-                        <ItemHistoryCard/>
+                        <ItemHistoryCard data={data}/>
                         <AdjustmentBox>
                             <h2>Name</h2>
                             <h3>Change Name</h3>

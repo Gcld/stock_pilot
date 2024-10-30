@@ -19,7 +19,7 @@ export default function ProductInfo({data}: ProductInfoProps) {
                     </InfoDiv>
                     <InfoDiv>
                         <InfoTitle>CATEGORY</InfoTitle>
-                        <InfoContent>{data.category.name}</InfoContent>
+                        <InfoContent>{data.category?.name}</InfoContent>
                     </InfoDiv>
                     <InfoDiv>
                         <InfoTitle>TOTAL BE PACKED</InfoTitle>

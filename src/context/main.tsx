@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 
 interface MainContextData {
     setTabGeneral: (tab: number) => void;
@@ -24,18 +24,18 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     const [loading, setLoading] = useState(true);
 
     const handleTabView = (tab: string) => {
-        localStorage.setItem('isGridView', JSON.stringify(tab));
+        localStorage.setItem('isGridView', tab);
         setIsGridView(tab);
     }
 
     const getTabView = () => {
         const tab = localStorage.getItem('isGridView');
-        setIsGridView(tab ?? 'list');
+        setIsGridView(tab || 'list');
     }
 
-    // useEffect(() => {
-    //     handleTabView('list');
-    // }, [])
+    useEffect(() => {
+        getTabView();
+    }, [])
 
     return (
         <MainContext.Provider

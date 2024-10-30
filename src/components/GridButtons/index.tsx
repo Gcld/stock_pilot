@@ -2,13 +2,17 @@ import { MdFormatListBulleted } from "react-icons/md";
 import { Container } from "./styled";
 import { IoGrid } from "react-icons/io5";
 import { useMain } from '@/context/main';
+import { useEffect } from 'react';
 
 export default function GridButtons() {
-    const { handleTabView, isGridView } = useMain();
+    const { handleTabView, isGridView, getTabView } = useMain();
+
+    useEffect(() => {
+        getTabView();
+    }, []);
 
     return (
         <Container>
-            {isGridView}
             <div 
                 className={isGridView === 'list' ? "buttonsClicked" : "buttons"} 
                 onClick={() => handleTabView('list')}

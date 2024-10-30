@@ -1,7 +1,7 @@
 import { Product } from "@/Interfaces/interface";
 
 export function GET() {
-    const products: Product[] = [
+    const data: Product[] = [
         {
             id: 1,
             name: "Product 1",
@@ -36,7 +36,7 @@ export function GET() {
             }
         },
     ]
-    return new Response(JSON.stringify({ message: "Success", products }), {
+    return new Response(JSON.stringify({data}), {
         headers: {
             "Content-Type": "application/json",
         },

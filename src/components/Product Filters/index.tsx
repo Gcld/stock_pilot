@@ -3,10 +3,13 @@ import { Container, FilterDropdown, DropdownContent, DropdownOption } from "./st
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuArrowDownAZ } from "react-icons/lu";
 import { GoNumber } from "react-icons/go";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Category } from "@/Interfaces/interface";
+import { api } from "@/service/api";
 
 export default function ProductFilters() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [categories, setCategories] = useState<Category[]>([]);
 
     const handleDropdownClick = (dropdown: string) => {
         if (openDropdown === dropdown) {
@@ -16,14 +19,26 @@ export default function ProductFilters() {
         }
     };
 
-    const categories = ['Electronics', 'Clothing', 'Books', 'Food', 'Other'];
+    const getCategories = async () => {
+        await api.get('/categories').then((response) => {
+            console.log("CATEGORIES RESPONSE", response.data);
+            setCategories(response.data);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     const alphabetical = ['A to Z', 'Z to A'];
     const quantity = ['Highest to Lowest', 'Lowest to Highest'];
+
+    useEffect(() => {
+        getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Container>
             <h3>PRODUCT FILTERS</h3>
-            
             <FilterDropdown>
                 <div 
                     className="filterHeader"
@@ -44,9 +59,9 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'category' && (
                     <DropdownContent>
-                        {categories.map((category) => (
-                            <DropdownOption key={category}>
-                                {category}
+                        {categories.map((category, index) => (
+                            <DropdownOption key={category.id || index}>
+                            {category.name}
                             </DropdownOption>
                         ))}
                     </DropdownContent>

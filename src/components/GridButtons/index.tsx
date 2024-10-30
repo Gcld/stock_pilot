@@ -9,6 +9,7 @@ export default function GridButtons() {
 
     useEffect(() => {
         getTabView();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

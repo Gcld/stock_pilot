@@ -59,8 +59,8 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'category' && (
                     <DropdownContent>
-                        {categories.map((category, index) => (
-                            <DropdownOption key={category.id || index}>
+                        {categories.map((category) => (
+                            <DropdownOption key={category.id}>
                             {category.name}
                             </DropdownOption>
                         ))}

@@ -1,15 +1,17 @@
+import { Product } from "@/Interfaces/interface";
 import ItemHistoryCard from "../ItemHistoryCard";
 import { Container } from "./styled";
 
-export default function ItemsHistoryContainer() {
+interface ItemsHistoryContainerProps {
+    data: Product[]
+}
+
+export default function ItemsHistoryContainer({data}: ItemsHistoryContainerProps) {
     return (
         <Container>
-            <ItemHistoryCard/>
-            <ItemHistoryCard/>
-            <ItemHistoryCard/>
-            <ItemHistoryCard/>
-            <ItemHistoryCard/>
-            <ItemHistoryCard/>
+            {data?.map((item) => (
+                <ItemHistoryCard key={item.id} data={item} />
+            ))}
         </Container>
     );
 }

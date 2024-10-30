@@ -1,15 +1,18 @@
+import { Product } from "@/Interfaces/interface";
 import ItemHistoryCardGrid from "../ItemHistoryCardGrid";
 import { Container } from "./styled";
 
-export default function ItemsHistoryContainerGrid() {
+interface ItemsContainerProps {
+    data: Product[];
+}
+
+export default function ItemsHistoryContainerGrid({data}: ItemsContainerProps) {
     return (
         <Container>
-            <ItemHistoryCardGrid/>
-            <ItemHistoryCardGrid/>
-            <ItemHistoryCardGrid/>
-            <ItemHistoryCardGrid/>
-            <ItemHistoryCardGrid/>
-            <ItemHistoryCardGrid/>
+            {data.length === 0 && <h1>No products found</h1>}
+            {data?.map((item) => (
+                <ItemHistoryCardGrid key={item.id} data={item} />
+            ))}
         </Container>
     );
 }

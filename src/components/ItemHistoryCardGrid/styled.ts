@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
+    height: 50%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -26,30 +27,36 @@ export const ItemInfo = styled.div`
     gap: 10px;
     padding-right: 20px;
     padding-left: 20px;
+    width: 100%;
 
-    h1{
+    h1 {
         font-family: var(--font-poppins);
         font-size: 24px;
         font-weight: 400;
         color: white;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%; 
+        text-align: center;
     }
 `;
 
 export const ItemDescription = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
     gap: 3px;
+    width: 100%; 
+    white-space: nowrap; 
+    overflow: hidden; 
 
-    > h2{
+    > h2 {
         font-family: var(--font-poppins);
         font-size: 12px;
         font-weight: regular;
         color: #8D8D8D;
     }
 
-    .inStock{
+    .inStock {
         font-family: var(--font-poppins);
         font-size: 12px;
         font-weight: regular;
@@ -62,7 +69,7 @@ export const ItemPriceAndButton = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 70px;
+    position: relative;
 
     > h1{
         display: flex;

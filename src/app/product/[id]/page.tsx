@@ -46,10 +46,10 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
     return (
         <Container>
-            <ProductDetailBar data ={product}/>
-            <ItemInfo data ={product}/>
-            <ProductButtons setTab={setTab}/>
-            {tab === 0 && <ProductContent data ={product}/>}
+            <ProductDetailBar data={product} />
+            <ItemInfo data={product} />
+            <ProductButtons setTab={setTab} />
+            {tab === 0 && <ProductContent data={product} />}
             {tab === 1 && <ProductHistory data={product} />}
         </Container>
     );

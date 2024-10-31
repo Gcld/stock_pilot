@@ -43,7 +43,7 @@ export const GridButtons = styled.div`
     }
 `;
 
-export const ButtonEnd = styled.div`
+export const ButtonEnd = styled.button`
     display: flex;
     width: 50px;
     height: 46px;
@@ -51,6 +51,11 @@ export const ButtonEnd = styled.div`
     background-color: var(--darkZaori);
     align-items: center;
     justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
     cursor: pointer;
     position: relative;
     z-index: 1;
@@ -63,6 +68,7 @@ export const ButtonEnd = styled.div`
     &:last-child {
         border-radius: 0 9px 9px 0;
     }
+
 
     .button-content {
         display: flex;

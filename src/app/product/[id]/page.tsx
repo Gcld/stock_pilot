@@ -10,21 +10,33 @@ import ProductHistory from "@/components/ProductHistory";
 import { useMain } from "@/context/main";
 import { Product } from "@/Interfaces/interface";
 import { api } from "@/service/api";
+import { useParams } from 'next/navigation';
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-
+export default function ProductDetail() {
+    const params = useParams();
     const [tab, setTab] = useState(0);
-    const {setShowMenu} = useMain();
+    const { setShowMenu } = useMain();
     const [product, setProduct] = useState<Product>({} as Product);
+    const [totalProducts, setTotalProducts] = useState(0);
 
-    const getProduct = async () => {
-        await api.get(`/products/${params.id}`).then((response) => {
-            console.log("RESPONSE", response.data);
+    const getProduct = async (id: string) => {
+        try {
+            const response = await api.get(`/products/${id}`);
             setProduct(response.data);
-        }).catch((error) => {
+        } catch (error) {
             console.log(error);
-        })
+        }
     }
+
+    const getTotalProducts = async () => {
+        try {
+            const response = await api.get('/products');
+            setTotalProducts(response.data.length);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
         
 
     // const getProductLocal = async () => {
@@ -39,14 +51,15 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
     useEffect(() => {
         setShowMenu(false);
-        getProduct();
-        // getProductLocal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setShowMenu])
+        if (params.id) {
+            getProduct(params.id as string);
+        }
+        getTotalProducts();
+    }, [params.id, setShowMenu]);
 
     return (
         <Container>
-            <ProductDetailBar data={product} />
+            <ProductDetailBar data={product} totalProducts={totalProducts} />
             <ItemInfo data={product} />
             <ProductButtons setTab={setTab} />
             {tab === 0 && <ProductContent data={product} />}

@@ -1,21 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Description, Separator, AdjustStockButton, Overlay, OverlayContent, AdjustmentBox, Select, AdjustmentButtonsDiv, ButtonsDiv, PlusOrMinusButton, ButtonsMovementDiv } from "./styled";
 import ItemHistoryCard from '../ItemHistoryCard';
 import { FaMinus, FaPlus } from 'react-icons/fa';
-import { Product } from '@/Interfaces/interface';
+import { Category, Product } from '@/Interfaces/interface';
+import { api } from '@/service/api';
 
 interface Props {
     data: Product
 }
 
 export default function ProductStockAndDescription({data}: Props) {
+    const [categories, setCategories] = useState<Category[]>([]);
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [category, setCategory] = useState<number>(0);
+    const [price, setPrice] = useState("");
 
     const openOverlay = () => setIsOverlayOpen(true);
     const closeOverlay = () => setIsOverlayOpen(false);
 
-    const categories = ['Electronics', 'Clothing', 'Books', 'Food', 'Other'];
+    const getCategories = async () => {
+        try {
+            const response = await api.get('/categories');
+            console.log("CATEGORIES EDIT", response.data);
+            setCategories(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const updateProduct = async () => {
+        try {
+            await api.put(`/products/${data.id}`, {
+                name: name,
+                description: description,
+                price: price,
+                category: category
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        setName(data.name);
+        setDescription(data.description);
+        setCategory(data.category?.id || 0);
+        setPrice(data.price);
+        getCategories();
+    }, [data]);
+
+    useEffect(() => {
+        if (data.category?.id) {
+            const findCategoryName = categories.find((cat) => cat.id === data.category?.id);
+            console.log("FIND CATEGORY NAME", findCategoryName);
+        }
+    }, [categories, data.category?.id]);
+
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedCategoryId = parseInt(e.target.value);
+        setCategory(selectedCategoryId);
+    }
 
     return (
         <Container>
@@ -36,21 +82,21 @@ export default function ProductStockAndDescription({data}: Props) {
                         <ItemHistoryCard data={data}/>
                         <AdjustmentBox>
                             <h2>Name</h2>
-                            <h3>Change Name</h3>
+                            <input value={name} onChange={(e) => setName(e.target.value)}/>
                         </AdjustmentBox>
                         <AdjustmentBox>
-                            <h2>Description</h2>
-                            <h3>Change Description</h3>
+                            <h2>Description</h2> 
+                            <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                         </AdjustmentBox>
                         <AdjustmentBox>
                             <h2>Category</h2>
                             <Select 
-                                value={selectedCategory} 
-                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                value={category} 
+                                onChange={handleCategoryChange}
                             >
-                                <option value="">Select Category</option>
-                                {categories.map((category) => (
-                                    <option key={category} value={category}>{category}</option>
+                                <option value="">Select a category</option>
+                                {categories.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
                                 ))}
                             </Select>
                         </AdjustmentBox>
@@ -61,7 +107,7 @@ export default function ProductStockAndDescription({data}: Props) {
                                 <PlusOrMinusButton>
                                     <FaMinus color='var(--buttonIconColor)'/>
                                 </PlusOrMinusButton>
-                                <h2>$100.00</h2>
+                                <h2>${price}</h2>
                                 <PlusOrMinusButton>
                                     <FaPlus color='var(--buttonIconColor)'/>
                                 </PlusOrMinusButton>
@@ -72,7 +118,10 @@ export default function ProductStockAndDescription({data}: Props) {
                                 <ButtonsMovementDiv><h2>Edit Movement</h2></ButtonsMovementDiv>
                             </AdjustmentBox>
                         </AdjustmentButtonsDiv>
-                        <button onClick={closeOverlay}>Confirm</button>
+                        <button onClick={() => {
+                            updateProduct();
+                            closeOverlay();
+                        }}>Confirm</button>
                     </OverlayContent>
                 </Overlay>
             )}

@@ -22,7 +22,7 @@ export default function ProductFilters() {
     const getCategories = async () => {
         await api.get('/categories').then((response) => {
             console.log("CATEGORIES RESPONSE", response.data);
-            setCategories(response.data.data);
+            setCategories(response.data);
         }).catch((error) => {
             console.log(error);
         })

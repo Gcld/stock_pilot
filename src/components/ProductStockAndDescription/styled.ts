@@ -181,7 +181,7 @@ export const AdjustmentBox = styled.div`
         color: var(--primaryLightZaori);
     }
 
-    > h3 {
+    > input, textarea {
         width: 100%;
         font-family: var(--font-poppins);
         font-size: 16px;
@@ -190,6 +190,7 @@ export const AdjustmentBox = styled.div`
         border: 1px solid #9B9B9B;
         border-radius: 20px;
         padding: 20px 0px 20px 10px;
+        background-color: transparent;
     }
 `;
 

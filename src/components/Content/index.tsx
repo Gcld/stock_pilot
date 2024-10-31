@@ -17,7 +17,7 @@ export default function Content() {
     const getProducts = async () => {
         await api.get('/products').then((response) => {
             console.log("RESPONSE", response.data);
-            setProducts(response.data.data);
+            setProducts(response.data);
         }).catch((error) => {
             console.log(error);
         }).finally(() => {

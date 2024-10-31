@@ -1,4 +1,5 @@
 import { Product } from "@/Interfaces/interface";
+import { NextRequest } from "next/server";
 
 export function GET() {
     const data: Product[] = [
@@ -41,4 +42,33 @@ export function GET() {
             "Content-Type": "application/json",
         },
     });
+}
+
+export async function POST(request: NextRequest) {
+    console.log(request.body);
+    try{
+        const body = await request.json();
+        const data = {
+                id: body.id,
+                name: `Product ${body.id}`,
+                description: `Description ${body.id}`,
+                price: "10.00",
+                stock_quantity: 10,
+                category: {
+                    id: 1,
+                    name: "Category 1"
+                }
+            }
+        return new Response(JSON.stringify({data}), {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    } catch (error) {
+        return new Response(JSON.stringify({error}), {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    }
 }

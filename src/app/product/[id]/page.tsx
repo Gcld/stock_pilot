@@ -20,17 +20,28 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     const getProduct = async () => {
         await api.get(`/products/${params.id}`).then((response) => {
             console.log("RESPONSE", response.data);
-            setProduct(response.data);
+            setProduct(response.data.data);
         }).catch((error) => {
             console.log(error);
         })
     }
         
 
+    const getProductLocal = async () => {
+        await api.post(`/products`, {id: params.id}).then((response) => {
+            console.log("RESPONSE", response.data);
+            setProduct(response.data.data);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
 
     useEffect(() => {
         setShowMenu(false);
-        getProduct();
+        // getProduct();
+        getProductLocal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setShowMenu])
 
     return (

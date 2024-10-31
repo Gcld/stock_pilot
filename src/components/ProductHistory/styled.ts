@@ -5,8 +5,8 @@ export const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
     gap: 30px;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 30px;
+    padding-right: 30px;
 `;
 
 export const HistoryCardDiv = styled.div`

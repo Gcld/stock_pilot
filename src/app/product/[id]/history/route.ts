@@ -6,6 +6,7 @@ export async function GET(
     request: NextRequest,
     { params }: { params: { id: string } }
 ) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const productId = params.id;
 
     const historyData = [

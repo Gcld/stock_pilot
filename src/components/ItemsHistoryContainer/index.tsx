@@ -9,6 +9,7 @@ interface ItemsHistoryContainerProps {
 export default function ItemsHistoryContainer({data}: ItemsHistoryContainerProps) {
     return (
         <Container>
+            {data.length === 0 && <h1>No products found</h1>}
             {data?.map((item) => (
                 <ItemHistoryCard key={item.id} data={item} />
             ))}

@@ -10,6 +10,7 @@ interface ItemsContainerProps {
 export default function ItemsContainer({data}: ItemsContainerProps) {
     return (
         <Container>
+            {data.length === 0 && <h1>No products found</h1>}
             {data?.map((item) => (
                 <ItemCard key={item.id} data={item} />
             ))}

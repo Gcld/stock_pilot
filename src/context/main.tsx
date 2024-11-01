@@ -15,6 +15,8 @@ interface MainContextData {
     getTabView: () => void;
     selectedCategory: number;
     setSelectedCategory: (categoryId: number) => void;
+    alphabeticalOrder: 'asc' | 'desc' | null;
+    setAlphabeticalOrder: (order: 'asc' | 'desc' | null) => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
@@ -25,6 +27,7 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     const [isGridView, setIsGridView] = useState('list');
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState<number>(0);
+    const [alphabeticalOrder, setAlphabeticalOrder] = useState<'asc' | 'desc' | null>(null);
 
     const handleTabView = (tab: string) => {
         localStorage.setItem('isGridView', tab);
@@ -55,6 +58,8 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
                 getTabView,
                 selectedCategory,
                 setSelectedCategory,
+                alphabeticalOrder,
+                setAlphabeticalOrder,
             }}
         >
             {children}

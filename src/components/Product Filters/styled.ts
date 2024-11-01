@@ -77,4 +77,9 @@ export const DropdownOption = styled.div`
         background-color: var(--primaryDarkZaori);
         color: var(--darkZaori);
     }
+
+    &.active {
+        background-color: var(--primaryDarkZaori);
+        color: var(--darkZaori);
+    }
 `;

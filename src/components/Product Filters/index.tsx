@@ -11,9 +11,8 @@ import { useMain } from "@/context/main";
 export default function ProductFilters() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [categories, setCategories] = useState<Category[]>([]);
-    const { setSelectedCategory } = useMain();
+    const { setSelectedCategory, alphabeticalOrder, setAlphabeticalOrder } = useMain();
 
-    const alphabetical = ['A to Z', 'Z to A'];
     const quantity = ['Highest to Lowest', 'Lowest to Highest'];
 
     const handleDropdownClick = (dropdown: string) => {
@@ -23,7 +22,6 @@ export default function ProductFilters() {
             setOpenDropdown(dropdown);
         }
     };
-
     const getCategories = async () => {
         try {
             const response = await api.get('/categories');
@@ -35,6 +33,11 @@ export default function ProductFilters() {
 
     const handleCategorySelect = (categoryId: number) => {
         setSelectedCategory(categoryId);
+        setOpenDropdown(null);
+    }
+
+    const handleAlphabeticalSelect = (order: 'asc' | 'desc') => {
+        setAlphabeticalOrder(order);
         setOpenDropdown(null);
     }
 
@@ -95,11 +98,23 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'alphabetical' && (
                     <DropdownContent>
-                        {alphabetical.map((option: string) => (
-                            <DropdownOption key={option}>
-                                {option}
+                        <DropdownOption 
+                            onClick={() => handleAlphabeticalSelect('asc')}
+                            className={alphabeticalOrder === 'asc' ? 'active' : ''}
+                        >
+                            A to Z
+                        </DropdownOption>
+                        <DropdownOption 
+                            onClick={() => handleAlphabeticalSelect('desc')}
+                            className={alphabeticalOrder === 'desc' ? 'active' : ''}
+                        >
+                            Z to A
+                        </DropdownOption>
+                        {alphabeticalOrder && (
+                            <DropdownOption onClick={() => setAlphabeticalOrder(null)}>
+                                Clear Order
                             </DropdownOption>
-                        ))}
+                        )}
                     </DropdownContent>
                 )}
             </FilterDropdown>

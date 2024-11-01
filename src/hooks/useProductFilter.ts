@@ -4,15 +4,27 @@ import { useMain } from '@/context/main';
 
 export const useProductFilter = (initialProducts: Product[]) => {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
-    const { selectedCategory } = useMain();
+    const { selectedCategory, alphabeticalOrder } = useMain();
 
     useEffect(() => {
-        if (selectedCategory === 0) {
-            setFilteredProducts(initialProducts);
-        } else {
-            setFilteredProducts(initialProducts.filter(product => product.category.id === selectedCategory));
+        let result = [...initialProducts];
+
+        if (selectedCategory !== 0) {
+            result = result.filter(product => product.category.id === selectedCategory);
         }
-    }, [selectedCategory, initialProducts]);
+
+        if (alphabeticalOrder) {
+            result.sort((a, b) => {
+                if (alphabeticalOrder === 'asc') {
+                    return a.name.localeCompare(b.name);
+                } else {
+                    return b.name.localeCompare(a.name);
+                }
+            });
+        }
+
+        setFilteredProducts(result);
+    }, [selectedCategory, alphabeticalOrder, initialProducts]);
 
     return filteredProducts;
 };

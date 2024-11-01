@@ -1,6 +1,6 @@
 import { Product } from "@/Interfaces/interface";
 import ItemHistoryCardGrid from "../ItemHistoryCardGrid";
-import { Container } from "./styled";
+import { Container, NoProductsMessage } from "./styled";
 
 interface ItemsContainerProps {
     data: Product[];
@@ -9,10 +9,12 @@ interface ItemsContainerProps {
 export default function ItemsHistoryContainerGrid({data}: ItemsContainerProps) {
     return (
         <Container>
-            {data.length === 0 && <h1>No products found</h1>}
-            {data?.map((item) => (
-                <ItemHistoryCardGrid key={item.id} data={item} />
-            ))}
+            {data.length === 0 
+                ? <NoProductsMessage>No products found</NoProductsMessage>
+                : data.map((item) => (
+                    <ItemHistoryCardGrid key={item.id} data={item} />
+                ))
+            }
         </Container>
     );
 }

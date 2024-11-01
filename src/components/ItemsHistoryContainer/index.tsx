@@ -1,6 +1,6 @@
 import { Product } from "@/Interfaces/interface";
 import ItemHistoryCard from "../ItemHistoryCard";
-import { Container } from "./styled";
+import { Container, NoProductsMessage } from "./styled";
 
 interface ItemsHistoryContainerProps {
     data: Product[]
@@ -9,10 +9,12 @@ interface ItemsHistoryContainerProps {
 export default function ItemsHistoryContainer({data}: ItemsHistoryContainerProps) {
     return (
         <Container>
-            {data.length === 0 && <h1>No products found</h1>}
-            {data?.map((item) => (
-                <ItemHistoryCard key={item.id} data={item} />
-            ))}
+            {data.length === 0 
+                ? <NoProductsMessage>No products found.</NoProductsMessage>
+                : data.map((item) => (
+                    <ItemHistoryCard key={item.id} data={item} />
+                ))
+            }
         </Container>
     );
 }

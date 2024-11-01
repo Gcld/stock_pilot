@@ -10,7 +10,7 @@ export default function ItemsContainer({ data }: ItemsContainerProps) {
     return (
         <Container>
             {data.length === 0
-                ? <NoProductsMessage>No products found</NoProductsMessage>
+                ? <NoProductsMessage>No products found.</NoProductsMessage>
                 : data.map((item) => (
                     <ItemCard key={item.id} data={item} />
                 ))

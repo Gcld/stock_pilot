@@ -9,11 +9,12 @@ import { Container } from "./styled";
 import { useMain } from "@/context/main";
 import { api } from "@/service/api";
 import { useEffect, useState } from "react";
+import { useProductFilter } from "@/hooks/useProductFilter";
 
 export default function Content() {
-    const { isGridView, setLoading, selectedCategory } = useMain();
+    const { isGridView, setLoading } = useMain();
     const [products, setProducts] = useState<Product[]>([]);
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const filteredProducts = useProductFilter(products);
 
     const getProducts = async () => {
         try {
@@ -29,14 +30,6 @@ export default function Content() {
     useEffect(() => {
         getProducts();
     }, [])
-
-    useEffect(() => {
-        if (selectedCategory === 0) {
-            setFilteredProducts(products);
-        } else {
-            setFilteredProducts(products.filter(product => product.category.id === selectedCategory));
-        }
-    }, [selectedCategory, products]);
 
     return (
         <Container>

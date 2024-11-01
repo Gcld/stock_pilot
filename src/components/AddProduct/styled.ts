@@ -75,7 +75,6 @@ export const Select = styled.select`
         color: var(--primaryLightZaori);
     }
 
-    /* Para navegadores baseados em WebKit (Chrome, Safari) */
     &::-webkit-scrollbar {
         width: 10px;
     }

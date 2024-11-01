@@ -11,29 +11,40 @@ import { api } from "@/service/api";
 import { useEffect, useState } from "react";
 
 export default function Content() {
-    const { isGridView, setLoading } = useMain();
+    const { isGridView, setLoading, selectedCategory } = useMain();
     const [products, setProducts] = useState<Product[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
     const getProducts = async () => {
-        await api.get('/products').then((response) => {
-            console.log("RESPONSE", response.data);
+        try {
+            const response = await api.get('/products');
             setProducts(response.data);
-        }).catch((error) => {
+        } catch (error) {
             console.log(error);
-        }).finally(() => {
+        } finally {
             setLoading(false);
-        })
+        }
     }
 
     useEffect(() => {
         getProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (selectedCategory === 0) {
+            setFilteredProducts(products);
+        } else {
+            setFilteredProducts(products.filter(product => product.category.id === selectedCategory));
+        }
+    }, [selectedCategory, products]);
 
     return (
         <Container>
             <Filters />
-            {isGridView === 'grid' ? <ItemsContainerGrid data={products} /> : <ItemsContainer data={products}/>}
+            {isGridView === 'grid' 
+                ? <ItemsContainerGrid data={filteredProducts} /> 
+                : <ItemsContainer data={filteredProducts} />
+            }
             <AddProduct />
         </Container>
     );

@@ -1,15 +1,20 @@
+import React, { useEffect, useState } from "react";
 import { MdCategory } from "react-icons/md";
 import { Container, FilterDropdown, DropdownContent, DropdownOption } from "./styled";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuArrowDownAZ } from "react-icons/lu";
 import { GoNumber } from "react-icons/go";
-import { useEffect, useState } from "react";
 import { Category } from "@/Interfaces/interface";
 import { api } from "@/service/api";
+import { useMain } from "@/context/main";
 
 export default function ProductFilters() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [categories, setCategories] = useState<Category[]>([]);
+    const { setSelectedCategory } = useMain();
+
+    const alphabetical = ['A to Z', 'Z to A'];
+    const quantity = ['Highest to Lowest', 'Lowest to Highest'];
 
     const handleDropdownClick = (dropdown: string) => {
         if (openDropdown === dropdown) {
@@ -20,20 +25,21 @@ export default function ProductFilters() {
     };
 
     const getCategories = async () => {
-        await api.get('/categories').then((response) => {
-            console.log("CATEGORIES RESPONSE", response.data);
+        try {
+            const response = await api.get('/categories');
             setCategories(response.data);
-        }).catch((error) => {
+        } catch (error) {
             console.log(error);
-        })
+        }
     }
 
-    const alphabetical = ['A to Z', 'Z to A'];
-    const quantity = ['Highest to Lowest', 'Lowest to Highest'];
+    const handleCategorySelect = (categoryId: number) => {
+        setSelectedCategory(categoryId);
+        setOpenDropdown(null);
+    }
 
     useEffect(() => {
         getCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -59,15 +65,16 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'category' && (
                     <DropdownContent>
+                        <DropdownOption onClick={() => handleCategorySelect(0)}>All Categories</DropdownOption>
                         {categories.map((category) => (
-                            <DropdownOption key={category.id}>
-                            {category.name}
+                            <DropdownOption key={category.id} onClick={() => handleCategorySelect(category.id)}>
+                                {category.name}
                             </DropdownOption>
                         ))}
                     </DropdownContent>
                 )}
             </FilterDropdown>
-
+            
             <FilterDropdown>
                 <div 
                     className="filterHeader"
@@ -88,7 +95,7 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'alphabetical' && (
                     <DropdownContent>
-                        {alphabetical.map((option) => (
+                        {alphabetical.map((option: string) => (
                             <DropdownOption key={option}>
                                 {option}
                             </DropdownOption>
@@ -117,7 +124,7 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'quantity' && (
                     <DropdownContent>
-                        {quantity.map((option) => (
+                        {quantity.map((option: string) => (
                             <DropdownOption key={option}>
                                 {option}
                             </DropdownOption>

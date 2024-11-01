@@ -13,6 +13,8 @@ interface MainContextData {
     setLoading: (loading: boolean) => void;
     handleTabView: (tab: string) => void;
     getTabView: () => void;
+    selectedCategory: number;
+    setSelectedCategory: (categoryId: number) => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
@@ -22,6 +24,7 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     const [showMenu, setShowMenu] = useState(true);
     const [isGridView, setIsGridView] = useState('list');
     const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState<number>(0);
 
     const handleTabView = (tab: string) => {
         localStorage.setItem('isGridView', tab);
@@ -49,7 +52,9 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
                 loading,
                 setLoading,
                 handleTabView,
-                getTabView
+                getTabView,
+                selectedCategory,
+                setSelectedCategory,
             }}
         >
             {children}

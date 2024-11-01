@@ -4,7 +4,7 @@ import { useMain } from '@/context/main';
 
 export const useProductFilter = (initialProducts: Product[]) => {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
-    const { selectedCategory, alphabeticalOrder } = useMain();
+    const { selectedCategory, alphabeticalOrder, quantityOrder } = useMain();
 
     useEffect(() => {
         let result = [...initialProducts];
@@ -23,8 +23,18 @@ export const useProductFilter = (initialProducts: Product[]) => {
             });
         }
 
+        if (quantityOrder) {
+            result.sort((a, b) => {
+                if (quantityOrder === 'asc') {
+                    return a.stock_quantity - b.stock_quantity;
+                } else {
+                    return b.stock_quantity - a.stock_quantity;
+                }
+            });
+        }
+
         setFilteredProducts(result);
-    }, [selectedCategory, alphabeticalOrder, initialProducts]);
+    }, [selectedCategory, alphabeticalOrder, quantityOrder, initialProducts]);
 
     return filteredProducts;
 };

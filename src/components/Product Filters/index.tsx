@@ -11,9 +11,13 @@ import { useMain } from "@/context/main";
 export default function ProductFilters() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [categories, setCategories] = useState<Category[]>([]);
-    const { setSelectedCategory, alphabeticalOrder, setAlphabeticalOrder } = useMain();
-
-    const quantity = ['Highest to Lowest', 'Lowest to Highest'];
+    const {
+        setSelectedCategory,
+        alphabeticalOrder,
+        setAlphabeticalOrder,
+        quantityOrder,
+        setQuantityOrder
+    } = useMain();
 
     const handleDropdownClick = (dropdown: string) => {
         if (openDropdown === dropdown) {
@@ -41,6 +45,12 @@ export default function ProductFilters() {
         setOpenDropdown(null);
     }
 
+    const handleQuantitySelect = (order: 'asc' | 'desc') => {
+        setQuantityOrder(order);
+        setAlphabeticalOrder(null);  // Reset alphabetical order when changing quantity order
+        setOpenDropdown(null);
+    }
+
     useEffect(() => {
         getCategories();
     }, [])
@@ -49,18 +59,18 @@ export default function ProductFilters() {
         <Container>
             <h3>PRODUCT FILTERS</h3>
             <FilterDropdown>
-                <div 
+                <div
                     className="filterHeader"
                     onClick={() => handleDropdownClick('category')}
                 >
                     <div className="filterTitle">
-                        <MdCategory size={26} color="white"/>
+                        <MdCategory size={26} color="white" />
                         <h2>Category</h2>
                     </div>
-                    <IoMdArrowDropdown 
-                        size={20} 
+                    <IoMdArrowDropdown
+                        size={20}
                         color="var(--buttonIconColor)"
-                        style={{ 
+                        style={{
                             transform: openDropdown === 'category' ? 'rotate(180deg)' : 'rotate(0deg)',
                             transition: 'transform 0.3s ease'
                         }}
@@ -77,20 +87,20 @@ export default function ProductFilters() {
                     </DropdownContent>
                 )}
             </FilterDropdown>
-            
+
             <FilterDropdown>
-                <div 
+                <div
                     className="filterHeader"
                     onClick={() => handleDropdownClick('alphabetical')}
                 >
                     <div className="filterTitle">
-                        <LuArrowDownAZ size={26} color="white"/>
+                        <LuArrowDownAZ size={26} color="white" />
                         <h2>Alphabetical</h2>
                     </div>
-                    <IoMdArrowDropdown 
-                        size={20} 
+                    <IoMdArrowDropdown
+                        size={20}
                         color="var(--buttonIconColor)"
-                        style={{ 
+                        style={{
                             transform: openDropdown === 'alphabetical' ? 'rotate(180deg)' : 'rotate(0deg)',
                             transition: 'transform 0.3s ease'
                         }}
@@ -98,13 +108,13 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'alphabetical' && (
                     <DropdownContent>
-                        <DropdownOption 
+                        <DropdownOption
                             onClick={() => handleAlphabeticalSelect('asc')}
                             className={alphabeticalOrder === 'asc' ? 'active' : ''}
                         >
                             A to Z
                         </DropdownOption>
-                        <DropdownOption 
+                        <DropdownOption
                             onClick={() => handleAlphabeticalSelect('desc')}
                             className={alphabeticalOrder === 'desc' ? 'active' : ''}
                         >
@@ -120,18 +130,18 @@ export default function ProductFilters() {
             </FilterDropdown>
 
             <FilterDropdown>
-                <div 
+                <div
                     className="filterHeader"
                     onClick={() => handleDropdownClick('quantity')}
                 >
                     <div className="filterTitle">
-                        <GoNumber size={26} color="white"/>
+                        <GoNumber size={26} color="white" />
                         <h2>Quantity</h2>
                     </div>
-                    <IoMdArrowDropdown 
-                        size={20} 
+                    <IoMdArrowDropdown
+                        size={20}
                         color="var(--buttonIconColor)"
-                        style={{ 
+                        style={{
                             transform: openDropdown === 'quantity' ? 'rotate(180deg)' : 'rotate(0deg)',
                             transition: 'transform 0.3s ease'
                         }}
@@ -139,11 +149,23 @@ export default function ProductFilters() {
                 </div>
                 {openDropdown === 'quantity' && (
                     <DropdownContent>
-                        {quantity.map((option: string) => (
-                            <DropdownOption key={option}>
-                                {option}
+                        <DropdownOption
+                            onClick={() => handleQuantitySelect('desc')}
+                            className={quantityOrder === 'desc' ? 'active' : ''}
+                        >
+                            Highest to Lowest
+                        </DropdownOption>
+                        <DropdownOption
+                            onClick={() => handleQuantitySelect('asc')}
+                            className={quantityOrder === 'asc' ? 'active' : ''}
+                        >
+                            Lowest to Highest
+                        </DropdownOption>
+                        {quantityOrder && (
+                            <DropdownOption onClick={() => setQuantityOrder(null)}>
+                                Clear Order
                             </DropdownOption>
-                        ))}
+                        )}
                     </DropdownContent>
                 )}
             </FilterDropdown>

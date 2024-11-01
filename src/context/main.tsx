@@ -17,6 +17,8 @@ interface MainContextData {
     setSelectedCategory: (categoryId: number) => void;
     alphabeticalOrder: 'asc' | 'desc' | null;
     setAlphabeticalOrder: (order: 'asc' | 'desc' | null) => void;
+    quantityOrder: 'asc' | 'desc' | null;
+    setQuantityOrder: (order: 'asc' | 'desc' | null) => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
@@ -28,6 +30,7 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState<number>(0);
     const [alphabeticalOrder, setAlphabeticalOrder] = useState<'asc' | 'desc' | null>(null);
+    const [quantityOrder, setQuantityOrder] = useState<'asc' | 'desc' | null>(null);
 
     const handleTabView = (tab: string) => {
         localStorage.setItem('isGridView', tab);
@@ -60,6 +63,8 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
                 setSelectedCategory,
                 alphabeticalOrder,
                 setAlphabeticalOrder,
+                quantityOrder,
+                setQuantityOrder,
             }}
         >
             {children}

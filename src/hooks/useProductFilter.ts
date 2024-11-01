@@ -4,13 +4,27 @@ import { useMain } from '@/context/main';
 
 export const useProductFilter = (initialProducts: Product[]) => {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
-    const { selectedCategory, alphabeticalOrder, quantityOrder } = useMain();
+    const { selectedCategory, alphabeticalOrder, quantityOrder, priceRange } = useMain();
 
     useEffect(() => {
         let result = [...initialProducts];
 
         if (selectedCategory !== 0) {
             result = result.filter(product => product.category.id === selectedCategory);
+        }
+
+        if (priceRange.min !== null || priceRange.max !== null) {
+            result = result.filter(product => {
+                const price = parseFloat(product.price);
+                if (priceRange.min !== null && priceRange.max !== null) {
+                    return price >= priceRange.min && price <= priceRange.max;
+                } else if (priceRange.min !== null) {
+                    return price >= priceRange.min;
+                } else if (priceRange.max !== null) {
+                    return price <= priceRange.max;
+                }
+                return true;
+            });
         }
 
         if (alphabeticalOrder) {
@@ -34,7 +48,7 @@ export const useProductFilter = (initialProducts: Product[]) => {
         }
 
         setFilteredProducts(result);
-    }, [selectedCategory, alphabeticalOrder, quantityOrder, initialProducts]);
+    }, [selectedCategory, alphabeticalOrder, quantityOrder, priceRange, initialProducts]);
 
     return filteredProducts;
 };

@@ -30,10 +30,11 @@ export const FilterDropdown = styled.div`
         justify-content: space-between;
         padding: 9px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s all ease;
 
         &:hover {
             background-color: #FFFFFF25;
+            border-radius: 10px;
         }
     }
 

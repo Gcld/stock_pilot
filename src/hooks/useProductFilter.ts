@@ -4,7 +4,7 @@ import { useMain } from '@/context/main';
 
 export const useProductFilter = (initialProducts: Product[]) => {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
-    const { selectedCategory, alphabeticalOrder, quantityOrder, priceRange } = useMain();
+    const { selectedCategory, alphabeticalOrder, quantityOrder, priceRange, searchBar } = useMain();
 
     useEffect(() => {
         let result = [...initialProducts];
@@ -47,8 +47,12 @@ export const useProductFilter = (initialProducts: Product[]) => {
             });
         }
 
+        if(searchBar) {
+            result = result.filter(product => product.name.toLowerCase().includes(searchBar.toLowerCase()));
+        }
+
         setFilteredProducts(result);
-    }, [selectedCategory, alphabeticalOrder, quantityOrder, priceRange, initialProducts]);
+    }, [selectedCategory, alphabeticalOrder, quantityOrder, priceRange, searchBar, initialProducts]);
 
     return filteredProducts;
 };

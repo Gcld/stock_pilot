@@ -11,9 +11,13 @@ export const Container = styled.div`
     padding: 9px 0px 9px 8px;
     border-radius: 20px;
 
-    h2{
+    input{
+        width: 100%;
         font-family: var(--font-poppins);
         font-size: 14px;
-        color: var(--darkZaori);
+        color: var(--primaryLightZaori);
+        background-color: transparent;
+        border: none;
+        outline: none;
     }
 `;

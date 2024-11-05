@@ -72,3 +72,27 @@ export async function POST(request: NextRequest) {
         });
     }
 }
+
+export async function PATCH(request: NextRequest) {
+    try{
+        const body = await request.json();
+        const data = {
+                id: body.id,
+                name: body.name,
+                description: body.description,
+                price: body.price,
+                stock_quantity: body.stock_quantity,
+            }
+        return new Response(JSON.stringify({data}), {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    } catch (error) {
+        console.error("Error in PATCH method:", error);
+        return new Response(JSON.stringify({ error: "An error occurred while processing the request" }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+        });
+    }
+}

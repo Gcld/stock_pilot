@@ -1,11 +1,11 @@
 import { LuBox, LuHistory } from "react-icons/lu";
-import { Container } from "./styled";
+import { Container, Button } from "./styled";
 import { useState } from "react";
 import { useMain } from "@/context/main";
 
 export default function ButtonsMiddle() {
-    const {setTabGeneral} = useMain();
-    const [activeTab, setActiveTab] = useState(0); 
+    const { setTabGeneral } = useMain();
+    const [activeTab, setActiveTab] = useState(0);
 
     const handleTabChange = (tab: number) => {
         if (tab !== activeTab) {
@@ -16,20 +16,20 @@ export default function ButtonsMiddle() {
 
     return (
         <Container>
-            <div 
-                className={activeTab === 0 ? "buttonsMiddleClicked" : "buttonsMiddle"} 
+            <Button 
+                $isActive={activeTab === 0}
                 onClick={() => handleTabChange(0)}
             >
                 <LuBox size={20} color="var(--primaryDarkZaori)"/>
                 <h3>Inventory</h3>
-            </div>
-            <div 
-                className={activeTab === 1 ? "buttonsMiddleClicked" : "buttonsMiddle"} 
+            </Button>
+            <Button 
+                $isActive={activeTab === 1}
                 onClick={() => handleTabChange(1)}
             >
                 <LuHistory size={20} color="var(--primaryDarkZaori)"/>
                 <h3>History</h3>
-            </div>    
+            </Button>    
         </Container>
     );
 }

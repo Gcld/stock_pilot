@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Logo() {
     return (
         <Container>
-            <Link href="/">
+            <Link href="/" passHref>
                 <LogoDiv>
                     <LuArchive size={58} color="var(--primaryDarkZaori)"/>
                     <h2>StockPilot</h2>

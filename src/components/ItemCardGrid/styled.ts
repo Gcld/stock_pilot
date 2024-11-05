@@ -11,6 +11,14 @@ export const Container = styled.div`
     padding: 15px;
 `;
 
+export const ItemDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+`;
+
 export const ItemPicture = styled.div`
     width: 100%;
     height: 150px;

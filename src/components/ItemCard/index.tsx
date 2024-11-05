@@ -1,4 +1,4 @@
-import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton } from "./styled";
+import { Container, ItemDescription, ItemDiv, ItemInfo, ItemPicture, ItemPriceAndButton } from "./styled";
 import Link from "next/link";
 import { useState } from "react";
 import ActionDropdown from "../ActionDropdown";
@@ -16,16 +16,19 @@ export default function ItemCard({data}: Props) {
     };
 
     return (
-        <Link href={`/product/${data.id}`} passHref>
             <Container>
-                <ItemPicture/>
-                <ItemInfo>
-                    <h1>{data.name}</h1>
-                    <ItemDescription>
-                    <h2>{data.category.name} • {data.stock_quantity > 0 ? 'Stocked Product' : 'Out of Stock'}:</h2>
-                    <h2 className="inStock">{data.stock_quantity} in stock</h2>
-                    </ItemDescription>
-                </ItemInfo>
+                <Link href={`/product/${data.id}`} passHref>
+                <ItemDiv>
+                    <ItemPicture/>
+                    <ItemInfo>
+                        <h1>{data.name}</h1>
+                        <ItemDescription>
+                        <h2>{data.category.name} • {data.stock_quantity > 0 ? 'Stocked Product' : 'Out of Stock'}:</h2>
+                        <h2 className="inStock">{data.stock_quantity} in stock</h2>
+                        </ItemDescription>
+                    </ItemInfo>
+                </ItemDiv>
+                </Link>
                 <ItemPriceAndButton>
                     <h1>${data.price}</h1>
                     <ActionDropdown 
@@ -35,6 +38,5 @@ export default function ItemCard({data}: Props) {
                     />
                 </ItemPriceAndButton>
             </Container>
-        </Link>
     );
 }

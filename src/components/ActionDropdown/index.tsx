@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu, DeleteConfirmation, DeleteButtons, ModalOverlay } from "./styled";
 import { BsThreeDots } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -20,21 +20,21 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
     const [showEditModal, setShowEditModal] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-                setShowMovementMenu(false);
-                setShowDeleteConfirmation(false);
-                setShowEditModal(false);
-            }
-        };
+    // useEffect(() => {
+    //     const handleClickOutside = (event: MouseEvent) => {
+    //         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    //             setIsOpen(false);
+    //             setShowMovementMenu(false);
+    //             setShowDeleteConfirmation(false);
+    //             setShowEditModal(false);
+    //         }
+    //     };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [setIsOpen]);
+    //     document.addEventListener('mousedown', handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [setIsOpen]);
 
     const handleDotsClick = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -140,7 +140,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
                 )}
             </div>
             {showEditModal && (
-                <ModalOverlay onClick={() => setShowEditModal(false)}>
+                <ModalOverlay>
                     <EditModal onClose={() => setShowEditModal(false)} />
                 </ModalOverlay>
             )}

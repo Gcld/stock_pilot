@@ -19,6 +19,14 @@ export const ItemPicture = styled.div`
     border-radius: 5px;
 `;
 
+export const ItemDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+`;
+
 export const ItemInfo = styled.div`
     display: flex;
     flex-direction: column;

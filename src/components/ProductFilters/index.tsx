@@ -4,13 +4,13 @@ import { Container, FilterDropdown, DropdownContent, DropdownOption } from "./st
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuArrowDownAZ } from "react-icons/lu";
 import { GoNumber } from "react-icons/go";
-import { Category } from "@/Interfaces/interface";
 import { api } from "@/service/api";
 import { useMain } from "@/context/main";
 
 export default function ProductFilters() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const {categories, setCategories} = useMain();
+    
     const {
         setSelectedCategory,
         alphabeticalOrder,

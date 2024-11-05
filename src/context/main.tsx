@@ -1,5 +1,6 @@
 'use client'
 
+import { Category } from "@/Interfaces/interface";
 import { createContext, useContext, useState, useEffect } from "react"
 
 interface MainContextData {
@@ -23,6 +24,8 @@ interface MainContextData {
     setPriceRange: (range: { min: number | null; max: number | null }) => void;
     searchBar: string;
     setSearchBar: (search: string) => void;
+    categories: Category[];
+    setCategories: (categories: Category[]) => void;
 }
 
 const MainContext = createContext<MainContextData>({} as MainContextData)
@@ -37,6 +40,7 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     const [quantityOrder, setQuantityOrder] = useState<'asc' | 'desc' | null>(null);
     const [priceRange, setPriceRange] = useState<{ min: number | null; max: number | null }>({ min: null, max: null });
     const [searchBar, setSearchBar] = useState('');
+    const [categories, setCategories] = useState<Category[]>([]);
 
     const handleTabView = (tab: string) => {
         localStorage.setItem('isGridView', tab);
@@ -75,6 +79,8 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
                 setPriceRange,
                 searchBar,
                 setSearchBar,
+                categories,
+                setCategories,
             }}
         >
             {children}

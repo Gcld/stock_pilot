@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ButtonsContainer, Container, FormGroup, Input, Select, TextArea } from './styled';
+import { useMain } from '@/context/main';
 
 
 interface EditModalProps {
@@ -15,7 +16,8 @@ export default function EditModal({ onClose }: EditModalProps) {
         quantity: ''
     });
 
-    const categories = ['Electronics', 'Clothing', 'Books', 'Food', 'Other'];
+    const {categories} = useMain();
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -29,12 +31,14 @@ export default function EditModal({ onClose }: EditModalProps) {
         e.preventDefault();
         // Aqui você implementará a lógica da API posteriormente
         console.log('Form submitted:', formData);
-        onClose();
+        //onClose();
     };
 
+
     return (
-        <Container onClick={(e) => e.stopPropagation()}>
+        <Container>
             <h2>Edit Product</h2>
+            <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>X</button>
             <form onSubmit={handleSubmit}>
                 <FormGroup>
                     <label>Name</label>
@@ -66,7 +70,7 @@ export default function EditModal({ onClose }: EditModalProps) {
                     >
                         <option value="">Select a category</option>
                         {categories.map(category => (
-                            <option key={category} value={category}>{category}</option>
+                            <option key={category.id} value={category.id}>{category.name}</option>
                         ))}
                     </Select>
                 </FormGroup>

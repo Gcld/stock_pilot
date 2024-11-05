@@ -19,10 +19,11 @@ export default function ProductDetail() {
     const [product, setProduct] = useState<Product>({} as Product);
     const [totalProducts, setTotalProducts] = useState(0);
 
-    const getProduct = async (id: string) => {
+    const getProduct = async () => {
         try {
-            const response = await api.get(`/products/${id}`);
-            setProduct(response.data);
+            const response = await api.post(`/products`, {id: params.id});
+            console.log("RESPONSEPRODUCT", response.data);
+            setProduct(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -52,9 +53,10 @@ export default function ProductDetail() {
     useEffect(() => {
         setShowMenu(false);
         if (params.id) {
-            getProduct(params.id as string);
+            getProduct();
         }
         getTotalProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id, setShowMenu]);
 
     return (

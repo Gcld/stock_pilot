@@ -16,15 +16,12 @@ export const DotsButton = styled.div`
 
 export const DropdownMenu = styled.div`
     position: absolute;
-    right: 0;
-    top: 100%;
     background-color: var(--darkZaori);
     border: 1px solid var(--buttonIconColor);
     border-radius: 10px;
     min-width: 180px;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    margin-top: 5px;
 `;
 
 export const SubDropdownMenu = styled.div`

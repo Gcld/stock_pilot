@@ -1,5 +1,3 @@
-// src/components/ProductDetailBar/index.tsx
-
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { ButtonEnd, Container, GridButtons, Separator } from "./styled";
 import { Product } from "@/Interfaces/interface";

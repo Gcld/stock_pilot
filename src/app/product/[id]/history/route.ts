@@ -1,5 +1,3 @@
-// src/app/api/products/[id]/history/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

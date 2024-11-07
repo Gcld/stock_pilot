@@ -1,5 +1,3 @@
-// src/components/Price/index.tsx
-
 import { useState, useEffect } from "react";
 import { Container, PriceInput } from "./styled";
 import { useMain } from "@/context/main";

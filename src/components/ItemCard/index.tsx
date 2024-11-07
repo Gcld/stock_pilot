@@ -14,7 +14,6 @@ export default function ItemCard({data}: Props) {
     const handleActionClick = (action: string) => {
         console.log(`Action clicked: ${action}`);
     };
-
     return (
             <Container>
                 <Link href={`/product/${data.id}`} passHref>

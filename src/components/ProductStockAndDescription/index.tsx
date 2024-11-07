@@ -4,6 +4,7 @@ import ItemHistoryCard from '../ItemHistoryCard';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { Category, Product } from '@/Interfaces/interface';
 import { api } from '@/service/api';
+import EditMovementModal from '../EditMovementModal';
 
 interface Props {
     data: Product
@@ -16,6 +17,7 @@ export default function ProductStockAndDescription({data}: Props) {
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState<number>(0);
     const [price, setPrice] = useState("");
+    const [isMovementModalOpen, setIsMovementModalOpen] = useState(false);
 
     const openOverlay = () => setIsOverlayOpen(true);
     const closeOverlay = () => setIsOverlayOpen(false);
@@ -29,6 +31,11 @@ export default function ProductStockAndDescription({data}: Props) {
             console.log(error);
         }
     }
+
+    const handleMovementConfirm = (movement: string, quantity: number) => {
+        console.log(`Movement: ${movement}, Quantity: ${quantity}`);
+        // Implementar a lógica para atualizar o movimento do produto
+    };
 
     const updateProduct = async () => {
         try {
@@ -114,7 +121,9 @@ export default function ProductStockAndDescription({data}: Props) {
                             </AdjustmentBox>
                             <AdjustmentBox>
                                 <h2>Movement</h2>
-                                <ButtonsMovementDiv><h2>Edit Movement</h2></ButtonsMovementDiv>
+                                <ButtonsMovementDiv onClick={() => setIsMovementModalOpen(true)}>
+                                    <h2>Edit Movement</h2>
+                                </ButtonsMovementDiv>
                             </AdjustmentBox>
                         </AdjustmentButtonsDiv>
                         <button onClick={() => {
@@ -124,6 +133,11 @@ export default function ProductStockAndDescription({data}: Props) {
                     </OverlayContent>
                 </Overlay>
             )}
+            <EditMovementModal
+                isOpen={isMovementModalOpen}
+                onClose={() => setIsMovementModalOpen(false)}
+                onConfirm={handleMovementConfirm}
+            />
         </Container>
     );
 }

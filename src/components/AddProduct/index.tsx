@@ -21,7 +21,7 @@ export default function AddProduct() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Product submitted:', product);
-        // Aqui você pode adicionar a lógica para enviar o produto para o backend
+
     };
 
     return (

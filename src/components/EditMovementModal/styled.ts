@@ -54,7 +54,7 @@ export const Title = styled.h2`
 
 export const InputGroup = styled.div`
     margin-bottom: 20px;
-`;
+`; 
 
 export const Label = styled.label`
     display: block;

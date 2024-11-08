@@ -19,6 +19,7 @@ export default function ProductImages({ productId, productName }: ProductImagesP
                 );
                 const responses = await Promise.all(promises);
                 const urls = responses.map(response => response.data.urls.small);
+                console.log("Fetched thumbnail URLs:", urls);
                 setThumbnailUrls(urls);
             } catch (error) {
                 console.error("Error fetching thumbnail images:", error);
@@ -38,7 +39,7 @@ export default function ProductImages({ productId, productName }: ProductImagesP
                 {thumbnailUrls.map((url, index) => (
                     <ProductImageSmall 
                         key={index} 
-                        imageUrl={url}
+                        style={{ backgroundImage: `url(${url})` }}
                         role="img"
                         aria-label={`Product thumbnail ${index + 1}`}
                     />

@@ -19,11 +19,10 @@ export const ProductImageBig = styled.div`
     overflow: hidden;
 `;
 
-export const ProductImageSmall = styled.div<{ imageUrl: string }>`
+export const ProductImageSmall = styled.div`
     width: 96px;
     height: 96px;
     border-radius: 20px;
-    background-image: url(${props => props.imageUrl});
     background-size: cover;
     background-position: center;
 `;

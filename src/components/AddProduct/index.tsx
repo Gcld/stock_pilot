@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Form, Input, TextArea, Select, SubmitButton } from "./styled";
 import { api } from '@/service/api';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddProduct() {
     const [product, setProduct] = useState({
@@ -20,17 +21,41 @@ export default function AddProduct() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Product submitted:', product);
-        api.post('/product', product).then((response) => {
-            console.log(response);
-            toast.success(response.data.message);   
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+        try {
+            const response = await api.post('/product', product);
+            console.log('Product submitted:', response.data);
+            toast.success(response.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setProduct({
+                name: '',
+                description: '',
+                price: '',
+                category: '',
+                quantity: ''
+            });
+        } catch (error) {
+            console.error('Error submitting product:', error);
+            toast.error('Failed to add product. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     };
+
 
     return (
         <Container>
@@ -86,6 +111,7 @@ export default function AddProduct() {
                 />
                 <SubmitButton type="submit">Add Product</SubmitButton>
             </Form>
+            <ToastContainer />
         </Container>
     );
 }

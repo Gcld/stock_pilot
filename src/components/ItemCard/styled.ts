@@ -47,6 +47,8 @@ export const ItemPicture = styled.div`
     height: 82px;
     background-color: white;
     border-radius: 5px;
+    background-size: cover;
+    background-position: center;
 `;
 
 export const ItemDiv = styled.div`

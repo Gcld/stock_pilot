@@ -102,6 +102,7 @@ export const ProfileDiv = styled.div`
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    z-index: 1000;
 
     &:hover {
         background-color: var(--darkZaori);

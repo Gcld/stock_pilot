@@ -29,7 +29,7 @@ export default function EditModal({ onClose }: EditModalProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Aqui você implementará a lógica da API posteriormente
+        // Implementar a lógica da API posteriormente
         console.log('Form submitted:', formData);
         //onClose();
     };

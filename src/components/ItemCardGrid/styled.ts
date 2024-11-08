@@ -46,10 +46,6 @@ export const ItemDiv = styled.div`
     justify-content: center;
     gap: 10px;
     transition: all 0.3s ease;
-
-    &:hover {
-        transform: scale(1.02);
-    }
 `;
 
 export const ItemPicture = styled.div`

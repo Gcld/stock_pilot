@@ -1,5 +1,3 @@
-// src/components/ProductContent/index.tsx
-
 import { Product } from "@/Interfaces/interface";
 import ProductInfo from "../ProductInfo"; 
 import ProductStockAndDescription from "../ProductStockAndDescription";

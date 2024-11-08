@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function ItemCardGrid({data}: Props) {
-    console.log("GRID", data)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleActionClick = (action: string) => {

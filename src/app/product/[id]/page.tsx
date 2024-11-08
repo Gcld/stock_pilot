@@ -10,54 +10,69 @@ import ProductHistory from "@/components/ProductHistory";
 import { useMain } from "@/context/main";
 import { Product } from "@/Interfaces/interface";
 import { api } from "@/service/api";
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function ProductDetail() {
     const params = useParams();
+    const router = useRouter();
     const [tab, setTab] = useState(0);
     const { setShowMenu } = useMain();
-    const [product, setProduct] = useState<Product>({} as Product);
+    const [product, setProduct] = useState<Product | null>(null);
     const [totalProducts, setTotalProducts] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const getProduct = async () => {
+    const getProduct = async (id: string) => {
         try {
-            const response = await api.post(`/products`, {id: params.id});
-            console.log("RESPONSEPRODUCT", response.data);
+            const response = await api.post(`/products`, {id: id});
+            console.log("Product fetched:", response.data.data);
             setProduct(response.data.data);
         } catch (error) {
-            console.log(error);
+            console.error("Error fetching product:", error);
+            router.push('/404');
         }
     }
 
     const getTotalProducts = async () => {
         try {
             const response = await api.get('/products');
-            setTotalProducts(response.data.length);
+            if (Array.isArray(response.data)) {
+                const total = response.data.length;
+                console.log("Total products fetched:", total);
+                setTotalProducts(total);
+            } else if (typeof response.data === 'object' && response.data.data) {
+                const total = response.data.data.length;
+                console.log("Total products fetched:", total);
+                setTotalProducts(total);
+            } else {
+                console.error("Unexpected response format:", response.data);
+                setTotalProducts(0);
+            }
         } catch (error) {
-            console.log(error);
+            console.error("Error fetching total products:", error);
+            setTotalProducts(0);
         }
     }
 
-        
-
-    // const getProductLocal = async () => {
-    //     await api.post(`/products`, {id: params.id}).then((response) => {
-    //         console.log("RESPONSE", response.data);
-    //         setProduct(response.data.data);
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     })
-    // }
-
+    useEffect(() => {
+        setIsLoading(true);
+        setShowMenu(false);
+        const fetchData = async () => {
+            if (params.id) {
+                await getProduct(params.id as string);
+            }
+            await getTotalProducts();
+            setIsLoading(false);
+        };
+        fetchData();
+    }, [params.id, setShowMenu]);
 
     useEffect(() => {
-        setShowMenu(false);
-        if (params.id) {
-            getProduct();
-        }
-        getTotalProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.id, setShowMenu]);
+        console.log("ProductDetail state updated:", { product, totalProducts, isLoading });
+    }, [product, totalProducts, isLoading]);
+
+    if (isLoading || !product) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Container>

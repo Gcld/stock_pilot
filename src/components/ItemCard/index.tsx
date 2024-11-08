@@ -1,11 +1,10 @@
-// src/components/ItemCard/index.tsx
-
 import React, { useState, useEffect } from "react";
 import { Container, ItemDescription, ItemDiv, ItemInfo, ItemPicture, ItemPriceAndButton } from "./styled";
 import Link from "next/link";
 import ActionDropdown from "../ActionDropdown";
 import { Product } from "@/Interfaces/interface";
 import axios from "axios";
+import ProductImage from "../ProuctImage";
 
 interface Props {
     data: Product;
@@ -13,7 +12,7 @@ interface Props {
 
 export default function ItemCard({data}: Props) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [imageUrl, setImageUrl] = useState("");
+    const [, setImageUrl] = useState("");
 
     useEffect(() => {
         const fetchRandomImage = async () => {
@@ -39,8 +38,10 @@ export default function ItemCard({data}: Props) {
     return (
         <Container>
             <Link href={`/product/${data.id}`} passHref>
-                <ItemDiv>
-                    <ItemPicture style={{ backgroundImage: `url(${imageUrl})` }} />
+            <ItemDiv>
+                <ItemPicture>
+                    <ProductImage productId={data.id} alt={data.name} />
+                </ItemPicture>
                     <ItemInfo>
                         <h1>{data.name}</h1>
                         <ItemDescription>

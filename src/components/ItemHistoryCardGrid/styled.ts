@@ -13,10 +13,9 @@ export const Container = styled.div`
 `;
 
 export const ItemPicture = styled.div`
-    width: 100%;
-    height: 150px;
-    background-color: white;
-    border-radius: 5px;
+    width: 105px;  
+    height: 82px;  
+    overflow: hidden; 
 `;
 
 export const ItemInfo = styled.div`

@@ -1,14 +1,17 @@
 import { Product } from "@/Interfaces/interface";
-import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton} from "./styled";
+import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton } from "./styled";
+import ProductImage from "../ProuctImage";
 
 interface Props {
     data: Product;
 }
 
-export default function ItemHistoryCard({data}: Props) {
+export default function ItemHistoryCard({ data }: Props) {
     return (
         <Container>
-            <ItemPicture/>
+            <ItemPicture>
+                <ProductImage productId={data.id} alt={data.name} />
+            </ItemPicture>
             <ItemInfo>
                 <h1>{data.name}</h1>
                 <ItemDescription>

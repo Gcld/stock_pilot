@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import ActionDropdown from "../ActionDropdown";
 import { Product } from "@/Interfaces/interface";
+import ProductImage from "../ProuctImage";
 
 interface Props {
     data: Product
@@ -20,7 +21,9 @@ export default function ItemCardGrid({data}: Props) {
             <Container>
                 <Link href={`/product/${data.id}`} passHref>
                 <ItemDiv>
-                    <ItemPicture/>
+                <ItemPicture>
+                    <ProductImage productId={data.id} alt={data.name} />
+                </ItemPicture>
                     <ItemInfo>
                         <h1>{data.name}</h1>
                         <ItemDescription>

@@ -5,29 +5,25 @@ export const Container = styled.div`
     flex-direction: row;
     gap: 20px;
 
-    .productImages{
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-    }
-
-    .productImageBig{
-        width: 677px;
-        height: 404px;
-        background-color: var(--primaryLightZaori);
-        border-radius: 20px;
-    }
-
-    .productImagesDiv{
+    .productImagesDiv {
         display: flex;
         flex-direction: column;
         gap: 7px;
     }
+`;
 
-    .productImageSmall{
-        width: 96px;
-        height: 96px;
-        background-color: var(--primaryLightZaori);
-        border-radius: 20px;
-    }
+export const ProductImageBig = styled.div`
+    width: 677px;
+    height: 404px;
+    border-radius: 20px;
+    overflow: hidden;
+`;
+
+export const ProductImageSmall = styled.div<{ imageUrl: string }>`
+    width: 96px;
+    height: 96px;
+    border-radius: 20px;
+    background-image: url(${props => props.imageUrl});
+    background-size: cover;
+    background-position: center;
 `;

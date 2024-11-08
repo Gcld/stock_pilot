@@ -9,7 +9,7 @@ interface ProductInfoProps {
 export default function ProductInfo({data}: ProductInfoProps) {
     return (
         <Container>
-            <ProductImages/>
+            <ProductImages productId={data.id} productName={data.name} />
             <div className="productInfoDiv">
                 <h1>Basic Information</h1>
                 <InfoWrapper>

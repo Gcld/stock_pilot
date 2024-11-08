@@ -37,7 +37,7 @@ export const InfoTitle = styled.h3`
     font-size: 16px;
     font-weight: 400;
     color: var(--buttonIconColor);
-    width: 150px; // Ajuste este valor conforme necessário
+    width: 150px;
 `;
 
 export const InfoContent = styled.h3`

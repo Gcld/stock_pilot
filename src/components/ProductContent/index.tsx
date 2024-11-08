@@ -1,5 +1,7 @@
+// src/components/ProductContent/index.tsx
+
 import { Product } from "@/Interfaces/interface";
-import ProductInfo from "../Product Info";
+import ProductInfo from "../ProductInfo"; 
 import ProductStockAndDescription from "../ProductStockAndDescription";
 import { Container } from "./styled";
 

@@ -7,6 +7,9 @@ export const Container = styled.div`
     width: 90%;
     max-width: 500px;
     position: relative;
+    z-index: 1001; 
+    overflow: auto; 
+    max-height: 90vh; 
 
     h2 {
         color: var(--primaryLightZaori);

@@ -36,7 +36,7 @@ export default function EditModal({ onClose }: EditModalProps) {
 
 
     return (
-        <Container>
+        <Container onClick={(e) => e.stopPropagation()}>
             <h2>Edit Product</h2>
             <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>X</button>
             <form onSubmit={handleSubmit}>

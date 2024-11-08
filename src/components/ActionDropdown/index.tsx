@@ -69,7 +69,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
 
     const handleDotsClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        e.stopPropagation(); 
+        e.stopPropagation();
         setIsOpen(!isOpen);
         if (!isOpen) {
             setTimeout(updateDropdownPosition, 0);
@@ -81,7 +81,8 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
 
     const handleDropdownItemClick = (e: React.MouseEvent, action: string, subAction?: string) => {
         e.preventDefault();
-        e.stopPropagation(); 
+        e.stopPropagation();
+
         if (action === 'edit') {
             setShowEditModal(true);
             setIsOpen(false);
@@ -108,12 +109,12 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
     };
 
     const dropdownContent = isOpen && (
-        <DropdownMenu 
+        <DropdownMenu
             ref={dropdownRef}
-            style={{ 
+            style={{
                 position: 'absolute',
-                top: `${dropdownPosition.top}px`, 
-                left: `${dropdownPosition.left}px` 
+                top: `${dropdownPosition.top}px`,
+                left: `${dropdownPosition.left}px`
             }}
         >
             <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'edit')}>
@@ -187,10 +188,11 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
                 dropdownContent,
                 document.body
             )}
-            {showEditModal && (
+            {showEditModal && ReactDOM.createPortal(
                 <ModalOverlay>
                     <EditModal onClose={() => setShowEditModal(false)} />
-                </ModalOverlay>
+                </ModalOverlay>,
+                document.body
             )}
         </>
     );

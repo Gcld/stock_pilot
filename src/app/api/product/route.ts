@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
                     name: "Category 1"
                 }
             }
-        return new Response(JSON.stringify({data}), {
+        return new Response(JSON.stringify({data, message: "Product created successfully!"}), {
             headers: {
                 "Content-Type": "application/json",
             },

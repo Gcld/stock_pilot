@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Input, TextArea, Select, SubmitButton } from "./styled";
+import { api } from '@/service/api';
+import { toast } from 'react-toastify';
 
 export default function AddProduct() {
     const [product, setProduct] = useState({
@@ -21,7 +23,13 @@ export default function AddProduct() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Product submitted:', product);
-
+        api.post('/product', product).then((response) => {
+            console.log(response);
+            toast.success(response.data.message);   
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     };
 
     return (

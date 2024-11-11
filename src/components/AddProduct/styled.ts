@@ -57,7 +57,7 @@ export const Select = styled.select`
     border: 1px solid var(--grayZaori);
     border-radius: 20px;
     background-color: var(--darkZaori);
-    color: #FDF9E745;
+    color: white;
     font-family: var(--font-poppins);
     appearance: none; 
     background-image: url('data:image/svg+xml;utf8,<svg fill="%23FDF9E7" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');

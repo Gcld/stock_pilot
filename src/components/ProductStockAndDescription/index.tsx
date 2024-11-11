@@ -25,7 +25,7 @@ export default function ProductStockAndDescription({data}: Props) {
     const getCategories = async () => {
         try {
             const response = await api.get('/categories');
-            setCategories(response.data.data);
+            setCategories(response.data);
         } catch (error) {
             console.log(error);
         }

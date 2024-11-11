@@ -5,8 +5,8 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-between;
+    gap: auto;
     background-color: var(--darkZaori);
     border-radius: 10px;
     padding: 8px;
@@ -52,7 +52,7 @@ export const ItemDiv = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
     transition: all 0.3s ease;
 
@@ -68,12 +68,18 @@ export const ItemInfo = styled.div`
     gap: 10px;
     padding-right: 20px;
     border-right: 1px solid var(--buttonIconColor);
+    margin-left: auto;
 
     h1{
         font-family: var(--font-poppins);
         font-size: 24px;
         font-weight: 400;
         color: white;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-width: 210px;
     }
 `;
 

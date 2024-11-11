@@ -21,14 +21,16 @@ export default function ProductDetail() {
     const [totalProducts, setTotalProducts] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
-    const getProduct = async (id: string) => {
+    const getProduct = async (id: number) => {
         try {
-            const response = await api.post(`/products`, {id: id});
-            console.log("Product fetched:", response.data.data);
-            setProduct(response.data.data);
+            const response = await api.get(`/products/${id}`);
+            setProduct(response.data);
         } catch (error) {
             console.error("Error fetching product:", error);
             router.push('/404');
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -37,11 +39,9 @@ export default function ProductDetail() {
             const response = await api.get('/products');
             if (Array.isArray(response.data)) {
                 const total = response.data.length;
-                console.log("Total products fetched:", total);
                 setTotalProducts(total);
-            } else if (typeof response.data === 'object' && response.data.data) {
-                const total = response.data.data.length;
-                console.log("Total products fetched:", total);
+            } else if (typeof response.data === 'object' && response.data) {
+                const total = response.data.length;
                 setTotalProducts(total);
             } else {
                 console.error("Unexpected response format:", response.data);
@@ -51,6 +51,9 @@ export default function ProductDetail() {
             console.error("Error fetching total products:", error);
             setTotalProducts(0);
         }
+        finally {
+            setIsLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -58,10 +61,10 @@ export default function ProductDetail() {
         setShowMenu(false);
         const fetchData = async () => {
             if (params.id) {
-                await getProduct(params.id as string);
+                await getProduct(Number(params.id));
             }
             await getTotalProducts();
-            setIsLoading(false);
+            // setIsLoading(false);
         };
         fetchData();
     }, [params.id, setShowMenu]);

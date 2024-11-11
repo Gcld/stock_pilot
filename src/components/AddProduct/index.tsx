@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Form, Input, TextArea, Select, SubmitButton } from "./styled";
 import { api } from '@/service/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Category } from '@/Interfaces/interface';
 
-export default function AddProduct() {
+interface Props {
+    getProducts: () => Promise<void>;
+}
+
+export default function AddProduct({ getProducts }: Props) {
     const [product, setProduct] = useState({
         name: '',
         description: '',
         price: '',
-        category: '',
-        quantity: ''
+        stock_quantity: 0,
+        category: 0,
     });
+
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    const getCategories = async () => {
+        try {
+            const response = await api.get('/categories');
+            setCategories(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getCategories();
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -24,7 +44,7 @@ export default function AddProduct() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await api.post('/product', product);
+            const response = await api.post('/products/', product);
             console.log('Product submitted:', response.data);
             toast.success(response.data.message, {
                 position: "top-right",
@@ -39,9 +59,10 @@ export default function AddProduct() {
                 name: '',
                 description: '',
                 price: '',
-                category: '',
-                quantity: ''
+                stock_quantity: 0,
+                category: 0,
             });
+            getProducts();
         } catch (error) {
             console.error('Error submitting product:', error);
             toast.error('Failed to add product. Please try again.', {
@@ -94,18 +115,18 @@ export default function AddProduct() {
                     onChange={handleChange}
                     required
                 >
-                    <option value="">New category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="clothing">Clothing</option>
-                    <option value="books">Books</option>
-                    <option value="food">Food</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
                 </Select>
                 <h3>Quantity</h3>
                 <Input
                     type="number"
-                    name="quantity"
+                    name="stock_quantity"
                     placeholder="0"
-                    value={product.quantity}
+                    value={product.stock_quantity}
                     onChange={handleChange}
                     required
                 />

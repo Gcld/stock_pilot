@@ -10,7 +10,7 @@ interface Props {
     data: Product;
 }
 
-export default function ItemCard({data}: Props) {
+export default function ItemCard({ data }: Props) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [, setImageUrl] = useState("");
 
@@ -38,10 +38,10 @@ export default function ItemCard({data}: Props) {
     return (
         <Container>
             <Link href={`/product/${data.id}`} passHref>
-            <ItemDiv>
-                <ItemPicture>
-                    <ProductImage productId={data.id} alt={data.name} />
-                </ItemPicture>
+                <ItemDiv>
+                    <ItemPicture>
+                        <ProductImage productId={data.id} alt={data.name} />
+                    </ItemPicture>
                     <ItemInfo>
                         <h1>{data.name}</h1>
                         <ItemDescription>
@@ -53,7 +53,7 @@ export default function ItemCard({data}: Props) {
             </Link>
             <ItemPriceAndButton>
                 <h1>${data.price}</h1>
-                <ActionDropdown 
+                <ActionDropdown
                     isOpen={isDropdownOpen}
                     setIsOpen={setIsDropdownOpen}
                     onActionClick={handleActionClick}

@@ -7,6 +7,7 @@ export const useProductFilter = (initialProducts: Product[]) => {
     const { selectedCategory, alphabeticalOrder, quantityOrder, priceRange, searchBar } = useMain();
 
     useEffect(() => {
+        console.log('INICIALPRODUCTS', initialProducts);
         let result = [...initialProducts];
 
         if (selectedCategory !== 0) {

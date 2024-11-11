@@ -67,6 +67,11 @@ export const ItemInfo = styled.div`
         font-size: 24px;
         font-weight: 400;
         color: white;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-width: 280px;
     }
 `;
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ImageContainer } from './styled';
+import ProductDefault from '@/assets/placeholder.png';
 
 interface ProductImageProps {
     productId: number;
@@ -26,7 +27,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ productId, alt }) => {
                 }
             } catch (error) {
                 console.error("Error fetching random image:", error);
-                setImageUrl("/path/to/default/image.jpg");
+                setImageUrl(ProductDefault.src);
             }
         };
 

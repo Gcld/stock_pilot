@@ -8,7 +8,7 @@ interface Props {
 export const ItemInfo = ({data}: Props) => {
     return (
         <Container>
-            <h3>ID: PRD_{data.id} • {data.category?.name} • {data.stock_quantity === 0 ? 'Out of Stock' : 'Stocked Product'} </h3>
+            <h3>ID: PRD_{data.id} • {data.category.name} • {data.stock_quantity === 0 ? 'Out of Stock' : 'Stocked Product'} </h3>
         </Container>
     );
 }

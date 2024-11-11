@@ -16,7 +16,7 @@ export default function ContentHistory() {
     const getProducts = async () => {
         try {
             const response = await api.get('/products');
-            setProducts(response.data.data);
+            setProducts(response.data);
         } catch (error) {
             console.log(error);
         } finally {

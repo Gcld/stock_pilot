@@ -6,10 +6,11 @@ import { Product } from "@/Interfaces/interface";
 import ProductImage from "../ProuctImage";
 
 interface Props {
-    data: Product
+    data: Product;
+    getProducts: () => Promise<void>;
 }
 
-export default function ItemCardGrid({data}: Props) {
+export default function ItemCardGrid({data, getProducts}: Props) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleActionClick = (action: string) => {
@@ -38,6 +39,8 @@ export default function ItemCardGrid({data}: Props) {
                         isOpen={isDropdownOpen}
                         setIsOpen={setIsDropdownOpen}
                         onActionClick={handleActionClick}
+                        id={data.id}
+                        getProducts={getProducts}
                     />
                 </ItemPriceAndButton>
             </Container>

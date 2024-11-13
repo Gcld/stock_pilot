@@ -8,9 +8,10 @@ import ProductImage from "../ProuctImage";
 
 interface Props {
     data: Product;
+    getProducts: () => Promise<void>;
 }
 
-export default function ItemCard({ data }: Props) {
+export default function ItemCard({ data, getProducts }: Props) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [, setImageUrl] = useState("");
 
@@ -57,6 +58,8 @@ export default function ItemCard({ data }: Props) {
                     isOpen={isDropdownOpen}
                     setIsOpen={setIsDropdownOpen}
                     onActionClick={handleActionClick}
+                    id = {data.id}
+                    getProducts={getProducts}
                 />
             </ItemPriceAndButton>
         </Container>

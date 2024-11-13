@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { ButtonsContainer, Container, FormGroup, Input, Select, TextArea } from './styled';
 import { useMain } from '@/context/main';
-
+import { api } from '@/service/api';
+import { toast } from 'react-toastify';
 
 interface EditModalProps {
+    id: number;
     onClose: () => void;
+    getProducts: () => Promise<void>;
 }
 
-export default function EditModal({ onClose }: EditModalProps) {
+export default function EditModal({ onClose, id, getProducts }: EditModalProps) {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
         category: '',
         price: '',
-        quantity: ''
+        stock_quantity: ''
     });
 
-    const {categories} = useMain();
-
+    const { categories } = useMain();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -27,11 +29,47 @@ export default function EditModal({ onClose }: EditModalProps) {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Implementar a lógica da API posteriormente
-        console.log('Form submitted:', formData);
-        //onClose();
+        
+        const newData = Object.entries(formData).reduce((acc, [key, value]) => {
+            if (value !== '') {
+                acc[key] = value;
+            }
+            return acc;
+        }, {} as Record<string, string | number>);
+
+        if (newData.stock_quantity) {
+            newData.stock_quantity = Number(newData.stock_quantity);
+        }
+
+        try {
+            const response = await api.patch(`/products/${id}/`, newData);
+            console.log('Form submitted:', response.data);
+            console.log('Product submitted:', response.data);
+            toast.success(response.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            getProducts();
+            onClose(); 
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Failed to update product. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     };
 
 
@@ -90,8 +128,8 @@ export default function EditModal({ onClose }: EditModalProps) {
                     <label>Quantity</label>
                     <Input
                         type="number"
-                        name="quantity"
-                        value={formData.quantity}
+                        name="stock_quantity"
+                        value={formData.stock_quantity}
                         onChange={handleChange}
                         placeholder="0"
                     />

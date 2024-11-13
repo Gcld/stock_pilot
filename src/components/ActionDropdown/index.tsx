@@ -8,14 +8,18 @@ import { IoReturnDownBack, IoAdd } from "react-icons/io5";
 import { BiSolidDiscount } from "react-icons/bi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import EditModal from "../EditModal";
+import { api } from "@/service/api";
+import { toast } from "react-toastify";
 
 interface ActionDropdownProps {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
     onActionClick: (action: string, subAction?: string) => void;
+    id: number;
+    getProducts: () => Promise<void>;
 }
 
-export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: ActionDropdownProps) {
+export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, getProducts}: ActionDropdownProps) {
     const [showMovementMenu, setShowMovementMenu] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -79,7 +83,34 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
         setShowEditModal(false);
     };
 
-    const handleDropdownItemClick = (e: React.MouseEvent, action: string, subAction?: string) => {
+    const handleDeleteProduct = async () => {
+        try{
+            const response = await api.delete(`/products/${id}/`);
+            toast.success(response.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        catch(error){
+            console.error('Error deleting product:', error);
+            toast.error('Failed to delete product. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
+    const handleDropdownItemClick = async (e: React.MouseEvent, action: string, subAction?: string) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -166,7 +197,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
                             Cancel
                         </button>
                         <button
-                            onClick={(e) => handleDropdownItemClick(e, 'delete', 'confirm')}
+                            onClick={handleDeleteProduct}
                             className="confirm"
                         >
                             Confirm
@@ -190,7 +221,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick }: Act
             )}
             {showEditModal && ReactDOM.createPortal(
                 <ModalOverlay>
-                    <EditModal onClose={() => setShowEditModal(false)} />
+                    <EditModal onClose={() => setShowEditModal(false)} id = {id} getProducts={getProducts}/>
                 </ModalOverlay>,
                 document.body
             )}

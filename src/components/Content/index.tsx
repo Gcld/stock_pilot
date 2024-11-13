@@ -36,8 +36,8 @@ export default function Content() {
         <Container>
             <Filters />
             {isGridView === 'grid' 
-                ? <ItemsContainerGrid data={filteredProducts} /> 
-                : <ItemsContainer data={filteredProducts} />
+                ? <ItemsContainerGrid data={filteredProducts} getProducts={getProducts}/> 
+                : <ItemsContainer data={filteredProducts} getProducts={getProducts}/>
             }
             <AddProduct getProducts={getProducts}/>
         </Container>

@@ -5,6 +5,7 @@ import { Poppins } from 'next/font/google'
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppProvider from "@/context/indext";
+import { ToastContainer } from "react-toastify";
 
 
 const poppins = Poppins({
@@ -27,6 +28,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className}`}>
         <StyledComponentsRegistry>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <AppProvider>
             <Header />
             <main className="main">

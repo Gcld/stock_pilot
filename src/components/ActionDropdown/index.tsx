@@ -85,8 +85,8 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
 
     const handleDeleteProduct = async () => {
         try{
-            const response = await api.delete(`/products/${id}/`);
-            toast.success(response.data.message, {
+            await api.delete(`/products/${id}/`);
+            toast.success('Product deleted successfully', {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,

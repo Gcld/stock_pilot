@@ -5,13 +5,14 @@ import { Container } from "./styled";
 
 interface ProductContentProps {
     data: Product;
+    getProduct: (id: number) => Promise<void>;
 }
 
-export default function ProductContent({data}: ProductContentProps) {
+export default function ProductContent({data, getProduct}: ProductContentProps) {
     return (
         <Container>
             <ProductInfo data={data}/>
-            <ProductStockAndDescription data={data} />
+            <ProductStockAndDescription data={data} getProduct={getProduct} />
         </Container>
     );
 }

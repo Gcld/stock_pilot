@@ -64,14 +64,9 @@ export default function ProductDetail() {
                 await getProduct(Number(params.id));
             }
             await getTotalProducts();
-            // setIsLoading(false);
         };
         fetchData();
     }, [params.id, setShowMenu]);
-
-    useEffect(() => {
-        console.log("ProductDetail state updated:", { product, totalProducts, isLoading });
-    }, [product, totalProducts, isLoading]);
 
     if (isLoading || !product) {
         return <div>Loading...</div>;
@@ -79,10 +74,10 @@ export default function ProductDetail() {
 
     return (
         <Container>
-            <ProductDetailBar data={product} totalProducts={totalProducts} />
+            <ProductDetailBar data={product} totalProducts={totalProducts} />5
             <ItemInfo data={product} />
             <ProductButtons setTab={setTab} />
-            {tab === 0 && <ProductContent data={product} />}
+            {tab === 0 && <ProductContent data={product} getProduct={getProduct} />}
             {tab === 1 && <ProductHistory data={product} />}
         </Container>
     );

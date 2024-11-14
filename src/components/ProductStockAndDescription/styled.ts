@@ -96,50 +96,78 @@ export const Overlay = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    overflow-y: scroll; 
 `;
 
 export const OverlayContent = styled.div`
     display: flex;
     flex-direction: column;
     background-color: var(--darkZaori);
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
+    max-height: 90vh;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
     max-width: 680px;
-    gap: 30px;
+    gap: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 
     > h2 {
         font-family: var(--font-poppins);
-        font-size: 32px;
-        font-weight: 400;
+        font-size: 28px;
+        font-weight: 600;
         color: var(--primaryLightZaori);
+        margin-bottom: 10px;
     }
 
-    button {
-        background-color: black;
-        color: white;
-        border: 1.5px solid var(--buttonIconColor);
-        padding: 10px 20px;
-        border-radius: 20px;
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto;
+        padding-right: 10px;
+        margin-right: -10px;
+        padding-bottom: 20px;
+    }
+
+    button[type="submit"] {
+        background-color: var(--primaryDarkZaori);
+        color: black;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
         cursor: pointer;
         font-family: var(--font-poppins);
-        font-size: 32px;
-        font-weight: 400;
+        font-size: 18px;
+        font-weight: 500;
         transition: all 0.3s ease;
+        align-self: stretch;
+        margin-top: 20px;
 
         &:hover {
-            background-color: var(--buttonIconColor);
-            color: black;
-            border-color: black;
+            background-color: var(--primaryLightZaori);
         }
     }
+
+    form::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    form::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+
+    form::-webkit-scrollbar-thumb {
+        background-color: var(--primaryDarkZaori);
+        border-radius: 10px;
+    }
 `;
+
 
 export const Select = styled.select`
     font-family: var(--font-poppins);
@@ -171,26 +199,37 @@ export const Select = styled.select`
 export const AdjustmentBox = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 
     > h2 {
-        width: 100%;
         font-family: var(--font-poppins);
         font-size: 16px;
-        font-weight: 400;
+        font-weight: 500;
         color: var(--primaryLightZaori);
     }
 
-    > input, textarea {
+    > input, textarea, ${Select} {
         width: 100%;
         font-family: var(--font-poppins);
         font-size: 16px;
         font-weight: 400;
-        color: #9B9B9B;
-        border: 1px solid #9B9B9B;
-        border-radius: 20px;
-        padding: 20px 0px 20px 10px;
-        background-color: transparent;
+        color: #FFFFFF;
+        border: 1px solid var(--buttonIconColor);
+        border-radius: 10px;
+        padding: 12px 15px;
+        background-color: rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--primaryLightZaori);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
     }
 `;
 
@@ -199,6 +238,7 @@ export const AdjustmentButtonsDiv = styled.div`
     flex-direction: row;
     justify-content: space-between;
     gap: 20px;
+    padding-bottom: 20px;
 
     > h2 {
         width: 100%;

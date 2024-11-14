@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Description, Separator, AdjustStockButton, Overlay, OverlayContent, AdjustmentBox, Select, AdjustmentButtonsDiv, ButtonsDiv, PlusOrMinusButton, ButtonsMovementDiv } from "./styled";
-import ItemHistoryCard from '../ItemHistoryCard';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { Category, Product } from '@/Interfaces/interface';
 import { api } from '@/service/api';
 import EditMovementModal from '../EditMovementModal';
+import { toast } from 'react-toastify';
 
 interface Props {
     data: Product
@@ -19,6 +19,14 @@ export default function ProductStockAndDescription({data}: Props) {
     const [price, setPrice] = useState("");
     const [isMovementModalOpen, setIsMovementModalOpen] = useState(false);
 
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        category: '',
+        price: '',
+        stock_quantity: ''
+    });
+
     const openOverlay = () => setIsOverlayOpen(true);
     const closeOverlay = () => setIsOverlayOpen(false);
 
@@ -30,6 +38,49 @@ export default function ProductStockAndDescription({data}: Props) {
             console.log(error);
         }
     }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        const newData = Object.entries(formData).reduce((acc, [key, value]) => {
+            if (value !== '') {
+                acc[key] = value;
+            }
+            return acc;
+        }, {} as Record<string, string | number>);
+
+        if (newData.stock_quantity) {
+            newData.stock_quantity = Number(newData.stock_quantity);
+        }
+
+        try {
+            const response = await api.patch(`/products/${id}/`, newData);
+            console.log('Form submitted:', response.data);
+            console.log('Product submitted:', response.data);
+            toast.success('Product updated successfully', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            getProducts();
+            onClose(); 
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Failed to update product. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    };
 
     const handleMovementConfirm = (movement: string, quantity: number) => {
         console.log(`Movement: ${movement}, Quantity: ${quantity}`);
@@ -85,7 +136,7 @@ export default function ProductStockAndDescription({data}: Props) {
                 <Overlay onClick={closeOverlay}>
                     <OverlayContent onClick={(e) => e.stopPropagation()}>
                         <h2>New Adjustment</h2>
-                        <ItemHistoryCard data={data}/>
+                        
                         <AdjustmentBox>
                             <h2>Name</h2>
                             <input value={name} onChange={(e) => setName(e.target.value)}/>

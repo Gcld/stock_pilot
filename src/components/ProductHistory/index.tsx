@@ -15,6 +15,7 @@ interface ProductHistoryProps {
 }
 
 export default function ProductHistory({ data }: ProductHistoryProps) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [history, setHistory] = useState<HistoryItem[]>([]);
 
     useEffect(() => {
@@ -33,9 +34,10 @@ export default function ProductHistory({ data }: ProductHistoryProps) {
     return (
         <Container>
             <HistoryCardDiv>
-                {history.map((item, index) => (
+                {/* {history.map((item, index) => (
                     <ProductHistoryCard key={index} data={item} />
-                ))}
+                ))} */}
+                <ProductHistoryCard data={{ change: '10%', date: '2023-08-01'}} />
             </HistoryCardDiv>
             <ProductStockAndDescription data={data} />
         </Container>

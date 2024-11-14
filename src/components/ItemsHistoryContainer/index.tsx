@@ -1,4 +1,5 @@
-import { Product } from "@/Interfaces/interface";
+import React from "react";
+import { Product, HistoryItem } from "@/Interfaces/interface";
 import ItemHistoryCard from "../ItemHistoryCard";
 import { Container, NoProductsMessage } from "./styled";
 
@@ -7,11 +8,28 @@ interface ItemsHistoryContainerProps {
 }
 
 export default function ItemsHistoryContainer({data}: ItemsHistoryContainerProps) {
+    // Função para gerar um HistoryItem mock a partir de um Product
+    const generateMockHistoryItem = (product: Product): HistoryItem => {
+        return {
+            id: Math.floor(Math.random() * 1000), // ID aleatório para o movimento
+            product: {
+                id: product.id,
+                name: product.name
+            },
+            movement_type: Math.random() > 0.5 ? 'entrada' : 'saida', // Tipo de movimento aleatório
+            quantity: Math.floor(Math.random() * 100), // Quantidade aleatória
+            reason: Math.random() > 0.5 ? 'Restock' : 'Sale', // Razão aleatória
+            created_at: new Date().toISOString() // Data atual
+        };
+    };
+
+    const historyItems: HistoryItem[] = data.map(generateMockHistoryItem);
+
     return (
         <Container>
-            {data.length === 0 
-                ? <NoProductsMessage>No products found.</NoProductsMessage>
-                : data.map((item) => (
+            {historyItems.length === 0 
+                ? <NoProductsMessage>No history found.</NoProductsMessage>
+                : historyItems.map((item) => (
                     <ItemHistoryCard key={item.id} data={item} />
                 ))
             }

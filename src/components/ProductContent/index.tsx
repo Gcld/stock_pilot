@@ -11,7 +11,7 @@ export default function ProductContent({data}: ProductContentProps) {
     return (
         <Container>
             <ProductInfo data={data}/>
-            <ProductStockAndDescription data={data}/>
+            <ProductStockAndDescription data={data} />
         </Container>
     );
 }

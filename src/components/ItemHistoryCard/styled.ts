@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isEntrada: boolean }>`
     height: 98px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--darkZaori);
     border-radius: 10px;
     padding: 8px;
+    background-color: ${props => props.$isEntrada ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)'};
+    border: 2px solid ${props => props.$isEntrada ? 'var(--successColor)' : 'var(--errorColor)'};
 `;
 
 export const ItemPicture = styled.div`
@@ -33,7 +34,7 @@ export const ItemInfo = styled.div`
         font-family: var(--font-poppins);
         font-size: 24px;
         font-weight: 400;
-        color: white;
+        color: var(--primaryDarkZaori);
     }
 `;
 
@@ -49,28 +50,37 @@ export const ItemDescription = styled.div`
         font-family: var(--font-poppins);
         font-size: 12px;
         font-weight: regular;
-        color: #8D8D8D;
+        color: var(--primaryDarkZaori);
     }
 
     .inStock{
         font-family: var(--font-poppins);
         font-size: 12px;
         font-weight: regular;
-        color: white;
+        color: var(--primaryDarkZaori);
     }
 `;
 
 export const ItemPriceAndButton = styled.div`
     display: flex;
+    flex-direction: column;
     width: 100%;
     justify-content: center;
-    align-items: center;
-    gap: 40px;
+    align-items: flex-end;
+    gap: 10px;
 
-    > h1{
+    h2 {
         font-family: var(--font-poppins);
-        font-size: 32px;
+        font-size: 14px;
         font-weight: 400;
-        color: var(--primaryLightZaori);
+        color: var(--primaryDarkZaori);
     }
+`;
+
+export const MovementType = styled.div<{ $isEntrada: boolean }>`
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    background-color: ${props => props.$isEntrada ? 'var(--successColor)' : 'var(--errorColor)'};
 `;

@@ -11,3 +11,15 @@ export interface Category {
     id: number,
     name: string
 }
+
+export interface HistoryItem {
+    id: number;
+    product: {
+        id: number;
+        name: string;
+    };
+    movement_type: 'entrada' | 'saida';
+    quantity: number;
+    reason: string;
+    created_at: string;
+}

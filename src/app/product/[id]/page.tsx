@@ -74,7 +74,7 @@ export default function ProductDetail() {
 
     return (
         <Container>
-            <ProductDetailBar data={product} totalProducts={totalProducts} />5
+            <ProductDetailBar data={product} totalProducts={totalProducts} />
             <ItemInfo data={product} />
             <ProductButtons setTab={setTab} />
             {tab === 0 && <ProductContent data={product} getProduct={getProduct} />}

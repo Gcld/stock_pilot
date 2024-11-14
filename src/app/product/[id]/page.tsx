@@ -78,7 +78,7 @@ export default function ProductDetail() {
             <ItemInfo data={product} />
             <ProductButtons setTab={setTab} />
             {tab === 0 && <ProductContent data={product} getProduct={getProduct} />}
-            {tab === 1 && <ProductHistory data={product} />}
+            {tab === 1 && <ProductHistory data={product} getProduct={getProduct} />}
         </Container>
     );
 }

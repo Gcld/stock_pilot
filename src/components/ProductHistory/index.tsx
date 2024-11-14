@@ -12,9 +12,10 @@ interface HistoryItem {
 
 interface ProductHistoryProps {
     data: Product;
+    getProduct: (id: number) => Promise<void>;
 }
 
-export default function ProductHistory({ data }: ProductHistoryProps) {
+export default function ProductHistory({ data, getProduct }: ProductHistoryProps) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [history, setHistory] = useState<HistoryItem[]>([]);
 
@@ -39,7 +40,7 @@ export default function ProductHistory({ data }: ProductHistoryProps) {
                 ))} */}
                 <ProductHistoryCard data={{ change: '10%', date: '2023-08-01'}} />
             </HistoryCardDiv>
-            <ProductStockAndDescription data={data} />
+            <ProductStockAndDescription data={data} getProduct={getProduct} />
         </Container>
     );
 }

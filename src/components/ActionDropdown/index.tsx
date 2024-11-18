@@ -30,8 +30,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const [formData, setFormData] = useState({
         stock_quantity: ''
     });
-    
-    
+
     const updateDropdownPosition = () => {
         if (buttonRef.current && dropdownRef.current) {
             const buttonRect = buttonRef.current.getBoundingClientRect();
@@ -100,6 +99,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
                 draggable: true,
                 progress: undefined,
             });
+            getProducts();
         }
         catch(error){
             console.error('Error deleting product:', error);
@@ -125,10 +125,20 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const handleSubmitAdd = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await api.patch(`/products/${id}/`, formData);
+            const currentProductResponse = await api.get(`/products/${id}/`);
+            const currentQuantity = currentProductResponse.data.stock_quantity;
+            
+            const quantityToAdd = parseInt(formData.stock_quantity);
+            if (isNaN(quantityToAdd)) {
+                throw new Error("Invalid quantity");
+            }
+            
+            const newQuantity = currentQuantity + quantityToAdd;
+            const response = await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
+            
             console.log('Form submitted:', response.data);
             console.log('Product submitted:', response.data);
-            toast.success('Product updated successfully', {
+            toast.success('Product quantity updated successfully', {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -140,9 +150,10 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             getProducts();
             setIsOpen(false);
             setShowAddForm(false);
+            setFormData({ stock_quantity: '' });
         } catch (error) {
             console.error('Error submitting form:', error);
-            toast.error('Failed to update product. Please try again.', {
+            toast.error('Failed to update product quantity. Please try again.', {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -235,6 +246,25 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
                 <MdDelete size={20} />
                 Delete
             </DropdownItem>
+            {showDeleteConfirmation && (
+                <DeleteConfirmation>
+                    <p>Do you wish to delete this product?</p>
+                    <DeleteButtons>
+                        <button
+                            onClick={(e) => handleDropdownItemClick(e, 'delete', 'cancel')}
+                            className="cancel"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            onClick={handleDeleteProduct}
+                            className="confirm"
+                        >
+                            Confirm
+                        </button>
+                    </DeleteButtons>
+                </DeleteConfirmation>
+            )}
             {showAddForm && (
                 <AddForm onSubmit={handleSubmitAdd}>
                     <AddInput
@@ -249,7 +279,6 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             )}
         </DropdownMenu>
     );
-
 
     return (
         <>

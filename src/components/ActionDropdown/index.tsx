@@ -23,12 +23,13 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const [showMovementMenu, setShowMovementMenu] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [showAddForm, setShowAddForm] = useState(false);
+    const [showMovementForm, setShowMovementForm] = useState(false);
+    const [currentMovementType, setCurrentMovementType] = useState('');
     const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
     const buttonRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [formData, setFormData] = useState({
-        stock_quantity: ''
+        quantity: ''
     });
 
     const updateDropdownPosition = () => {
@@ -85,6 +86,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
         setShowMovementMenu(false);
         setShowDeleteConfirmation(false);
         setShowEditModal(false);
+        setShowMovementForm(false);
     };
 
     const handleDeleteProduct = async () => {
@@ -115,30 +117,39 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
         }
     }
 
-    const handleChangeAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmitAdd = async (e: React.FormEvent) => {
+    const handleSubmitMovement = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const currentProductResponse = await api.get(`/products/${id}/`);
             const currentQuantity = currentProductResponse.data.stock_quantity;
             
-            const quantityToAdd = parseInt(formData.stock_quantity);
-            if (isNaN(quantityToAdd)) {
+            const quantityToChange = parseInt(formData.quantity);
+            if (isNaN(quantityToChange) || quantityToChange <= 0) {
                 throw new Error("Invalid quantity");
             }
             
-            const newQuantity = currentQuantity + quantityToAdd;
+            let newQuantity: number;
+            if (currentMovementType === 'add') {
+                newQuantity = currentQuantity + quantityToChange;
+            } else {
+                if (quantityToChange > currentQuantity) {
+                    throw new Error("Cannot subtract more than the current quantity");
+                }
+                newQuantity = currentQuantity - quantityToChange;
+            }
+            
             const response = await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
             
             console.log('Form submitted:', response.data);
             console.log('Product submitted:', response.data);
-            toast.success('Product quantity updated successfully', {
+            toast.success(`Product quantity ${currentMovementType === 'add' ? 'increased' : 'decreased'} successfully`, {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -149,11 +160,11 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             });
             getProducts();
             setIsOpen(false);
-            setShowAddForm(false);
-            setFormData({ stock_quantity: '' });
+            setShowMovementForm(false);
+            setFormData({ quantity: '' });
         } catch (error) {
             console.error('Error submitting form:', error);
-            toast.error('Failed to update product quantity. Please try again.', {
+            toast.error(error instanceof Error ? error.message : 'Failed to update product quantity. Please try again.', {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -188,8 +199,9 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             setShowDeleteConfirmation(false);
             return;
         }
-        if (action === 'movement' && subAction === 'add') {
-            setShowAddForm(true);
+        if (action === 'movement' && subAction) {
+            setCurrentMovementType(subAction);
+            setShowMovementForm(true);
             setShowMovementMenu(false);
             return;
         }
@@ -265,16 +277,16 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
                     </DeleteButtons>
                 </DeleteConfirmation>
             )}
-            {showAddForm && (
-                <AddForm onSubmit={handleSubmitAdd}>
+            {showMovementForm && (
+                <AddForm onSubmit={handleSubmitMovement}>
                     <AddInput
                         type="number"
-                        name="stock_quantity"
-                        value={formData.stock_quantity}
-                        onChange={handleChangeAdd}
-                        placeholder="Quantity to add"
+                        name="quantity"
+                        value={formData.quantity}
+                        onChange={handleChangeQuantity}
+                        placeholder={`Quantity to ${currentMovementType}`}
                     />
-                    <AddButton type="submit">Add</AddButton>
+                    <AddButton type="submit">{currentMovementType}</AddButton>
                 </AddForm>
             )}
         </DropdownMenu>

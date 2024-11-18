@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
 `;
 
 export const NoProductsMessage = styled.h1`
@@ -13,4 +15,5 @@ export const NoProductsMessage = styled.h1`
     text-align: center;
     width: 100%;
     padding: 20px;
+    grid-column: 1 / -1;
 `;

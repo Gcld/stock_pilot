@@ -140,3 +140,26 @@ export const DeleteButtons = styled.div`
         }
     }
 `;
+
+export const AddForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+`;
+
+export const AddInput = styled.input`
+    margin-bottom: 10px;
+    padding: 5px;
+`;
+
+export const AddButton = styled.button`
+    background-color: var(--primaryDarkZaori);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+    background-color: var(--darkZaori);
+    }
+`;

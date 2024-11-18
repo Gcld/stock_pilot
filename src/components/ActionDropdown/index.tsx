@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
-import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu, DeleteConfirmation, DeleteButtons, ModalOverlay } from "./styled";
+import { DotsButton, DropdownMenu, DropdownItem, SubDropdownMenu, DeleteConfirmation, DeleteButtons, ModalOverlay, AddForm, AddInput, AddButton } from "./styled";
 import { BsThreeDots } from "react-icons/bs";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaExchangeAlt } from "react-icons/fa";
@@ -23,10 +23,15 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const [showMovementMenu, setShowMovementMenu] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showAddForm, setShowAddForm] = useState(false);
     const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
     const buttonRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-
+    const [formData, setFormData] = useState({
+        stock_quantity: ''
+    });
+    
+    
     const updateDropdownPosition = () => {
         if (buttonRef.current && dropdownRef.current) {
             const buttonRect = buttonRef.current.getBoundingClientRect();
@@ -110,6 +115,45 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
         }
     }
 
+    const handleChangeAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmitAdd = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await api.patch(`/products/${id}/`, formData);
+            console.log('Form submitted:', response.data);
+            console.log('Product submitted:', response.data);
+            toast.success('Product updated successfully', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            getProducts();
+            setIsOpen(false);
+            setShowAddForm(false);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Failed to update product. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    };
+
     const handleDropdownItemClick = async (e: React.MouseEvent, action: string, subAction?: string) => {
         e.preventDefault();
         e.stopPropagation();
@@ -131,6 +175,11 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
         }
         if (action === 'delete' && subAction === 'cancel') {
             setShowDeleteConfirmation(false);
+            return;
+        }
+        if (action === 'movement' && subAction === 'add') {
+            setShowAddForm(true);
+            setShowMovementMenu(false);
             return;
         }
         onActionClick(action, subAction);
@@ -186,27 +235,21 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
                 <MdDelete size={20} />
                 Delete
             </DropdownItem>
-            {showDeleteConfirmation && (
-                <DeleteConfirmation>
-                    <p>Do you wish to delete this product?</p>
-                    <DeleteButtons>
-                        <button
-                            onClick={(e) => handleDropdownItemClick(e, 'delete', 'cancel')}
-                            className="cancel"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            onClick={handleDeleteProduct}
-                            className="confirm"
-                        >
-                            Confirm
-                        </button>
-                    </DeleteButtons>
-                </DeleteConfirmation>
+            {showAddForm && (
+                <AddForm onSubmit={handleSubmitAdd}>
+                    <AddInput
+                        type="number"
+                        name="stock_quantity"
+                        value={formData.stock_quantity}
+                        onChange={handleChangeAdd}
+                        placeholder="Quantity to add"
+                    />
+                    <AddButton type="submit">Add</AddButton>
+                </AddForm>
             )}
         </DropdownMenu>
     );
+
 
     return (
         <>

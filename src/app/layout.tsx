@@ -4,7 +4,7 @@ import StyledComponentsRegistry from "./registry";
 import { Poppins } from 'next/font/google'
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AppProvider from "@/context/indext";
+import AppProvider from "@/context";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 

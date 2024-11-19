@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton, MovementType } from "./styled";
+import { Container, Header, Content, Footer, ItemPicture, ProductName, MovementInfo, MovementType, QuantityInfo } from "./styled";
 import ProductImage from "../ProuctImage";
 import { HistoryItem } from "@/Interfaces/interface";
 
@@ -12,23 +12,23 @@ export default function ItemHistoryCardGrid({ data }: Props) {
 
     return (
         <Container $isEntrada={isEntrada}>
-            <ItemPicture>
-                <ProductImage productId={data.product.id} alt={data.product.name} />
-            </ItemPicture>
-            <ItemInfo>
-                <h1>{data.product.name}</h1>
-                <ItemDescription>
-                    <h2>Movement ID: {data.id}</h2>
-                    <h2>Date: {new Date(data.created_at).toLocaleDateString()}</h2>
-                </ItemDescription>
-            </ItemInfo>
-            <ItemPriceAndButton>
+            <Header>
+                <ItemPicture>
+                    <ProductImage productId={data.product.id} alt={data.product.name} />
+                </ItemPicture>
+                <ProductName>{data.product.name}</ProductName>
+            </Header>
+            <Content>
+                <MovementInfo>Movement ID: {data.id}</MovementInfo>
+                <MovementInfo>Date: {new Date(data.created_at).toLocaleDateString()}</MovementInfo>
                 <MovementType $isEntrada={isEntrada}>
                     {isEntrada ? 'In' : 'Out'}
                 </MovementType>
-                <h2>Quantity: {data.quantity}</h2>
-                <h2>Reason: {data.reason}</h2>
-            </ItemPriceAndButton>
+            </Content>
+            <Footer>
+                <QuantityInfo>Quantity: {data.quantity}</QuantityInfo>
+                <MovementInfo>Reason: {data.reason}</MovementInfo>
+            </Footer>
         </Container>
     )
 }

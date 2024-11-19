@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
+    min-height: 600px; 
 `;
 
 export const Container = styled.div`
@@ -12,9 +13,10 @@ export const Container = styled.div`
     width: 100%;
     flex-direction: column;
     gap: 22px;
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
     padding-right: 20px;
+    min-height: 0; 
 `;
 
 export const NoProductsMessage = styled.h1`
@@ -29,8 +31,8 @@ export const NoProductsMessage = styled.h1`
 export const PaginationContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    padding: 10px 0;
+    padding: 20px 0;
+    background-color: var(--background);
 `;
 
 export const PageButton = styled.button<{ $isActive: boolean }>`

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HistoryItem } from "@/Interfaces/interface";
 import ItemHistoryCardGrid from "../ItemHistoryCardGrid";
-import { Container, NoProductsMessage, PaginationContainer, PageButton, Wrapper } from "./styled";
+import { Container, NoProductsMessage, PaginationContainer, PageButton, Wrapper, GridItem } from "./styled";
 
 interface ItemsHistoryContainerGridProps {
     data: HistoryItem[]
@@ -25,7 +25,9 @@ export default function ItemsHistoryContainerGrid({data}: ItemsHistoryContainerG
                 {data.length === 0 
                     ? <NoProductsMessage>No history found</NoProductsMessage>
                     : currentItems.map((item) => (
-                        <ItemHistoryCardGrid key={item.id} data={item} />
+                        <GridItem key={item.id}>
+                            <ItemHistoryCardGrid data={item} />
+                        </GridItem>
                     ))
                 }
             </Container>

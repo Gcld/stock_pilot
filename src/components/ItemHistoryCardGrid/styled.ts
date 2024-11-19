@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div<{ $isEntrada: boolean }>`
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
     aspect-ratio: 1 / 1;
     border-radius: 10px;
@@ -15,74 +14,63 @@ export const Container = styled.div<{ $isEntrada: boolean }>`
     box-sizing: border-box;
 `;
 
+export const Header = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+`;
+
 export const ItemPicture = styled.div`
     width: 100%;
-    height: 40%;
+    height: 120px;
     overflow: hidden;
     border-radius: 5px;
-    margin-bottom: 10px;
 `;
 
-export const ItemInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 100%;
-    height: 30%;
-
-    h1 {
-        font-family: var(--font-poppins);
-        font-size: 16px;
-        font-weight: 400;
-        color: var(--primaryDarkZaori);
-        text-align: center;
-        word-break: break-word;
-        margin: 0;
-    }
-`;
-
-export const ItemDescription = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    width: 100%; 
+export const ProductName = styled.h1`
+    font-family: var(--font-poppins);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primaryDarkZaori);
     text-align: center;
-
-    > h2 {
-        font-family: var(--font-poppins);
-        font-size: 10px;
-        font-weight: regular;
-        color: var(--primaryDarkZaori);
-        margin: 0;
-    }
+    word-break: break-word;
+    margin: 0;
 `;
 
-export const ItemPriceAndButton = styled.div`
+export const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
     gap: 5px;
-    width: 100%;
-    height: 30%;
+`;
 
-    h2 {
-        font-family: var(--font-poppins);
-        font-size: 12px;
-        font-weight: 400;
-        color: var(--primaryDarkZaori);
-        text-align: center;
-        margin: 0;
-    }
+export const MovementInfo = styled.p`
+    font-family: var(--font-poppins);
+    font-size: 12px;
+    color: var(--primaryDarkZaori);
+    margin: 0;
+    text-align: center;
 `;
 
 export const MovementType = styled.div<{ $isEntrada: boolean }>`
-    padding: 2px 5px;
+    padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 14px;
     color: white;
     background-color: ${props => props.$isEntrada ? 'var(--successColor)' : 'var(--errorColor)'};
+    margin-top: 5px;
+`;
+
+export const Footer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+`;
+
+export const QuantityInfo = styled(MovementInfo)`
+    font-size: 14px;
+    font-weight: 500;
 `;

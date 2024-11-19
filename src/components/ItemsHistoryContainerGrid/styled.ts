@@ -5,16 +5,25 @@ export const Wrapper = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
+    min-height: 600px;
 `;
 
 export const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     padding: 20px;
     width: 100%;
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
+    align-content: start;
+`;
+
+export const GridItem = styled.div`
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 350px; 
+    margin: 0 auto;
 `;
 
 export const NoProductsMessage = styled.h1`
@@ -30,8 +39,8 @@ export const NoProductsMessage = styled.h1`
 export const PaginationContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    padding: 10px 0;
+    padding: 20px 0;
+    background-color: var(--background);
 `;
 
 export const PageButton = styled.button<{ $isActive: boolean }>`

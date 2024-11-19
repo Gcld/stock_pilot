@@ -33,6 +33,101 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
         reason: '',
     });
 
+    const handleMovementPost = async () => {
+        try {
+            const currentProductResponse = await api.get(`/products/${id}/`);
+            const currentQuantity = currentProductResponse.data.stock_quantity;
+            
+            const quantityToChange = parseInt(formData.quantity);
+            if (isNaN(quantityToChange) || quantityToChange <= 0) {
+                throw new Error("Invalid quantity");
+            }
+            
+            let newQuantity: number;
+            if (currentMovementType === 'Add') {
+                newQuantity = currentQuantity + quantityToChange;
+            } else {
+                if (quantityToChange > currentQuantity) {
+                    throw new Error("Cannot subtract more than the current quantity");
+                }
+                newQuantity = currentQuantity - quantityToChange;
+            }
+            
+            const response = await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
+            const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
+            await api.post(`/movements/`, 
+                {
+                "product": id,
+                "movement_type": movementToRequest,
+                "quantity" : quantityToChange,
+                "reason": currentMovementType
+        });
+            
+            console.log('Form submitted:', response.data);
+            console.log('Product submitted:', response.data);
+            toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            getProducts();
+            setIsOpen(false);
+            setShowMovementForm(false);
+            setFormData({ quantity: '', reason: '' });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error(error instanceof Error ? error.message : 'Failed to update product quantity. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
+    const handleMovementPostDelete = async (id: number, quantity: number) => {
+        try {
+            await api.post(`/movements/`, 
+                {
+                "product": id,
+                "movement_type": 'OUT',
+                "quantity" : quantity,
+                "reason": 'Deleted'
+        });
+            toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            getProducts();
+            setIsOpen(false);
+            setShowMovementForm(false);
+            setFormData({ quantity: '', reason: '' });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error(error instanceof Error ? error.message : 'Failed to update product quantity. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     const updateDropdownPosition = () => {
         if (buttonRef.current && dropdownRef.current) {
             const buttonRect = buttonRef.current.getBoundingClientRect();
@@ -92,17 +187,22 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
 
     const handleDeleteProduct = async () => {
         try{
-            await api.delete(`/products/${id}/`);
-            toast.success('Product deleted successfully', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            getProducts();
+            const currentProductResponse = await api.get(`/products/${id}/`);
+            const currentQuantity = currentProductResponse.data.stock_quantity;
+            const response = await api.delete(`/products/${id}/`);
+            if(response.status === 204){
+                handleMovementPostDelete(id, currentQuantity);
+                toast.success('Product deleted successfully', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                getProducts();
+            }
         }
         catch(error){
             console.error('Error deleting product:', error);
@@ -127,62 +227,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
 
     const handleSubmitMovement = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const currentProductResponse = await api.get(`/products/${id}/`);
-            const currentQuantity = currentProductResponse.data.stock_quantity;
-            
-            const quantityToChange = parseInt(formData.quantity);
-            if (isNaN(quantityToChange) || quantityToChange <= 0) {
-                throw new Error("Invalid quantity");
-            }
-            
-            let newQuantity: number;
-            if (currentMovementType === 'Add') {
-                newQuantity = currentQuantity + quantityToChange;
-            } else {
-                if (quantityToChange > currentQuantity) {
-                    throw new Error("Cannot subtract more than the current quantity");
-                }
-                newQuantity = currentQuantity - quantityToChange;
-            }
-            
-            const response = await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
-            const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
-            await api.post(`/movements/`, 
-                {
-                "product": id,
-                "movement_type": movementToRequest,
-                "quantity" : quantityToChange,
-                "reason": currentMovementType
-        });
-            
-            console.log('Form submitted:', response.data);
-            console.log('Product submitted:', response.data);
-            toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            getProducts();
-            setIsOpen(false);
-            setShowMovementForm(false);
-            setFormData({ quantity: '', reason: '' });
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            toast.error(error instanceof Error ? error.message : 'Failed to update product quantity. Please try again.', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
+        handleMovementPost()
     };
 
     const handleDropdownItemClick = async (e: React.MouseEvent, action: string, reason?: string) => {

@@ -34,10 +34,10 @@ const EditMovementModal: React.FC<EditMovementModalProps> = ({ isOpen, onClose, 
                     <Label>Movement Type</Label>
                     <Select value={movement} onChange={(e) => setMovement(e.target.value)}>
                         <option value="">Select movement type</option>
-                        <option value="return">Return</option>
-                        <option value="sell">Sell</option>
-                        <option value="discard">Discard</option>
-                        <option value="add">Add</option>
+                        <option value="Return">Return</option>
+                        <option value="Sell">Sell</option>
+                        <option value="Discard">Discard</option>
+                        <option value="Add">Add</option>
                     </Select>
                 </InputGroup>
                 <InputGroup>

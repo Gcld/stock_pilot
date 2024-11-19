@@ -1,25 +1,15 @@
 import React from "react";
 import { Container, ItemDescription, ItemInfo, ItemPicture, ItemPriceAndButton, MovementType } from "./styled";
 import ProductImage from "../ProuctImage";
+import { HistoryItem } from "@/Interfaces/interface";
 
-interface HistoryItem {
-    id: number;
-    product: {
-        id: number;
-        name: string;
-    };
-    movement_type: 'entrada' | 'saida';
-    quantity: number;
-    reason: string;
-    created_at: string;
-}
 
 interface Props {
     data: HistoryItem;
 }
 
 export default function ItemHistoryCard({ data }: Props) {
-    const isEntrada = data.movement_type === 'entrada';
+    const isEntrada = data.movement_type === 'IN';
 
     return (
         <Container $isEntrada={isEntrada}>
@@ -35,7 +25,7 @@ export default function ItemHistoryCard({ data }: Props) {
             </ItemInfo>
             <ItemPriceAndButton>
                 <MovementType $isEntrada={isEntrada}>
-                    {isEntrada ? 'Entrada' : 'Saída'}
+                    {isEntrada ? 'In' : 'Out'}
                 </MovementType>
                 <h2>Quantity: {data.quantity}</h2>
                 <h2>Reason: {data.reason}</h2>

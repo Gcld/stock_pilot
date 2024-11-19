@@ -29,7 +29,8 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const buttonRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [formData, setFormData] = useState({
-        quantity: ''
+        quantity: '',
+        reason: '',
     });
 
     const updateDropdownPosition = () => {
@@ -136,7 +137,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             }
             
             let newQuantity: number;
-            if (currentMovementType === 'add') {
+            if (currentMovementType === 'Add') {
                 newQuantity = currentQuantity + quantityToChange;
             } else {
                 if (quantityToChange > currentQuantity) {
@@ -146,10 +147,18 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             }
             
             const response = await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
+            const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
+            await api.post(`/movements/`, 
+                {
+                "product": id,
+                "movement_type": movementToRequest,
+                "quantity" : quantityToChange,
+                "reason": currentMovementType
+        });
             
             console.log('Form submitted:', response.data);
             console.log('Product submitted:', response.data);
-            toast.success(`Product quantity ${currentMovementType === 'add' ? 'increased' : 'decreased'} successfully`, {
+            toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -161,7 +170,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             getProducts();
             setIsOpen(false);
             setShowMovementForm(false);
-            setFormData({ quantity: '' });
+            setFormData({ quantity: '', reason: '' });
         } catch (error) {
             console.error('Error submitting form:', error);
             toast.error(error instanceof Error ? error.message : 'Failed to update product quantity. Please try again.', {
@@ -176,7 +185,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
         }
     };
 
-    const handleDropdownItemClick = async (e: React.MouseEvent, action: string, subAction?: string) => {
+    const handleDropdownItemClick = async (e: React.MouseEvent, action: string, reason?: string) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -185,27 +194,27 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             setIsOpen(false);
             return;
         }
-        if (action === 'movement' && !subAction) {
+        if (action === 'movement' && !reason) {
             setShowMovementMenu(!showMovementMenu);
             setShowDeleteConfirmation(false);
             return;
         }
-        if (action === 'delete' && !subAction) {
+        if (action === 'delete' && !reason) {
             setShowDeleteConfirmation(true);
             setShowMovementMenu(false);
             return;
         }
-        if (action === 'delete' && subAction === 'cancel') {
+        if (action === 'delete' && reason === 'cancel') {
             setShowDeleteConfirmation(false);
             return;
         }
-        if (action === 'movement' && subAction) {
-            setCurrentMovementType(subAction);
+        if (action === 'movement' && reason) {
+            setCurrentMovementType(reason);
             setShowMovementForm(true);
             setShowMovementMenu(false);
             return;
         }
-        onActionClick(action, subAction);
+        onActionClick(action, reason);
         setIsOpen(false);
         setShowMovementMenu(false);
         setShowDeleteConfirmation(false);
@@ -233,19 +242,19 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             </DropdownItem>
             {showMovementMenu && (
                 <SubDropdownMenu>
-                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'return')}>
+                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'Return')}>
                         <IoReturnDownBack size={20} />
                         Return
                     </DropdownItem>
-                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'sell')}>
+                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'Sell')}>
                         <RiMoneyDollarCircleFill size={20} />
                         Sell
                     </DropdownItem>
-                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'discard')}>
+                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'Discard')}>
                         <BiSolidDiscount size={20} />
                         Discard
                     </DropdownItem>
-                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'add')}>
+                    <DropdownItem onClick={(e) => handleDropdownItemClick(e, 'movement', 'Add')}>
                         <IoAdd size={20} />
                         Add
                     </DropdownItem>

@@ -5,18 +5,18 @@ import { Container } from "./styled";
 import ItemsHistoryContainer from "../ItemsHistoryContainer";
 import { api } from "@/service/api";
 import { useEffect, useState } from "react";
-import { Product } from "@/Interfaces/interface";
-import { useProductFilter } from "@/hooks/useProductFilter";
+import { HistoryItem } from "@/Interfaces/interface";
+
 
 export default function ContentHistory() {
     const { isGridView, setLoading } = useMain();
-    const [products, setProducts] = useState<Product[]>([]);
-    const filteredProducts = useProductFilter(products);
+    const [movements, setMovements] = useState<HistoryItem[]>([]);
 
-    const getProducts = async () => {
+
+    const getHistory = async () => {
         try {
-            const response = await api.get('/products');
-            setProducts(response.data);
+            const response = await api.get('/movements');
+            setMovements(response.data);
         } catch (error) {
             console.log(error);
         } finally {
@@ -25,7 +25,7 @@ export default function ContentHistory() {
     }
 
     useEffect(() => {
-        getProducts();
+        getHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
@@ -33,8 +33,8 @@ export default function ContentHistory() {
         <Container>
             <Filters/>
             {isGridView === 'grid' 
-                ? <ItemsHistoryContainerGrid data={filteredProducts}/> 
-                : <ItemsHistoryContainer data={filteredProducts}/>
+                ? <ItemsHistoryContainerGrid data={movements}/> 
+                : <ItemsHistoryContainer data={movements}/>
             }
         </Container>
     );

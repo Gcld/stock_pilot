@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function ItemHistoryCardGrid({ data }: Props) {
-    const isEntrada = data.movement_type === 'entrada';
+    const isEntrada = data.movement_type === 'IN';
 
     return (
         <Container $isEntrada={isEntrada}>
@@ -24,7 +24,7 @@ export default function ItemHistoryCardGrid({ data }: Props) {
             </ItemInfo>
             <ItemPriceAndButton>
                 <MovementType $isEntrada={isEntrada}>
-                    {isEntrada ? 'Entrada' : 'Saída'}
+                    {isEntrada ? 'In' : 'Out'}
                 </MovementType>
                 <h2>Quantity: {data.quantity}</h2>
                 <h2>Reason: {data.reason}</h2>

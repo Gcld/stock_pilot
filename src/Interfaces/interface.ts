@@ -18,7 +18,7 @@ export interface HistoryItem {
         id: number;
         name: string;
     };
-    movement_type: 'entrada' | 'saida';
+    movement_type: 'IN' | 'OUT';
     quantity: number;
     reason: string;
     created_at: string;

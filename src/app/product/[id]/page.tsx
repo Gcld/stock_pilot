@@ -3,10 +3,8 @@
 import ProductDetailBar from "@/components/ProductDetailBar";
 import { Container } from "./styled";
 import { ItemInfo } from "@/components/ItemInfo";
-import ProductButtons from "@/components/ProductButtons";
 import ProductContent from "@/components/ProductContent";
 import { useEffect, useState } from "react";
-import ProductHistory from "@/components/ProductHistory";
 import { useMain } from "@/context/main";
 import { Product } from "@/Interfaces/interface";
 import { api } from "@/service/api";
@@ -15,7 +13,6 @@ import { useParams, useRouter } from 'next/navigation';
 export default function ProductDetail() {
     const params = useParams();
     const router = useRouter();
-    const [tab, setTab] = useState(0);
     const { setShowMenu } = useMain();
     const [product, setProduct] = useState<Product | null>(null);
     const [totalProducts, setTotalProducts] = useState(0);

@@ -11,10 +11,10 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
+    gap: 20px;
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
+    padding: 0px 20px;
 `;
 
 export const GridItem = styled.div`

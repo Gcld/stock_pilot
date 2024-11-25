@@ -9,6 +9,7 @@ export const Container = styled.div`
     background-color: var(--darkZaori);
     border-radius: 10px;
     height: 100%;
+    width: 30%;
 `;
 
 export const Form = styled.form`

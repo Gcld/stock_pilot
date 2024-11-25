@@ -12,6 +12,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 22px;
+    padding: 0px 20px;
     flex: 1;
     overflow-y: auto;
 `;

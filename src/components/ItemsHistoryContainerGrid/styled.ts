@@ -20,7 +20,6 @@ export const Container = styled.div`
 `;
 
 export const GridItem = styled.div`
-    aspect-ratio: 1 / 1;
     width: 100%;
     max-width: 350px; 
     margin: 0 auto;

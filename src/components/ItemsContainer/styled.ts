@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 22px;
     padding: 0px 20px;
     flex: 1;

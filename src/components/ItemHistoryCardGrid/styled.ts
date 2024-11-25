@@ -4,7 +4,6 @@ export const Container = styled.div<{ $isEntrada: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    aspect-ratio: 1 / 1;
     border-radius: 10px;
     padding: 15px;
     background-color: ${props => props.$isEntrada ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)'};

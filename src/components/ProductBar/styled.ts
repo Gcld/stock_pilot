@@ -7,4 +7,8 @@ export const Container = styled.div`
     align-items: center;
     gap: 20px;
     padding: 33px;
+
+    @media (max-width: 578px) {
+        flex-direction: column;
+    }
 `;

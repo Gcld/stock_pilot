@@ -7,4 +7,13 @@ export const Container = styled.div`
     gap: 10px;
     align-content: center;
     justify-content: center;
+
+    @media (max-width: 1100px) {
+        flex-direction: column;
+        align-items: center;
+
+        > div {
+            width: 100%; 
+        }
+    }
 `;

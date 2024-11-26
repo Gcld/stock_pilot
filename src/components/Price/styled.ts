@@ -4,6 +4,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 11px;
     width: 100%;
     background-color: #161616;
@@ -37,7 +38,7 @@ export const Container = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: left;
+        justify-content: center;
         border-radius: 10px;
         border: 2px solid #5D5D5D;
         background-color: transparent;

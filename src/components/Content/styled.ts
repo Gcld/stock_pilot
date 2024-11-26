@@ -8,12 +8,36 @@ export const Container = styled.div`
     align-content: center;
     justify-content: center;
 
+    .mobileGrid{
+        display: none;
+    }
+
     @media (max-width: 1100px) {
         flex-direction: column;
-        align-items: center;
+        width: 100%;
 
-        > div {
-            width: 100%; 
+        .mobileGrid{
+            display: flex;
         }
     }
+`;
+
+export const MobileMenu = styled.div`
+    display: none;
+
+    @media (max-width: 1100px) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+`;
+
+export const Button = styled.div`
+    display: flex;
+    background-color: var(--darkZaori);
+    border-radius: 10px;
+    padding: 10px;
+    font-family: var(--font-poppins);
+    font-size: 12px;
+    cursor: pointer;
 `;

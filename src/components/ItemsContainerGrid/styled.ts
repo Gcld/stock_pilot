@@ -15,6 +15,10 @@ export const Container = styled.div`
     flex: 1;
     overflow-y: auto;
     padding: 0px 20px;
+
+    @media (max-width: 740px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export const GridItem = styled.div`

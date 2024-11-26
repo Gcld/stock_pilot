@@ -9,6 +9,10 @@ export const Container = styled.div`
     background-color: var(--darkZaori);
     border-radius: 10px;
 
+    @media (max-width: 1100px) {
+        display: none;
+    }
+
     .buttonsClicked, .buttons {
         display: flex;
         width: 50px;

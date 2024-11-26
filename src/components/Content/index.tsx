@@ -5,11 +5,12 @@ import AddProduct from "../AddProduct";
 import Filters from "../Filters";
 import ItemsContainer from "../ItemsContainer";
 import ItemsContainerGrid from "../ItemsContainerGrid";
-import { Container } from "./styled";
+import { Button, Container, MobileMenu } from "./styled";
 import { useMain } from "@/context/main";
 import { api } from "@/service/api";
 import { useEffect, useState } from "react";
 import { useProductFilter } from "@/hooks/useProductFilter";
+import { LuListFilter, LuPlus } from "react-icons/lu";
 
 export default function Content() {
     const { isGridView, setLoading } = useMain();
@@ -34,11 +35,24 @@ export default function Content() {
 
     return (
         <Container>
+            <MobileMenu>
+                <Button>
+                    <LuPlus size={20}/>
+                    <h2>Add Product</h2>
+                </Button>
+                <Button>
+                    <LuListFilter size={20}/>
+                    <h2>Filter</h2>
+                </Button>
+            </MobileMenu>
             <Filters />
             {isGridView === 'grid' 
                 ? <ItemsContainerGrid data={filteredProducts} getProducts={getProducts}/> 
                 : <ItemsContainer data={filteredProducts} getProducts={getProducts}/>
             }
+            <div className="mobileGrid">
+                <ItemsContainerGrid data={filteredProducts} getProducts={getProducts}/>
+            </div> 
             <AddProduct getProducts={getProducts}/>
         </Container>
     );

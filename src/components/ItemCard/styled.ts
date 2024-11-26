@@ -39,6 +39,11 @@ export const Container = styled.div`
             left: 100%;
         }
     }
+
+    @media (max-width: 1100px) {
+        width: 100%;
+        
+    }
 `;
 
 
@@ -46,6 +51,10 @@ export const ItemPicture = styled.div`
     width: 105px;  
     height: 82px;  
     overflow: hidden; 
+
+    @media (max-width: 1100px) {
+        
+    }
 `;
 
 export const ItemDiv = styled.div`
@@ -176,5 +185,9 @@ export const ItemPriceAndButton = styled.div`
         font-size: 32px;
         font-weight: 400;
         color: var(--primaryLightZaori);
+
+        @media (max-width: 1100px) {
+            font-size: 24px;
+        }
     }
 `;

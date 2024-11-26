@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
     height: 100%;
     min-height: 600px;
@@ -15,9 +16,12 @@ export const Container = styled.div`
     flex: 1;
     overflow-y: auto;
     padding: 0px 20px;
+    justify-content: center;
 
     @media (max-width: 740px) {
         grid-template-columns: repeat(1, 1fr);
+        margin : 0 auto;
+        padding: 0;
     }
 `;
 

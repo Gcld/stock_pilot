@@ -37,6 +37,10 @@ export const Container = styled.div`
             left: 100%;
         }
     }
+
+    @media (max-width: 740px) {
+        width: 100%;
+    }
 `;
 
 export const ItemDiv = styled.div`

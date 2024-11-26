@@ -17,6 +17,10 @@ export const Container = styled.div`
     align-items: center;
     gap: 28px;
     position: relative;
+
+    @media (max-width: 780px) {
+        display: none;
+    }
 `;
 
 export const Dropdown = styled.div<{ $isProfile?: boolean }>`

@@ -21,7 +21,6 @@ const pulse = keyframes`
 `;
 
 export const Container = styled.div`
-    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -65,5 +64,12 @@ export const LogoDiv = styled.div`
 
     svg {
         transition: all 0.3s ease;
+    }
+
+    @media (max-width: 578px) {
+        width: 100%;
+        > h2 {
+            display: none;
+        }
     }
 `;

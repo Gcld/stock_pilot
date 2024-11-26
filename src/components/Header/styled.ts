@@ -2,10 +2,22 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    width: 100%;
     height: 100px;
     flex-direction: row;
     background-color: black;
     padding: 20px;
-    justify-content: space-between;
+    justify-content: space-around;
+
+    .mobileMenu{
+        display: none;
+    }
+
+    @media (max-width: 780px) {
+        .mobileMenu{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primaryDarkZaori)
+        }
+    }
 `;

@@ -7,6 +7,7 @@ import ButtonsMiddle from "../ButtonsMiddle";
 import Logo from "../Logo";
 import { Container } from "./styled";
 import { useMain } from "@/context/main";
+import { LuMenu } from 'react-icons/lu';
 
 export default function Header() {
     const { showMenu, setShowMenu } = useMain();
@@ -21,6 +22,9 @@ export default function Header() {
             <Logo />
             {showMenu && <ButtonsMiddle />}
             <ButtonsEnd />
+            <div className='mobileMenu'>
+                <LuMenu size={30} onClick={() => setShowMenu(!showMenu)}/>
+            </div>
         </Container>
     );
 }

@@ -36,7 +36,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const handleMovementPost = async () => {
         try {
             const currentProductResponse = await api.get(`/products/${id}/`);
-            const currentQuantity = currentProductResponse.data.stock_quantity;
+            const currentQuantity = currentProductResponse.data.data.stock_quantity;
             
             const quantityToChange = parseInt(formData.quantity);
             if (isNaN(quantityToChange) || quantityToChange <= 0) {
@@ -188,7 +188,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
     const handleDeleteProduct = async () => {
         try{
             const currentProductResponse = await api.get(`/products/${id}/`);
-            const currentQuantity = currentProductResponse.data.stock_quantity;
+            const currentQuantity = currentProductResponse.data.data.stock_quantity;
             const response = await api.delete(`/products/${id}/`);
             if(response.status === 204){
                 handleMovementPostDelete(id, currentQuantity);

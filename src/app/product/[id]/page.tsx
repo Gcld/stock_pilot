@@ -21,7 +21,7 @@ export default function ProductDetail() {
     const getProduct = async (id: number) => {
         try {
             const response = await api.get(`/products/${id}`);
-            setProduct(response.data);
+            setProduct(response.data.data);
         } catch (error) {
             console.error("Error fetching product:", error);
             router.push('/404');
@@ -34,14 +34,14 @@ export default function ProductDetail() {
     const getTotalProducts = async () => {
         try {
             const response = await api.get('/products');
-            if (Array.isArray(response.data)) {
-                const total = response.data.length;
+            if (Array.isArray(response.data.data)) {
+                const total = response.data.data.length;
                 setTotalProducts(total);
-            } else if (typeof response.data === 'object' && response.data) {
-                const total = response.data.length;
+            } else if (typeof response.data.data === 'object' && response.data.data) {
+                const total = response.data.data.length;
                 setTotalProducts(total);
             } else {
-                console.error("Unexpected response format:", response.data);
+                console.error("Unexpected response format:", response.data.data);
                 setTotalProducts(0);
             }
         } catch (error) {

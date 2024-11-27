@@ -16,7 +16,7 @@ export default function ContentHistory() {
     const getHistory = async () => {
         try {
             const response = await api.get('/movements');
-            setMovements(response.data);
+            setMovements(response.data.data);
         } catch (error) {
             console.log(error);
         } finally {

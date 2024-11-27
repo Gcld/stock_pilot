@@ -6,7 +6,7 @@ export const Container = styled.div`
     flex-direction: row;
     background-color: black;
     padding: 20px;
-    justify-content: space-around;
+    justify-content: space-between;
 
     .mobileMenu{
         display: none;

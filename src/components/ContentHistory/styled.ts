@@ -8,6 +8,10 @@ export const Container = styled.div`
     align-content: center;
     justify-content: space-around;
 
+    .desktopGrid{
+        width: 100%;
+    }
+
     .mobileGrid{
         display: none;
     }
@@ -15,6 +19,10 @@ export const Container = styled.div`
     @media (max-width: 1100px) {
         flex-direction: column;
         width: 100%;
+
+        .desktopGrid{
+            display: none;
+        }
 
         .mobileGrid{
             display: flex;

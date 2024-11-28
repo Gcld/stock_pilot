@@ -17,6 +17,14 @@ export const Container = styled.div`
     flex: 1;
     overflow-y: auto;
     align-content: start;
+
+    @media (max-width: 800px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 520px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export const GridItem = styled.div`

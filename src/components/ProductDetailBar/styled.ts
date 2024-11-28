@@ -8,6 +8,7 @@ export const Container = styled.div`
     padding-right: 30px;
     padding-top: 130px;
     justify-content: space-between;
+    align-items: center;
 
     h1 {
         font-family: var(--font-poppins);
@@ -45,14 +46,13 @@ export const GridButtons = styled.div`
 export const ButtonEnd = styled.button`
     display: flex;
     width: 50px;
-    height: 46px;
+    padding: 10px;
     border-radius: 10px;
     background-color: var(--darkZaori);
     align-items: center;
     justify-content: center;
     background: none;
     border: none;
-    padding: 0;
     font: inherit;
     outline: inherit;
     cursor: pointer;

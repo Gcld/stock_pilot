@@ -23,6 +23,11 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
         price: data.price,
         stock_quantity: data.stock_quantity.toString()
     });
+    const [editFormData, setEditFormData] = useState({
+        quantity: '',
+        reason: '',
+    });
+    const [currentMovementType, setCurrentMovementType] = useState('');
 
     const openOverlay = () => setIsOverlayOpen(true);
     const closeOverlay = () => setIsOverlayOpen(false);
@@ -34,6 +39,65 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
             [name]: value
         }));
     };
+
+    const handleMovementConfirm = async () => {
+        console.log("FORMDATA",editFormData);
+        try {
+            const currentProductResponse = await api.get(`/products/${data.id}/`);
+            const currentQuantity = currentProductResponse.data.stock_quantity;
+            
+            const quantityToChange = parseInt(editFormData.quantity);
+            if (isNaN(quantityToChange) || quantityToChange <= 0) {
+                throw new Error("Invalid quantity");
+            }
+            
+            let newQuantity: number;
+            if (currentMovementType === 'Add') {
+                newQuantity = currentQuantity + quantityToChange;
+            } else {
+                if (quantityToChange > currentQuantity) {
+                    throw new Error("Cannot subtract more than the current quantity");
+                }
+                newQuantity = currentQuantity - quantityToChange;
+            }
+            
+            const response = await api.patch(`/products/${data.id}/`, { stock_quantity: newQuantity });
+            const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
+            await api.post(`/movements/`, 
+                {
+                "product": data.id,
+                "movement_type": movementToRequest,
+                "quantity" : quantityToChange,
+                "reason": currentMovementType
+        });
+            
+            console.log('Form submitted:', response.data);
+            console.log('Product submitted:', response.data);
+            toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            getProduct(data.id);
+            setIsMovementModalOpen(false);
+            setEditFormData({ quantity: '', reason: '' });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error(error instanceof Error ? error.message : 'Failed to update product quantity. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
 
     const handlePriceChange = (increment: boolean) => {
         setFormData(prev => ({
@@ -82,11 +146,6 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                 progress: undefined,
             });
         }
-    };
-
-    const handleMovementConfirm = (movement: string, quantity: number) => {
-        console.log(`Movement: ${movement}, Quantity: ${quantity}`);
-        // Implementar a lógica para atualizar o movimento do produto
     };
 
     return (
@@ -163,6 +222,8 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                 isOpen={isMovementModalOpen}
                 onClose={() => setIsMovementModalOpen(false)}
                 onConfirm={handleMovementConfirm}
+                movementType={setCurrentMovementType}
+                getQuantity={setEditFormData}
             />
         </Container>
     );

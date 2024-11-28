@@ -10,6 +10,7 @@ export const Container = styled.div`
     border-radius: 10px;
     height: 100%;
     width: 30%;
+    overflow-y: auto;
 
     @media (max-width: 1100px) {
         display: none;

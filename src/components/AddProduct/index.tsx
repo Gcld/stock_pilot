@@ -23,7 +23,7 @@ export default function AddProduct({ getProducts }: Props) {
     const getCategories = async () => {
         try {
             const response = await api.get('/categories');
-            setCategories(response.data.data);
+            setCategories(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -45,8 +45,8 @@ export default function AddProduct({ getProducts }: Props) {
         e.preventDefault();
         try {
             const response = await api.post('/products/', product);
-            console.log('Product submitted:', response.data.data);
-            toast.success(response.data.data.message, {
+            console.log('Product submitted:', response.data);
+            toast.success(response.data.message, {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,

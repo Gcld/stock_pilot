@@ -45,8 +45,6 @@ export default function EditModal({ onClose, id, getProducts }: EditModalProps) 
 
         try {
             const response = await api.patch(`/products/${id}/`, newData);
-            console.log('Form submitted:', response.data);
-            console.log('Product submitted:', response.data);
             toast.success('Product updated successfully', {
                 position: "top-right",
                 autoClose: 3000,

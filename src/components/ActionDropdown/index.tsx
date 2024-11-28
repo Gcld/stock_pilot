@@ -14,12 +14,11 @@ import { toast } from "react-toastify";
 interface ActionDropdownProps {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-    onActionClick: (action: string, subAction?: string) => void;
     id: number;
     getProducts: () => Promise<void>;
 }
 
-export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, getProducts}: ActionDropdownProps) {
+export default function ActionDropdown({ isOpen, setIsOpen, id, getProducts}: ActionDropdownProps) {
     const [showMovementMenu, setShowMovementMenu] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -62,9 +61,6 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
                 "quantity" : quantityToChange,
                 "reason": currentMovementType
         });
-            
-            console.log('Form submitted:', response.data);
-            console.log('Product submitted:', response.data);
             toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
                 position: "top-right",
                 autoClose: 3000,
@@ -259,7 +255,6 @@ export default function ActionDropdown({ isOpen, setIsOpen, onActionClick, id, g
             setShowMovementMenu(false);
             return;
         }
-        onActionClick(action, reason);
         setIsOpen(false);
         setShowMovementMenu(false);
         setShowDeleteConfirmation(false);

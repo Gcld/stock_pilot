@@ -45,7 +45,6 @@ export default function AddProduct({ getProducts }: Props) {
         e.preventDefault();
         try {
             const response = await api.post('/products/', product);
-            console.log('Product submitted:', response.data);
             toast.success(response.data.message, {
                 position: "top-right",
                 autoClose: 3000,

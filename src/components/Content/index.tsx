@@ -23,7 +23,6 @@ export default function Content() {
         try {
             const response = await api.get('/products/');
             setProducts(response.data);
-            console.log("PRODUTOS",response.data);
         } catch (error) {
             console.log(error);
         } finally {

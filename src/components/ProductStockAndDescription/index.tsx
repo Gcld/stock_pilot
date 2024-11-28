@@ -41,7 +41,6 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
     };
 
     const handleMovementConfirm = async () => {
-        console.log("FORMDATA",editFormData);
         try {
             const currentProductResponse = await api.get(`/products/${data.id}/`);
             const currentQuantity = currentProductResponse.data.stock_quantity;
@@ -70,9 +69,6 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                 "quantity" : quantityToChange,
                 "reason": currentMovementType
         });
-            
-            console.log('Form submitted:', response.data);
-            console.log('Product submitted:', response.data);
             toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
                 position: "top-right",
                 autoClose: 3000,
@@ -122,7 +118,6 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
 
         try {
             const response = await api.patch(`/products/${data.id}/`, newData);
-            console.log('Product updated:', response.data);
             toast.success('Product updated successfully', {
                 position: "top-right",
                 autoClose: 3000,

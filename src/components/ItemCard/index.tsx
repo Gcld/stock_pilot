@@ -32,10 +32,6 @@ export default function ItemCard({ data, getProducts }: Props) {
         fetchRandomImage();
     }, []);
 
-    const handleActionClick = (action: string) => {
-        console.log(`Action clicked: ${action}`);
-    };
-
     return (
         <Container>
             <Link href={`/product/${data.id}`} passHref>
@@ -57,7 +53,6 @@ export default function ItemCard({ data, getProducts }: Props) {
                 <ActionDropdown
                     isOpen={isDropdownOpen}
                     setIsOpen={setIsDropdownOpen}
-                    onActionClick={handleActionClick}
                     id = {data.id}
                     getProducts={getProducts}
                 />

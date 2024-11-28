@@ -16,8 +16,6 @@ export default function ItemsHistoryContainer({data}: ItemsHistoryContainerProps
     const reversedItems = data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     const currentItems = reversedItems.slice(indexOfFirstItem, indexOfLastItem);
 
-    console.log("REVERSEDITEMS",reversedItems);
-
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);

@@ -6,9 +6,15 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center; 
     background-color: #161616;
-    width: 30%;
+    width: 65%;
     padding: 20px 20px 50px 20px;
     border-radius: 20px;
+
+    @media (max-width: 873px) {
+        flex-direction: column;
+        width: 80%;
+    }
+
 
     .quantityAndDescription {
         height: 100%;
@@ -60,6 +66,11 @@ export const Description = styled.div`
     font-weight: 400;
     color: #FFFFFF;
     padding: 10px;
+    padding-bottom: 20px;
+
+    @media (max-width: 321px) {
+        font-size: 18px;
+    }
 `;
 
 export const AdjustStockButton = styled.div`
@@ -83,6 +94,10 @@ export const AdjustStockButton = styled.div`
         font-weight: 400;
         color: var(--primaryDarkZaori);
         transition: color 0.3s ease;
+
+        @media (max-width: 513px) {
+            text-align: center;
+        }
     }
 
     &:hover h2 {

@@ -20,7 +20,7 @@ export default function ProductDetail() {
 
     const getProduct = async (id: number) => {
         try {
-            const response = await api.get(`/products/${id}`);
+            const response = await api.get(`/products/${id}/`);
             setProduct(response.data);
         } catch (error) {
             console.error("Error fetching product:", error);
@@ -33,7 +33,7 @@ export default function ProductDetail() {
 
     const getTotalProducts = async () => {
         try {
-            const response = await api.get('/products');
+            const response = await api.get('/products/');
             if (Array.isArray(response.data)) {
                 const total = response.data.length;
                 setTotalProducts(total);

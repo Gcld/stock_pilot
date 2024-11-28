@@ -4,6 +4,8 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     gap: 20px;
+    align-items: center;
+    justify-content: center;
 
     .productImagesDiv {
         display: flex;
@@ -17,6 +19,31 @@ export const ProductImageBig = styled.div`
     height: 404px;
     border-radius: 20px;
     overflow: hidden;
+
+    @media (max-width: 1200px) {
+        width: 500px;
+    }
+
+    @media (max-width: 1023px) {
+        width: 400px;
+    }
+
+    @media (max-width: 923px) {
+        width: 350px;
+    }
+
+    @media (max-width: 873px) {
+        width: 450px;
+    }
+
+    @media (max-width: 768px) {
+        width: 350px;
+    }
+
+    @media (max-width: 400px) {
+        width: 200px;
+        height: 200px;
+    }
 `;
 
 export const ProductImageSmall = styled.div`

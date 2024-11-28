@@ -6,6 +6,7 @@ export const Container = styled.div`
     flex-direction: row;
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 130px;
     justify-content: space-between;
 
     h1 {

@@ -5,6 +5,10 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 30px;
 
+    @media (max-width: 873px) {
+        align-items: center;
+    }
+
     .productInfoDiv {
         display: flex;
         flex-direction: column;

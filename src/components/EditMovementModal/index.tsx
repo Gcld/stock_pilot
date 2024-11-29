@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { ModalOverlay, ModalContent, Select, Button, ButtonGroup, Title, InputGroup, Label, QuantityControl, PlusMinusButton, QuantityDisplay } from './styled';
+import { ModalOverlay, ModalContent, Select, Button, ButtonGroup, Title, InputGroup, Label, QuantityControl, PlusMinusButton, QuantityDisplay, Input } from './styled';
 import { IoClose } from 'react-icons/io5';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 interface EditMovementModalProps {
     isOpen: boolean;
@@ -16,12 +17,59 @@ const EditMovementModal: React.FC<EditMovementModalProps> = ({ isOpen, onClose, 
     const [quantity, setQuantity] = useState(0);
 
     const handleConfirm = () => {
+        if (!movement) {
+            toast.error('Por favor, selecione um tipo de movimento', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            return;
+        }
+
+        if (quantity <= 0) {
+            toast.error('A quantidade deve ser maior que zero', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            return;
+        }
+
         onConfirm(movement, quantity);
         onClose();
     };
 
-    const handleIncrement = () => setQuantity(prev => prev + 1);
-    const handleDecrement = () => setQuantity(prev => Math.max(0, prev - 1));
+    const handleQuantityChange = (value: string | number) => {
+        if (typeof value === 'string') {
+            const sanitizedValue = value.replace(/[^0-9]/g, '');
+            const numericValue = parseInt(sanitizedValue, 10);
+
+            if (isNaN(numericValue) || numericValue < 0) {
+                toast.error('Por favor, insira um valor numérico válido', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                return;
+            }
+
+            setQuantity(numericValue);
+        } else {
+            setQuantity(Math.max(0, value));
+        }
+    };
+
+    const handleIncrement = () => handleQuantityChange(quantity + 1);
+    const handleDecrement = () => handleQuantityChange(quantity - 1);
 
     const handleMovementType = (e: ChangeEvent<HTMLSelectElement>) => {
         setMovement(e.target.value);
@@ -31,7 +79,7 @@ const EditMovementModal: React.FC<EditMovementModalProps> = ({ isOpen, onClose, 
     useEffect(() => {
         getQuantity({quantity, reason: movement});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[quantity]);
+    },[quantity, movement]);
 
     if (!isOpen) return null;
 
@@ -58,7 +106,20 @@ const EditMovementModal: React.FC<EditMovementModalProps> = ({ isOpen, onClose, 
                         <PlusMinusButton onClick={handleDecrement}>
                             <FaMinus color='var(--buttonIconColor)' />
                         </PlusMinusButton>
-                        <QuantityDisplay>{quantity}</QuantityDisplay>
+                        <input 
+                            type="text" 
+                            value={quantity} 
+                            onChange={(e) => handleQuantityChange(e.target.value)}
+                            style={{
+                                width: '100px', 
+                                textAlign: 'center', 
+                                backgroundColor: 'transparent', 
+                                border: 'none', 
+                                color: 'var(--primaryLightZaori)',
+                                fontSize: '32px',
+                                fontFamily: 'var(--font-poppins)'
+                            }}
+                        />
                         <PlusMinusButton onClick={handleIncrement}>
                             <FaPlus color='var(--buttonIconColor)' />
                         </PlusMinusButton>

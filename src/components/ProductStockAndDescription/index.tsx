@@ -12,7 +12,7 @@ interface Props {
     getProduct: (id: number) => Promise<void>;
 }
 
-export default function ProductStockAndDescription({data, getProduct}: Props) {
+export default function ProductStockAndDescription({ data, getProduct }: Props) {
     const { categories } = useMain();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [isMovementModalOpen, setIsMovementModalOpen] = useState(false);
@@ -44,12 +44,12 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
         try {
             const currentProductResponse = await api.get(`/products/${data.id}/`);
             const currentQuantity = currentProductResponse.data.stock_quantity;
-            
+
             const quantityToChange = parseInt(editFormData.quantity);
             if (isNaN(quantityToChange) || quantityToChange <= 0) {
                 throw new Error("Invalid quantity");
             }
-            
+
             let newQuantity: number;
             if (currentMovementType === 'Add') {
                 newQuantity = currentQuantity + quantityToChange;
@@ -59,16 +59,16 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                 }
                 newQuantity = currentQuantity - quantityToChange;
             }
-            
+
             await api.patch(`/products/${data.id}/`, { stock_quantity: newQuantity });
             const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
-            await api.post(`/movements/`, 
+            await api.post(`/movements/`,
                 {
-                "product": data.id,
-                "movement_type": movementToRequest,
-                "quantity" : quantityToChange,
-                "reason": currentMovementType
-        });
+                    "product": data.id,
+                    "movement_type": movementToRequest,
+                    "quantity": quantityToChange,
+                    "reason": currentMovementType
+                });
             toast.success(`Product quantity ${currentMovementType === 'Add' ? 'increased' : 'decreased'} successfully`, {
                 position: "top-right",
                 autoClose: 3000,
@@ -95,16 +95,39 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
         }
     }
 
-    const handlePriceChange = (increment: boolean) => {
-        setFormData(prev => ({
-            ...prev,
-            price: (parseFloat(prev.price) + (increment ? 1 : -1)).toFixed(2)
-        }));
+    const handlePriceChange = (increment: boolean | string) => {
+        if (typeof increment === 'boolean') {
+            setFormData(prev => ({
+                ...prev,
+                price: (parseFloat(prev.price) + (increment ? 1 : -1)).toFixed(2)
+            }));
+        } else {
+            // Validação para input de texto
+            const sanitizedValue = increment.replace(/[^0-9.]/g, '');
+            const numericValue = parseFloat(sanitizedValue);
+
+            if (isNaN(numericValue) || numericValue < 0) {
+                toast.error('Por favor, insira um valor numérico válido', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                return;
+            }
+
+            setFormData(prev => ({
+                ...prev,
+                price: numericValue.toFixed(2)
+            }));
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         const newData = Object.entries(formData).reduce((acc, [key, value]) => {
             if (value !== '') {
                 acc[key] = value;
@@ -150,7 +173,7 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                 <h3>QUANTITY AT HAND</h3>
                 <h2>{data.stock_quantity}</h2>
                 <AdjustStockButton onClick={openOverlay}>
-                    <h2>Adjust Stock</h2> 
+                    <h2>Adjust Stock</h2>
                 </AdjustStockButton>
                 <Separator />
                 <Description>{data.description}</Description>
@@ -162,25 +185,25 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                         <form onSubmit={handleSubmit}>
                             <AdjustmentBox>
                                 <h2>Name</h2>
-                                <input 
+                                <input
                                     name="name"
-                                    value={formData.name} 
+                                    value={formData.name}
                                     onChange={handleChange}
                                 />
                             </AdjustmentBox>
                             <AdjustmentBox>
-                                <h2>Description</h2> 
-                                <textarea 
-                                    name="description" 
-                                    value={formData.description} 
+                                <h2>Description</h2>
+                                <textarea
+                                    name="description"
+                                    value={formData.description}
                                     onChange={handleChange}
                                 ></textarea>
                             </AdjustmentBox>
                             <AdjustmentBox>
                                 <h2>Category</h2>
-                                <Select 
+                                <Select
                                     name="category"
-                                    value={formData.category} 
+                                    value={formData.category}
                                     onChange={handleChange}
                                 >
                                     {categories.map((cat) => (
@@ -193,11 +216,24 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                                     <h2>Price</h2>
                                     <ButtonsDiv>
                                         <PlusOrMinusButton onClick={() => handlePriceChange(false)}>
-                                            <FaMinus color='var(--buttonIconColor)'/>
+                                            <FaMinus color='var(--buttonIconColor)' />
                                         </PlusOrMinusButton>
-                                        <h2>${formData.price}</h2>
+                                        <input
+                                            type="text"
+                                            value={formData.price}
+                                            onChange={(e) => handlePriceChange(e.target.value)}
+                                            style={{
+                                                width: '100px',
+                                                textAlign: 'center',
+                                                backgroundColor: 'transparent',
+                                                border: 'none',
+                                                color: '#9B9B9B',
+                                                fontSize: '32px',
+                                                fontFamily: 'var(--font-poppins)'
+                                            }}
+                                        />
                                         <PlusOrMinusButton onClick={() => handlePriceChange(true)}>
-                                            <FaPlus color='var(--buttonIconColor)'/>
+                                            <FaPlus color='var(--buttonIconColor)' />
                                         </PlusOrMinusButton>
                                     </ButtonsDiv>
                                 </AdjustmentBox>

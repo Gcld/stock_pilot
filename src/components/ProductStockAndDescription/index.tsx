@@ -60,7 +60,7 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
                 newQuantity = currentQuantity - quantityToChange;
             }
             
-            const response = await api.patch(`/products/${data.id}/`, { stock_quantity: newQuantity });
+            await api.patch(`/products/${data.id}/`, { stock_quantity: newQuantity });
             const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
             await api.post(`/movements/`, 
                 {
@@ -117,7 +117,7 @@ export default function ProductStockAndDescription({data, getProduct}: Props) {
         }
 
         try {
-            const response = await api.patch(`/products/${data.id}/`, newData);
+            await api.patch(`/products/${data.id}/`, newData);
             toast.success('Product updated successfully', {
                 position: "top-right",
                 autoClose: 3000,

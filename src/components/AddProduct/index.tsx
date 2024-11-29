@@ -22,7 +22,7 @@ export default function AddProduct({ getProducts }: Props) {
 
     const getCategories = async () => {
         try {
-            const response = await api.get('/categories');
+            const response = await api.get('/categories/');
             setCategories(response.data);
         } catch (error) {
             console.log(error);
@@ -43,6 +43,7 @@ export default function AddProduct({ getProducts }: Props) {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log("PRODUCT",product);
         try {
             const response = await api.post('/products/', product);
             toast.success(response.data.message, {

@@ -52,7 +52,7 @@ export default function ActionDropdown({ isOpen, setIsOpen, id, getProducts}: Ac
                 newQuantity = currentQuantity - quantityToChange;
             }
             
-            const response = await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
+            await api.patch(`/products/${id}/`, { stock_quantity: newQuantity });
             const movementToRequest = currentMovementType == 'Add' ? 'IN' : 'OUT';
             await api.post(`/movements/`, 
                 {
